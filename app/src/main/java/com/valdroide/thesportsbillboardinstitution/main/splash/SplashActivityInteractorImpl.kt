@@ -1,17 +1,22 @@
 package com.valdroide.thesportsbillboardinstitution.main.splash
 
 import android.content.Context
+import com.valdroide.thesportsbillboardinstitution.model.entities.DateData
 import com.valdroide.thesportsbillboardinstitution.model.entities.Login
 
 class SplashActivityInteractorImpl(val repository: SplashActivityRepository) : SplashActivityInteractor {
 
 
-    override fun getDateClub(context: Context) {
-        repository.getDateClub(context)
+    override fun getDate(context: Context) {
+        repository.getDate(context)
     }
 
-    override fun validateDateClub(context: Context) {
-        repository.validateDateClub(context)
+    override fun getData(context: Context) {
+        repository.getData(context)
+    }
+
+    override fun validateDate(context: Context, dateData: DateData) {
+        repository.validateDate(context, dateData)
     }
 
     override fun getLogin(context: Context) {

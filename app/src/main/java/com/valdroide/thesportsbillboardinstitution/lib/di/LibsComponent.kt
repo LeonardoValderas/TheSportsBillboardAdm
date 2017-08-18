@@ -2,9 +2,8 @@ package com.valdroide.thesportsbillboardinstitution.lib.di
 
 import dagger.Component
 import javax.inject.Singleton
-import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionAppModule
 
 @Singleton
-@Component(modules = arrayOf(LibsModule::class, TheSportsBillboardInstitutionAppModule::class))
+@Component(modules = arrayOf(LibsModule::class))
 interface LibsComponent{
 }

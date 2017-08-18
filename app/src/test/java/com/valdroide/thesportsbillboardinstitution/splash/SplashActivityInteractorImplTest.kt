@@ -9,6 +9,7 @@ import org.junit.Before
 import com.valdroide.thesportsbillboardinstitution.main.splash.ui.SplashActivityView
 import org.mockito.Mock
 import com.valdroide.thesportsbillboardinstitution.main.splash.events.SplashActivityEvent
+import com.valdroide.thesportsbillboardinstitution.model.entities.DateData
 import org.junit.Test
 import org.mockito.Mockito.verify
 
@@ -22,7 +23,9 @@ class SplashActivityInteractorImplTest : BaseTest() {
     @Mock
     var repository: SplashActivityRepository? = null
     @Mock
-    var context: Context? = null
+    lateinit var context: Context
+    @Mock
+    lateinit var dateData: DateData
     @Mock
     var login: Login? = null
     @Mock
@@ -37,25 +40,25 @@ class SplashActivityInteractorImplTest : BaseTest() {
 
     @Test
     fun getDateClubTest() {
-        repository?.getDateClub(context!!)
-        verify(repository)?.getDateClub(context!!)
+        repository?.getDate(context)
+        verify(repository)?.getDate(context)
     }
 
     @Test
     fun validateDateClubTest() {
-        repository?.validateDateClub(context!!)
-        verify(repository)?.validateDateClub(context!!)
+        repository?.validateDate(context, dateData)
+        verify(repository)?.validateDate(context, dateData)
     }
 
     @Test
     fun getLoginTest() {
-        repository?.getLogin(context!!)
-        verify(repository)?.getLogin(context!!)
+        repository?.getLogin(context)
+        verify(repository)?.getLogin(context)
     }
 
     @Test
     fun validateLoginTest() {
-        repository?.validateLogin(context!!, login!!)
-        verify(repository)?.validateLogin(context!!, login!!)
+        repository?.validateLogin(context, login!!)
+        verify(repository)?.validateLogin(context, login!!)
     }
 }

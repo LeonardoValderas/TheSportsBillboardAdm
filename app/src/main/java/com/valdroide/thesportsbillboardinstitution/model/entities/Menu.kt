@@ -16,4 +16,6 @@ open class Menu : BaseModel() {
     @Column
     @SerializedName("menu")
     var MENU: String = ""
+    @SerializedName("is_active")
+    var IS_ACTIVE: Int = 0
 }

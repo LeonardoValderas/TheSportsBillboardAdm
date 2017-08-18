@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "698910998667",
+    "firebase_url": "https://thesportsbillboardinstitution.firebaseio.com",
+    "project_id": "thesportsbillboardinstitution",
+    "storage_bucket": "thesportsbillboardinstitution.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698910998667:android:94fe5ceda8a999bd",
+        "android_client_info": {
+          "package_name": "com.valdroide.thesportsbillboardinstitution"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "698910998667-toeh7pgsd2tc3t4irap4g04e8junub7v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.valdroide.thesportsbillboardinstitution",
+            "certificate_hash": "2b56fe4b9800d38b444f9808427f6afc66e37596"
+          }
+        },
+        {
+          "client_id": "698910998667-jg44oqjla20ta7psf62fsb6td785g1sv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCS8qi-r00bJJjk7sDBMJUPsrm0VLE4r_8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "698910998667-jg44oqjla20ta7psf62fsb6td785g1sv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

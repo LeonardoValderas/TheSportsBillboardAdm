@@ -1,5 +1,6 @@
 package com.valdroide.thesportsbillboardinstitution
 
+import com.raizlabs.android.dbflow.config.FlowManager
 import org.junit.Before
 import org.mockito.MockitoAnnotations
 import org.robolectric.RuntimeEnvironment

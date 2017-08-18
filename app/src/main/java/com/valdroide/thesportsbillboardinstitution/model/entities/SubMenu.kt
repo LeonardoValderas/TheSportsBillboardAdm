@@ -14,9 +14,11 @@ open class SubMenu : BaseModel() {
     @SerializedName("id")
     var ID_SUBMENU_KEY: Int = 0
     @Column
-    @SerializedName("submenu")
+    @SerializedName("sub_menu")
     var SUBMENU: String = ""
     @Column
-    @SerializedName("menu")
+    @SerializedName("id_menu")
     var ID_MENU_FOREIGN: Int = 0
+    @SerializedName("is_active")
+    var IS_ACTIVE: Int = 0
 }

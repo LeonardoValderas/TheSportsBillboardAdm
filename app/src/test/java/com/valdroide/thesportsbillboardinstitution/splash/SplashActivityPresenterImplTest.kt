@@ -2,6 +2,7 @@ package com.valdroide.thesportsbillboardinstitution.splash
 
 import android.content.Context
 import com.nhaarman.mockito_kotlin.whenever
+import com.raizlabs.android.dbflow.config.FlowManager
 import com.valdroide.thesportsbillboardinstitution.BaseTest
 import com.valdroide.thesportsbillboardinstitution.model.entities.Login
 import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
@@ -11,6 +12,7 @@ import com.valdroide.thesportsbillboardinstitution.main.splash.ui.SplashActivity
 import org.mockito.Mock
 import com.valdroide.thesportsbillboardinstitution.main.splash.SplashActivityInteractor
 import com.valdroide.thesportsbillboardinstitution.main.splash.events.SplashActivityEvent
+import com.valdroide.thesportsbillboardinstitution.model.entities.DateData
 import org.junit.Test
 import org.mockito.Mockito.verify
 import junit.framework.Assert.assertEquals
@@ -26,12 +28,13 @@ class SplashActivityPresenterImplTest : BaseTest() {
     @Mock
     var interactor: SplashActivityInteractor? = null
     @Mock
-    var context: Context? = null
+    lateinit var context: Context
     @Mock
     var login: Login? = null
     @Mock
     var event: SplashActivityEvent? = null
-
+    @Mock
+    lateinit var dateData: DateData
     @Before
     override fun setUp() {
         super.setUp()
@@ -52,26 +55,26 @@ class SplashActivityPresenterImplTest : BaseTest() {
 
     @Test
     fun getDateClubTest() {
-        interactor?.getDateClub(context!!)
-        verify(interactor)?.getDateClub(context!!)
+        interactor?.getDate(context!!)
+        verify(interactor)?.getDate(context!!)
     }
 
     @Test
     fun validateDateClubTest() {
-        interactor?.validateDateClub(context!!)
-        verify(interactor)?.validateDateClub(context!!)
+        interactor?.validateDate(context, dateData)
+        verify(interactor)?.validateDate(context, dateData)
     }
 
     @Test
     fun getLoginTest() {
-        interactor?.getLogin(context!!)
-        verify(interactor)?.getLogin(context!!)
+        interactor?.getLogin(context)
+        verify(interactor)?.getLogin(context)
     }
 
     @Test
     fun validateLoginTest() {
-        interactor?.validateLogin(context!!, login!!)
-        verify(interactor)?.validateLogin(context!!, login!!)
+        interactor?.validateLogin(context, login!!)
+        verify(interactor)?.validateLogin(context, login!!)
     }
 
 //    override fun sendEmail(context: Context, comment: String) {
@@ -98,7 +101,7 @@ class SplashActivityPresenterImplTest : BaseTest() {
         presenter?.onEventMainThread(event!!)
         assertNotNull(presenter?.getSplashView())
         verify(view)?.hideDialogProgress()
-        verify(view)?.setError(event!!.error)
+        verify(view)?.setError(event!!.error!!)
     }
 
     @Test

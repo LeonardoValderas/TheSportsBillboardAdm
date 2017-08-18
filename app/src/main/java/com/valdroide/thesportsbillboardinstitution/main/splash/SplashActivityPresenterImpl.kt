@@ -1,13 +1,15 @@
 package com.valdroide.thesportsbillboardinstitution.main.splash
 
 import android.content.Context
+import android.util.Log
 import com.valdroide.thesportsbillboardinstitution.model.entities.Login
 import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
 import com.valdroide.thesportsbillboardinstitution.main.splash.events.SplashActivityEvent
 import com.valdroide.thesportsbillboardinstitution.main.splash.ui.SplashActivityView
+import com.valdroide.thesportsbillboardinstitution.model.entities.DateData
+import org.greenrobot.eventbus.Subscribe
 
 class SplashActivityPresenterImpl(val view: SplashActivityView, val event: EventBus, val interactor: SplashActivityInteractor) : SplashActivityPresenter {
-
 
     override fun onCreate() {
         event.register(this)
@@ -17,12 +19,16 @@ class SplashActivityPresenterImpl(val view: SplashActivityView, val event: Event
         event.unregister(this)
     }
 
-    override fun getDateClub(context: Context) {
-        interactor.getDateClub(context)
+    override fun getDate(context: Context) {
+        interactor.getDate(context)
     }
 
-    override fun validateDateClub(context: Context) {
-        interactor.validateDateClub(context)
+    override fun getData(context: Context) {
+        interactor.getData(context)
+    }
+
+    override fun validateDate(context: Context, dateData: DateData) {
+        interactor.validateDate(context, dateData)
     }
 
     override fun getLogin(context: Context) {
@@ -41,6 +47,7 @@ class SplashActivityPresenterImpl(val view: SplashActivityView, val event: Event
         return view
     }
 
+    @Subscribe
     override fun onEventMainThread(event: SplashActivityEvent) {
         if (view != null) {
             when (event.type) {
@@ -50,11 +57,14 @@ class SplashActivityPresenterImpl(val view: SplashActivityView, val event: Event
                 }
                 SplashActivityEvent.ERROR -> {
                     view.hideDialogProgress()
-                    view.setError(event.error)
+                    view.setError(event.error!!)
                 }
                 SplashActivityEvent.GOTONAV -> {
                     view.hideDialogProgress()
                     view.goToNav()
+                }
+                SplashActivityEvent.DATEDATA -> {
+                    view.setDate(event.dateData)
                 }
             }
         }

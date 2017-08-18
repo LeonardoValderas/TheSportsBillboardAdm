@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.valdroide.thesportsbillboardinstitution.main.account.ui.AccountActivity"
+    tools:showIn="@layout/activity_account">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar">
+
+        <LinearLayout
+            android:id="@+id/linearConteiner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/textViewDescription"
+                style="@style/TextViewContact_Style"
+                android:gravity="center"
+                android:text="Description"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textViewPhone"
+                style="@style/TextViewContact_Style"
+                android:drawableLeft="@drawable/ic_phone"
+                android:text="Telefono"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textViewEmail"
+                style="@style/TextViewContact_Style"
+                android:drawableLeft="@drawable/ic_mail"
+                android:text="Email"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textViewWeb"
+                style="@style/TextViewContact_Style"
+                android:drawableLeft="@drawable/ic_internet"
+                android:text="Web"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textViewFace"
+                style="@style/TextViewContact_Style"
+                android:drawableLeft="@drawable/ic_facebook"
+                android:text="Facebook"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textViewInsta"
+                style="@style/TextViewContact_Style"
+                android:drawableLeft="@drawable/ic_instagram"
+                android:text="Instagram"
+                android:textSize="18sp" />
+
+            <TextView
+                style="@style/TextViewContact_Style"
+                android:text="Icon by MarkHawkinsDesigns"
+                android:textSize="10dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>
