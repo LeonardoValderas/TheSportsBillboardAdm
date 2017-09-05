@@ -4,11 +4,11 @@ import android.content.Context
 import com.valdroide.thesportsbillboardinstitution.BaseTest
 import com.valdroide.thesportsbillboardinstitution.model.entities.Login
 import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
-import com.valdroide.thesportsbillboardinstitution.main.splash.*
+import com.valdroide.thesportsbillboardinstitution.main_user.splash.*
 import org.junit.Before
-import com.valdroide.thesportsbillboardinstitution.main.splash.ui.SplashActivityView
+import com.valdroide.thesportsbillboardinstitution.main_user.splash.ui.SplashActivityView
 import org.mockito.Mock
-import com.valdroide.thesportsbillboardinstitution.main.splash.events.SplashActivityEvent
+import com.valdroide.thesportsbillboardinstitution.main_user.splash.events.SplashActivityEvent
 import com.valdroide.thesportsbillboardinstitution.model.entities.DateData
 import org.junit.Test
 import org.mockito.Mockito.verify

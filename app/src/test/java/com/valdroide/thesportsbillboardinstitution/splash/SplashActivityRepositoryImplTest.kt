@@ -2,7 +2,6 @@ package com.valdroide.thesportsbillboardinstitution.splash
 
 import android.content.Context
 import com.nhaarman.mockito_kotlin.*
-import com.raizlabs.android.dbflow.config.FlowManager
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import com.valdroide.thesportsbillboardinstitution.BaseTest
 import com.valdroide.thesportsbillboardinstitution.BuildConfig
@@ -10,15 +9,14 @@ import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitution
 import com.valdroide.thesportsbillboardinstitution.api.ApiService
 import com.valdroide.thesportsbillboardinstitution.model.entities.Login
 import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
-import com.valdroide.thesportsbillboardinstitution.main.splash.*
-import com.valdroide.thesportsbillboardinstitution.main.splash.events.SplashActivityEvent
+import com.valdroide.thesportsbillboardinstitution.main_user.splash.*
+import com.valdroide.thesportsbillboardinstitution.main_user.splash.events.SplashActivityEvent
 import org.junit.Before
-import com.valdroide.thesportsbillboardinstitution.main.splash.ui.SplashActivityView
+import com.valdroide.thesportsbillboardinstitution.main_user.splash.ui.SplashActivityView
 import org.mockito.Mock
 import com.valdroide.thesportsbillboardinstitution.model.entities.DateData
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.objectweb.asm.tree.TryCatchBlockNode
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
@@ -48,7 +46,7 @@ class SplashActivityRepositoryImplTest : BaseTest() {
     @Before
     override fun setUp() {
         super.setUp()
-        repository = SplashActivityRepositoryImpl(eventBus, service)
+        repository = SplashActivityRepositoryImpl(eventBus, service!!)
     }
 /*
     Doesnt work

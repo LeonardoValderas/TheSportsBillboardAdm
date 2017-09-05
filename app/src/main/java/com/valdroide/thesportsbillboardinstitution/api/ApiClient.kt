@@ -1,6 +1,8 @@
 package com.valdroide.thesportsbillboardinstitution.api
 
 import com.google.gson.GsonBuilder
+import com.valdroide.thesportsbillboardinstitution.model.response.AccountResponse
+import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.converter.gson.GsonConverterFactory
@@ -11,6 +13,7 @@ import java.util.concurrent.TimeUnit
 
 class ApiClient {
     //private final static String BASE_URL = "http://myd.esy.es/my_citys_shops_adm/";
+  //  private val BASE_URL = "http://valdroide.com/san_esteban/";
     //Emulator
     //private final static String BASE_URL = "http://10.0.2.2:8080/the_sports_billboard_adm/";
     //Test
@@ -43,6 +46,7 @@ class ApiClient {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
     }
+
     fun setTimeOut(): OkHttpClient {
         return OkHttpClient().newBuilder()
                 .connectTimeout(60, TimeUnit.SECONDS)

@@ -1,7 +1,43 @@
 <resources>
-    <string name="app_name">TheSportsBillboard</string>
-    <string name="title_activity_account">AccountActivity</string>
+    <string name="app_name">Adeful</string>
+    <string name="title_activity_account">Contactos</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="datp_empty_account">Dato vacio.</string>
+    <string name="web_address_invalid">Dirección Web invalida.</string>
+    <string name="title_activity_navigation">Adeful</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_tab">TabActivity</string>
+    <string name="fixture_title_tab">Fixture</string>
+    <string name="table_title_tab">Tabla</string>
+    <string name="news_title_tab">Noticias</string>
+    <string name="sanstion_title_tab">Sanciones</string>
+
+
+    <!--RESPONSE-->
+    <string name="null_response">Respuesta nula.</string>
+    <string name="null_process">Proceso nulo.</string>
+    <string name="shared.id.title.submenu">shared.id.title.submenu</string>
+    <string name="shared.id">shared.id</string>
+    <string name="shared_title">shared_title</string>
+    <string name="pos.title">N°</string>
+    <string name="team.title">EQUIPO</string>
+    <string name="points.title">PTS</string>
+    <string name="pj.title">PJ</string>
+    <string name="pg.title">PG</string>
+    <string name="pe.title">PE</string>
+    <string name="pp.title">PP</string>
+    <string name="gf.title">GF</string>
+    <string name="ge.title">GE</string>
+    <string name="df.title">DF</string>
+    <string name="player.title.tab">JUGADORES</string>
+    <string name="create.title.tab">Crear</string>
+    <string name="edit.title.tab">Editar</string>
 </resources>

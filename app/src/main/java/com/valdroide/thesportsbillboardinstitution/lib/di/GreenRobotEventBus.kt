@@ -1,4 +1,4 @@
-package com.valdroide.thesportsbillboarduadm.lib.di
+package com.valdroide.thesportsbillboardinstitution.lib.di
 
 import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
 

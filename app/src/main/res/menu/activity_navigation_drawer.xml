@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/ic_menu_send"
+            android:title="ADEFUL" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Comisión" />
+    </group>
+
+    <item android:title="CANCHA GRANDE">
+        <menu>
+            <item
+                android:id="@+id/primera_a_grande"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Primera A" />
+            <item
+                android:id="@+id/primera_b_grande"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Primera B" />
+            <item
+                android:id="@+id/veterano_grande"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Veterano" />
+            <item
+                android:id="@+id/senior_grande"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Senior" />
+            <item
+                android:id="@+id/master_grande"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Master" />
+        </menu>
+    </item>
+    <item android:title="FULBITO">
+        <menu>
+            <item
+                android:id="@+id/primera_a_fulb"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Primera A" />
+            <item
+                android:id="@+id/primera_b_fulb"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Primera B" />
+            <item
+                android:id="@+id/paralelo_fulb"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Paralelo" />
+            <item
+                android:id="@+id/veterano_fulb"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Veterano" />
+            <item
+                android:id="@+id/senior_fulb"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Senior" />
+            <item
+                android:id="@+id/master_fulb"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Master" />
+        </menu>
+    </item>
+    <item android:title="COPAS">
+        <menu>
+            <item
+                android:id="@+id/primera_a_copas"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Copa de Campeones" />
+            <item
+                android:id="@+id/primera_b_copas"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Copa Adeful" />
+            <item
+                android:id="@+id/master_copas"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Otra" />
+        </menu>
+    </item>
+
+</menu>

@@ -1,11 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#673AB7</color>
-    <color name="colorPrimaryDark">#512DA8</color>
-    <color name="colorPrimary_light">#D1C4E9</color>
-    <color name="colorAccent">#607D8B</color>
+
+    <!--SAN ESTEBAN-->
+    <!--<color name="colorPrimary">#0D6B0D</color>-->
+    <!--<color name="colorPrimaryDark">#0A600A</color>-->
+    <!--<color name="colorPrimary_light">#0E940E</color>-->
+    <!---->
+
+    <!--ADEFUL-->
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary_light">#C5CAE9</color>
+
+
+    <color name="colorAccent">#273de3</color>
+
+
+
+
     <color name="colorPrimary_text">#212121</color>
     <color name="colorSecondary_text">#757575</color>
-    <color name="colorIcons">#FFFFFF</color>
     <color name="colorDivider">#BDBDBD</color>
+    <color name="colorWhite">#FFFFFF</color>
+
+
+
+    <!--FIXTURE-->
+    <color name="colorCardViewFixture">#575a60</color>
+    <color name="colorTopFixture">#28292b</color>
+
+    <!--NEWS-->
+    <color name="colorCardViewNews">#F0F0F0</color>
+    <!--<color name="colorTopFixture">#28292b</color>-->
+
+    <color name="myWindowBackground">#DEDEDE</color>
+    <color name="myNavigationColor">#000000</color>
+
+
+
 </resources>

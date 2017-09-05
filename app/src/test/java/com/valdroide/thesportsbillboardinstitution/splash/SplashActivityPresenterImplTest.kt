@@ -2,16 +2,15 @@ package com.valdroide.thesportsbillboardinstitution.splash
 
 import android.content.Context
 import com.nhaarman.mockito_kotlin.whenever
-import com.raizlabs.android.dbflow.config.FlowManager
 import com.valdroide.thesportsbillboardinstitution.BaseTest
 import com.valdroide.thesportsbillboardinstitution.model.entities.Login
 import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
 import org.junit.Before
-import com.valdroide.thesportsbillboardinstitution.main.splash.SplashActivityPresenterImpl
-import com.valdroide.thesportsbillboardinstitution.main.splash.ui.SplashActivityView
+import com.valdroide.thesportsbillboardinstitution.main_user.splash.SplashActivityPresenterImpl
+import com.valdroide.thesportsbillboardinstitution.main_user.splash.ui.SplashActivityView
 import org.mockito.Mock
-import com.valdroide.thesportsbillboardinstitution.main.splash.SplashActivityInteractor
-import com.valdroide.thesportsbillboardinstitution.main.splash.events.SplashActivityEvent
+import com.valdroide.thesportsbillboardinstitution.main_user.splash.SplashActivityInteractor
+import com.valdroide.thesportsbillboardinstitution.main_user.splash.events.SplashActivityEvent
 import com.valdroide.thesportsbillboardinstitution.model.entities.DateData
 import org.junit.Test
 import org.mockito.Mockito.verify
@@ -55,8 +54,8 @@ class SplashActivityPresenterImplTest : BaseTest() {
 
     @Test
     fun getDateClubTest() {
-        interactor?.getDate(context!!)
-        verify(interactor)?.getDate(context!!)
+        interactor?.getDate(context)
+        verify(interactor)?.getDate(context)
     }
 
     @Test

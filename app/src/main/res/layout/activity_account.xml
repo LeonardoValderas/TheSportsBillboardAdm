@@ -5,9 +5,10 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/conteiner"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.valdroide.thesportsbillboardinstitution.main.account.ui.AccountActivity">
+    tools:context="com.valdroide.thesportsbillboardinstitution.main_user.account.ui.AccountActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -42,8 +43,8 @@
         android:layout_marginRight="8dp"
         fab:menu_animationDelayPerItem="0"
         fab:menu_colorNormal="@color/colorPrimary"
-        fab:menu_colorPressed="@color/colorAccent"
-        fab:menu_colorRipple="@color/colorPrimary_light"
+        fab:menu_colorPressed="@color/colorPrimary_light"
+        fab:menu_colorRipple="@color/colorPrimaryDark"
         fab:menu_labels_hideAnimation="@anim/jump_to_down"
         fab:menu_labels_showAnimation="@anim/jump_from_down"
         fab:menu_labels_style="@style/MenuLabelsStyle"
@@ -54,7 +55,7 @@
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_phone"
+            android:src="@mipmap/ic_phone"
             fab:fab_label="Llamar..." />
 
         <com.github.clans.fab.FloatingActionButton
@@ -62,7 +63,7 @@
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_mail"
+            android:src="@mipmap/ic_email"
             fab:fab_label="Enviar email..." />
 
         <com.github.clans.fab.FloatingActionButton
@@ -70,7 +71,7 @@
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_internet"
+            android:src="@mipmap/ic_internet"
             fab:fab_label="Ir a la Web..." />
 
         <com.github.clans.fab.FloatingActionButton
@@ -78,7 +79,7 @@
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_facebook"
+            android:src="@mipmap/ic_facebook"
             fab:fab_label="Ir al Facebook..." />
 
         <com.github.clans.fab.FloatingActionButton
@@ -86,7 +87,7 @@
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_instagram"
+            android:src="@mipmap/ic_instagram"
             fab:fab_label="Ir al Instagram..." />
     </com.github.clans.fab.FloatingActionMenu>
 

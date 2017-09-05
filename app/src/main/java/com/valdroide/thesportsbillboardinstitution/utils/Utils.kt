@@ -1,10 +1,14 @@
 package com.valdroide.thesportsbillboardinstitution.utils
 
+import android.Manifest
+import android.app.Activity
 import android.support.design.widget.Snackbar
 import android.view.View
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.*
 import android.net.ConnectivityManager
+import android.os.Build
 import android.widget.ImageView
 import com.squareup.picasso.Callback
 import java.net.InetAddress
@@ -12,12 +16,55 @@ import java.net.UnknownHostException
 import java.util.concurrent.*
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Transformation
+import android.os.Build.VERSION_CODES
+import android.os.Build.VERSION
+import android.os.Build.VERSION.SDK_INT
+import android.support.v4.app.ActivityCompat
+import android.content.pm.PackageManager
+import android.support.v4.content.ContextCompat
+import com.valdroide.thesportsbillboardinstitution.R
 
 
 object Utils {
 
     fun showSnackBar(conteiner: View, msg: String) {
         Snackbar.make(conteiner, msg, Snackbar.LENGTH_LONG).show()
+    }
+
+    fun oldPhones(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            false // IS NEW PHONE
+        else
+            true // IS OLD PHONE
+    }
+
+    fun checkForPermission(activity: Activity, permissionCheck: Int, PERMISSION: Int) {
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CALL_PHONE), PERMISSION)
+        }
+    }
+
+    fun hasPermission(activity: Activity): Boolean {
+        val permissionCheck = ContextCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE)
+        return permissionCheck == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun setSubmenuIdTitle(context: Context, id: Int, title: String) {
+        val shared: SharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_id_title_submenu), Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = shared.edit()
+        editor.putInt(context.getString(R.string.shared_id), id)
+        editor.putString(context.getString(R.string.shared_title), title)
+        editor.apply()
+    }
+
+    fun getSubmenuId(context: Context) : Int {
+        val shared: SharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_id_title_submenu), Context.MODE_PRIVATE)
+        return shared.getInt(context.getString(R.string.shared_id), 0)
+    }
+
+    fun getSubmenuTitle(context: Context) : String {
+        val shared: SharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_id_title_submenu), Context.MODE_PRIVATE)
+        return shared.getString(context.getString(R.string.shared_title), "")
     }
 
     fun isNetworkAvailable(context: Context): Boolean {
@@ -40,7 +87,7 @@ object Utils {
     }
 
     private fun internetConnectionAvailable(timeOut: Long): Boolean {
-        var inetAddress: InetAddress? = null
+        val inetAddress: InetAddress?
         try {
             val future = Executors.newSingleThreadExecutor().submit(object : Callable<InetAddress> {
                 override fun call(): InetAddress? {
@@ -66,19 +113,40 @@ object Utils {
     }
 
     fun setPicasso(context: Context, url: String, resource: Int, imageView: ImageView) {
-        if (!url.isEmpty()) {
-            Picasso.with(context)
-                    .load(url).fit()
-                    .placeholder(resource)
-                    .transform(RoundedCornersTransformation(8, 0))//radius-margin
-                    .into(imageView, object : Callback {
-                        override fun onSuccess() {}
+        var urlStrin = url
+        if (urlStrin.isEmpty())
+            urlStrin = "vacio"
 
-                        override fun onError() {
-                            imageView.setImageResource(resource)
-                        }
-                    })
-        }
+        Picasso.with(context)
+                .load(urlStrin).fit()
+                .placeholder(resource)
+                .centerCrop()
+                .transform(RoundedCornersTransformation(8, 0))//radius-margin
+                .into(imageView, object : Callback {
+                    override fun onSuccess() {}
+
+                    override fun onError() {
+                        imageView.setImageResource(resource)
+                    }
+                })
+    }
+
+
+    fun setPicassoWithOutRoundedConrners(context: Context, url: String, resource: Int, imageView: ImageView) {
+        var urlStrin = url
+        if (urlStrin.isEmpty())
+            urlStrin = "vacio"
+
+        Picasso.with(context)
+                .load(urlStrin).fit()
+                .placeholder(resource)
+                .into(imageView, object : Callback {
+                    override fun onSuccess() {}
+
+                    override fun onError() {
+                        imageView.setImageResource(resource)
+                    }
+                })
     }
 
     class RoundedCornersTransformation @JvmOverloads constructor(private val mRadius: Int, private val mMargin: Int, private val mCornerType: CornerType = CornerType.ALL) : Transformation {
