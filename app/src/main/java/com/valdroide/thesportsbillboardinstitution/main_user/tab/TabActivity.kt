@@ -13,6 +13,7 @@ import com.valdroide.thesportsbillboardinstitution.main_user.fragment.leaderboar
 import kotlinx.android.synthetic.main.content_tab.*
 import kotlinx.android.synthetic.main.activity_tab.*
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer
+import com.valdroide.thesportsbillboardinstitution.utils.SectionsPagerAdapter
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 
 

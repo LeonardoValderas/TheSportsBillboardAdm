@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,32 +10,20 @@
 
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:visibility="gone" />
 
     <ScrollView
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp">
+        android:layout_below="@+id/progressBar">
 
         <LinearLayout
             android:id="@+id/linearConteiner"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -49,51 +37,121 @@
 
             <TextView
                 android:id="@+id/textViewDescription"
-                style="@style/TextViewContact_Style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Description"
                 android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/textViewPhone"
-                style="@style/TextViewContact_Style"
-                android:drawableLeft="@mipmap/ic_phone"
-                android:text="Telefono"
-                android:textSize="18sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textViewEmail"
-                style="@style/TextViewContact_Style"
-                android:drawableLeft="@mipmap/ic_email"
-                android:text="Email"
-                android:textSize="18sp" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="10"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/ic_phone_black" />
 
-            <TextView
-                android:id="@+id/textViewWeb"
-                style="@style/TextViewContact_Style"
-                android:drawableLeft="@mipmap/ic_internet"
-                android:text="Web"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/textViewPhone"
+                    style="@style/TextViewContact_Style"
+                    android:layout_weight="90"
+                    android:text="Telefono"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textViewFace"
-                style="@style/TextViewContact_Style"
-                android:drawableLeft="@mipmap/ic_facebook"
-                android:text="Facebook"
-                android:textSize="18sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textViewInsta"
-                style="@style/TextViewContact_Style"
-                android:drawableLeft="@mipmap/ic_instagram"
-                android:text="Instagram"
-                android:textSize="18sp" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="10"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/ic_email_black" />
 
+                <TextView
+                    android:id="@+id/textViewEmail"
+                    style="@style/TextViewContact_Style"
+                    android:layout_weight="90"
+                    android:text="Email"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="10"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/ic_web_black" />
+
+                <TextView
+                    android:id="@+id/textViewWeb"
+                    style="@style/TextViewContact_Style"
+                    android:layout_weight="90"
+                    android:text="Web"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="10"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/facebook_black" />
+
+                <TextView
+                    android:id="@+id/textViewFace"
+                    style="@style/TextViewContact_Style"
+                    android:layout_weight="90"
+                    android:text="Facebook"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="10"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/instagram_black" />
+
+                <TextView
+                    android:id="@+id/textViewInsta"
+                    style="@style/TextViewContact_Style"
+                    android:layout_weight="90"
+                    android:text="Instagram"
+                    android:textSize="18sp" />
+            </LinearLayout>
             <!--<TextView-->
-                <!--style="@style/TextViewContact_Style"-->
-                <!--android:text="Icon by MarkHawkinsDesigns"-->
-                <!--android:textSize="10dp" />-->
+            <!--style="@style/TextViewContact_Style"-->
+            <!--android:text="Icon by MarkHawkinsDesigns"-->
+            <!--android:textSize="10dp" />-->
 
         </LinearLayout>
     </ScrollView>
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

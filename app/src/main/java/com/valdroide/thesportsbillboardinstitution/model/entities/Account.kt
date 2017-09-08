@@ -33,4 +33,13 @@ data class Account(
         var EMAIL: String,
         @SerializedName("url_image")
         @Expose
-        var URL_IMAGE: String)
+        var URL_IMAGE: String,
+        @SerializedName("name_image")
+        @Expose
+        var NAME_IMAGE: String,
+        @SerializedName("encode")
+        @Expose
+        var ENCODE: String,
+        @SerializedName("before")
+        @Expose
+        var BEFORE: String)

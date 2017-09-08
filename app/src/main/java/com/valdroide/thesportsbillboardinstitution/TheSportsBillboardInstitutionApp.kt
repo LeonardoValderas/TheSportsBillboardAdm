@@ -14,6 +14,26 @@ import com.valdroide.thesportsbillboardinstitution.main_user.splash.di.SplashAct
 import android.support.v4.app.Fragment
 import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.valdroide.thesportsbillboardinstitution.main_adm.account.di.AccountAdmActivityComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.account.di.AccountAdmActivityModule
+import com.valdroide.thesportsbillboardinstitution.main_adm.account.di.DaggerAccountAdmActivityComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.account.ui.AccountAdmActivityView
+import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.create.di.DaggerLoginCreateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.create.di.LoginCreateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.create.di.LoginCreateFragmentModule
+import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.create.ui.LoginCreateFragmentView
+import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.update.di.DaggerLoginEditFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.update.di.LoginEditFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.update.di.LoginEditFragmentModule
+import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.update.ui.LoginEditFragmentView
+import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.di.DaggerTeamCreateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.di.TeamCreateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.di.TeamCreateFragmentModule
+import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.ui.TeamCreateFragmentView
+import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.di.DaggerTeamUpdateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.di.TeamUpdateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.di.TeamUpdateFragmentModule
+import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.ui.TeamUpdateFragmentView
 import com.valdroide.thesportsbillboardinstitution.main_user.account.di.AccountActivityComponent
 import com.valdroide.thesportsbillboardinstitution.main_user.account.di.AccountActivityModule
 import com.valdroide.thesportsbillboardinstitution.main_user.account.di.DaggerAccountActivityComponent
@@ -151,5 +171,50 @@ class TheSportsBillboardInstitutionApp : Application() {
                 .libsModule(LibsModule(fragment))
                 .sanctionFragmentModule(SanctionFragmentModule(view, fragment))
                 .build()
+    }
+
+    //ADM
+
+    fun getLoginCreateFragmentComponent(view: LoginCreateFragmentView, fragment: Fragment): LoginCreateFragmentComponent {
+        return DaggerLoginCreateFragmentComponent
+                .builder()
+                .libsModule(LibsModule(fragment))
+                .loginCreateFragmentModule(LoginCreateFragmentModule(view))
+                .build()
+    }
+
+    fun getLoginEditFragmentComponent(view: LoginEditFragmentView, onItemClickListener: com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.update.ui.adapter.OnItemClickListener, fragment: Fragment): LoginEditFragmentComponent {
+        return DaggerLoginEditFragmentComponent
+                .builder()
+                .libsModule(LibsModule(fragment))
+                .loginEditFragmentModule(LoginEditFragmentModule(view, onItemClickListener))
+                .build()
+    }
+
+    fun getAccountAdmActivityComponent(view: AccountAdmActivityView, activity: Activity): AccountAdmActivityComponent {
+        return DaggerAccountAdmActivityComponent
+                .builder()
+                .libsModule(LibsModule(activity))
+                .accountAdmActivityModule(AccountAdmActivityModule(view))
+                .build()
+
+    }
+
+    fun getTeamCreateFragmentComponent(view: TeamCreateFragmentView, fragment: Fragment): TeamCreateFragmentComponent {
+        return DaggerTeamCreateFragmentComponent
+                .builder()
+                .libsModule(LibsModule(fragment))
+                .teamCreateFragmentModule(TeamCreateFragmentModule(view))
+                .build()
+
+    }
+
+    fun getTeamUpdateFragmentComponent(view: TeamUpdateFragmentView, listener: com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.ui.adapter.OnItemClickListener, fragment: Fragment): TeamUpdateFragmentComponent {
+        return DaggerTeamUpdateFragmentComponent
+                .builder()
+                .libsModule(LibsModule(fragment))
+                .teamUpdateFragmentModule(TeamUpdateFragmentModule(view, listener))
+                .build()
+
     }
 }

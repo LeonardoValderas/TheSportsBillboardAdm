@@ -40,4 +40,15 @@
     <string name="player.title.tab">JUGADORES</string>
     <string name="create.title.tab">Crear</string>
     <string name="edit.title.tab">Editar</string>
+    <string name="login.save.success">Login creado correctamente.</string>
+    <string name="login.edit.success">Login actualizado correctamente.</string>
+    <string name="login.error.user">El usuario debe contener más de 4 letras.</string>
+    <string name="login.error.pass">La contraseña debe contener más de 4 letras.</string>
+    <string name="account.success">Datos guardados.</string>
+    <string name="team.error.empty">Ingrese el nombre del equipo.</string>
+    <string name="team.save.success">Equipo creado correctamente.</string>
+    <string name="team.update.success">Equipo actualizado correctamente.</string>
+    <string name="team.delete.success">Equipo eliminado correctamente.</string>
+    <string name="alert.title">Atención</string>
+    <string name="alert.msg.team">Si elimina un equipo eliminará todos los fixtures asociados a el. Desea eliminar el equipo de todas formas?</string>
 </resources>

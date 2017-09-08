@@ -9,6 +9,7 @@ import com.valdroide.thesportsbillboardinstitution.BuildConfig
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_user.tab.TabActivity
+import com.valdroide.thesportsbillboardinstitution.utils.SectionsPagerAdapter
 import kotlinx.android.synthetic.main.activity_tab.*
 import kotlinx.android.synthetic.main.content_tab.*
 import org.junit.Before

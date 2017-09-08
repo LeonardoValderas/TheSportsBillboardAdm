@@ -7,12 +7,14 @@ import android.support.v7.app.AppCompatActivity
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.create.ui.LoginCreateFragment
-import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.edit.ui.LoginEditFragment
+import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.update.ui.LoginEditFragment
+import com.valdroide.thesportsbillboardinstitution.utils.Communicator
 import com.valdroide.thesportsbillboardinstitution.utils.SectionsPagerAdapter
 import kotlinx.android.synthetic.main.activity_tab.*
 import kotlinx.android.synthetic.main.content_tab.*
 
-open class TabLoginActivity : AppCompatActivity() {
+
+open class TabLoginActivity : AppCompatActivity(), Communicator {
 
     var adapter: SectionsPagerAdapter? = null
 
@@ -24,13 +26,14 @@ open class TabLoginActivity : AppCompatActivity() {
         setupNavigation()
     }
 
-    private fun initToobar(){
+    private fun initToobar() {
         setSupportActionBar(toolbar)
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
-     //   val title: String = Utils.getSubmenuTitle(this)
-       // getSupportActionBar()!!.setTitle(title)
+        //   val title: String = Utils.getSubmenuTitle(this)
+        // getSupportActionBar()!!.setTitle(title)
     }
-//      SAN ESTEBAN
+
+    //      SAN ESTEBAN
 //    private fun setPagerAdapter() {
 //        val titles = arrayOf(getString(R.string.news_title_tab), getString(R.string.fixture_title_tab),
 //                getString(R.string.table_title_tab), getString(R.string.sanstion_title_tab), getString(R.string.player_title_tab))
@@ -44,8 +47,6 @@ open class TabLoginActivity : AppCompatActivity() {
         adapter = SectionsPagerAdapter(supportFragmentManager, titles, fragments)
     }
 
-
-
     private fun setupNavigation() {
         viewPager.setAdapter(adapter)
         viewPager.setPageTransformer(true, RotateUpTransformer())
@@ -54,11 +55,11 @@ open class TabLoginActivity : AppCompatActivity() {
 
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-  //              hideKeyBoard()
+                //              hideKeyBoard()
             }
 
             override fun onPageSelected(position: Int) {
-    //            hideKeyBoard()
+                //            hideKeyBoard()
             }
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -66,4 +67,16 @@ open class TabLoginActivity : AppCompatActivity() {
             }
         })
     }
+
+    override fun refreshAdapter() {
+        getLoginEditFragment().refreshAdapter()
+    }
+
+    fun getLoginEditFragment(): LoginEditFragment {
+        val manager = supportFragmentManager
+        return manager
+                .findFragmentByTag("android:switcher:" + viewPager.id
+                        + ":" + 1) as LoginEditFragment
+    }
+
 }

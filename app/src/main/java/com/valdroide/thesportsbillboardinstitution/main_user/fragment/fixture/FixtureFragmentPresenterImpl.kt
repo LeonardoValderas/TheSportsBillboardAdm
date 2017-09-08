@@ -12,7 +12,7 @@ class FixtureFragmentPresenterImpl(var view: FixtureFragmentView, val event: Eve
     override fun getViewPresenter(): FixtureFragmentView = view
 
     override fun setViewPresenter(view: FixtureFragmentView) {
-       this.view = view
+        this.view = view
     }
 
     override fun onCreate() {
@@ -29,17 +29,17 @@ class FixtureFragmentPresenterImpl(var view: FixtureFragmentView, val event: Eve
 
     @Subscribe
     override fun onEventMainThread(event: FixtureFragmentEvent) {
-        if (view != null) {
-            when (event.type) {
-                FixtureFragmentEvent.FIXTURES -> {
-                    view.hideSwipeRefreshLayout()
-                    view.setFixture(event.fixtures!!)
-                }
-                FixtureFragmentEvent.ERROR -> {
-                    view.hideSwipeRefreshLayout()
-                    view.setError(event.error!!)
-                }
+        //   if (view != null) {
+        when (event.type) {
+            FixtureFragmentEvent.FIXTURES -> {
+                view.hideSwipeRefreshLayout()
+                view.setFixture(event.fixtures!!)
+            }
+            FixtureFragmentEvent.ERROR -> {
+                view.hideSwipeRefreshLayout()
+                view.setError(event.error!!)
             }
         }
+        // }
     }
 }

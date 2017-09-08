@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".TheSportsBillboardInstitutionApp"
@@ -14,19 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".main_user.splash.ui.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".main_user.account.ui.AccountActivity"
             android:label="@string/title_activity_account"
             android:theme="@style/AppTheme.NoActionBar">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".main_user.navigation.ui.NavigationActivity" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main_user.navigation.ui.NavigationActivity" />
         </activity>
         <activity
             android:name=".main_user.navigation.ui.NavigationActivity"
@@ -40,6 +37,30 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".main_user.navigation.ui.NavigationActivity" />
         </activity>
+
+        <activity
+            android:name=".main_adm.login.activity.TabLoginActivity"
+            android:label="@string/title_activity_tab"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".main_adm.account.ui.AccountAdmActivity"
+            android:label="@string/title_activity_account"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity
+            android:name=".main_adm.team.activity.TabTeamActivity"
+            android:label="@string/title_activity_tab"
+            android:theme="@style/AppTheme.NoActionBar">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
     </application>
 
 </manifest>

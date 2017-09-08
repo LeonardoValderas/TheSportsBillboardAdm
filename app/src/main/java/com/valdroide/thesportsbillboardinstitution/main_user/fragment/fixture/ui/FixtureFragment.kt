@@ -151,9 +151,8 @@ open class FixtureFragment : Fragment(), FixtureFragmentView, OnItemClickListene
         verifySwipeRefresh(true)
     }
 
-    override fun onClickFixture(position: Int, fixture: Fixture?) {
+    override fun onClickFixture(position: Int, fixture: Fixture) {
     }
-
     override fun onClickButtonAddMore() {
         getFixtures(true)
     }

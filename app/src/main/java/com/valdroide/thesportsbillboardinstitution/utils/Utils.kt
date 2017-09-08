@@ -1,6 +1,5 @@
 package com.valdroide.thesportsbillboardinstitution.utils
 
-import android.Manifest
 import android.app.Activity
 import android.support.design.widget.Snackbar
 import android.view.View
@@ -16,13 +15,22 @@ import java.net.UnknownHostException
 import java.util.concurrent.*
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Transformation
-import android.os.Build.VERSION_CODES
-import android.os.Build.VERSION
-import android.os.Build.VERSION.SDK_INT
 import android.support.v4.app.ActivityCompat
 import android.content.pm.PackageManager
 import android.support.v4.content.ContextCompat
 import com.valdroide.thesportsbillboardinstitution.R
+import android.content.Intent
+import android.content.DialogInterface
+import android.net.Uri
+import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
+import android.text.BoringLayout
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
+import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 object Utils {
@@ -38,14 +46,14 @@ object Utils {
             true // IS OLD PHONE
     }
 
-    fun checkForPermission(activity: Activity, permissionCheck: Int, PERMISSION: Int) {
+    fun checkForPermission(activity: Activity, permissionCheck: Int, PERMISSION: Int, manifestPermission: String) {
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CALL_PHONE), PERMISSION)
+            ActivityCompat.requestPermissions(activity, arrayOf(manifestPermission), PERMISSION)
         }
     }
 
-    fun hasPermission(activity: Activity): Boolean {
-        val permissionCheck = ContextCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE)
+    fun hasPermission(activity: Activity, manifestPermission: String): Boolean {
+        val permissionCheck = ContextCompat.checkSelfPermission(activity, manifestPermission)
         return permissionCheck == PackageManager.PERMISSION_GRANTED
     }
 
@@ -57,12 +65,12 @@ object Utils {
         editor.apply()
     }
 
-    fun getSubmenuId(context: Context) : Int {
+    fun getSubmenuId(context: Context): Int {
         val shared: SharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_id_title_submenu), Context.MODE_PRIVATE)
         return shared.getInt(context.getString(R.string.shared_id), 0)
     }
 
-    fun getSubmenuTitle(context: Context) : String {
+    fun getSubmenuTitle(context: Context): String {
         val shared: SharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_id_title_submenu), Context.MODE_PRIVATE)
         return shared.getString(context.getString(R.string.shared_title), "")
     }
@@ -108,8 +116,76 @@ object Utils {
         } catch (e: TimeoutException) {
             return false
         }
-
         return inetAddress != null && !inetAddress.equals("")
+    }
+
+    fun ImageDialogLogo(activity: Activity?, fragment: Fragment?, GALLERY: Int) {
+        val myAlertDialog: AlertDialog.Builder
+        if (activity != null)
+            myAlertDialog = AlertDialog.Builder(activity)
+        else
+            myAlertDialog = AlertDialog.Builder(fragment!!.activity)
+
+        myAlertDialog.setTitle("Galeria")
+        myAlertDialog.setMessage("Seleccione una foto.")
+        myAlertDialog.setPositiveButton("Galeria",
+                DialogInterface.OnClickListener { arg0, arg1 ->
+                    val pickIntent = Intent(
+                            Intent.ACTION_GET_CONTENT, null)
+                    pickIntent.type = "image/*"
+                    pickIntent.putExtra(
+                            "return-data", true)
+                    if (activity != null)
+                        activity.startActivityForResult(pickIntent, GALLERY)
+                    else
+                        fragment!!.startActivityForResult(pickIntent, GALLERY)
+                })
+        myAlertDialog.show()
+    }
+
+    fun startCropImageActivity(activity: Activity?, fragment: Fragment?, imageUri: Uri) {
+        if (activity != null) {
+            CropImage.activity(imageUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setMultiTouchEnabled(true)
+                    .start(activity)
+        } else {
+            CropImage.activity(imageUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setMultiTouchEnabled(true)
+                    .start(fragment!!.context, fragment)
+        }
+    }
+
+    fun getFechaOficial(): String {
+        val dateOficial = Date()
+        val sdf = SimpleDateFormat("yyyyMMddHHmmss")
+        return sdf.format(dateOficial)
+    }
+
+    fun getFechaOficialSeparate(): String {
+        val dateOficial = Date()
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        return sdf.format(dateOficial)
+    }
+
+    @Throws(IOException::class)
+    fun readBytes(uri: Uri?, context: Context): ByteArray {
+        val inputStream = context.contentResolver.openInputStream(uri)
+        val byteBuffer = ByteArrayOutputStream()
+
+        val bufferSize = 1024
+        val buffer = ByteArray(bufferSize)
+
+        //  val len = inputStream.read(buffer)
+        var len = 0
+        while (inputStream.read(buffer).let { len = it; it != -1 }) {
+            byteBuffer.write(buffer, 0, len)
+        }
+//        while (len != -1) {
+//            byteBuffer.write(buffer, 0, len)
+//        }
+        return byteBuffer.toByteArray()
     }
 
     fun setPicasso(context: Context, url: String, resource: Int, imageView: ImageView) {

@@ -163,9 +163,9 @@ open class AccountActivity : AppCompatActivity(), AccountActivityView, View.OnCl
     override fun onClickFabPhone() {
         if (!Utils.oldPhones()) {
             val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
-            Utils.checkForPermission(this, permissionCheck, PERMISSION_CALL)
+            Utils.checkForPermission(this, permissionCheck, PERMISSION_CALL, Manifest.permission.CALL_PHONE)
         }
-        if (Utils.hasPermission(this)) {
+        if (Utils.hasPermission(this, Manifest.permission.CALL_PHONE)) {
             callPhone(number_phone)
         }
     }
