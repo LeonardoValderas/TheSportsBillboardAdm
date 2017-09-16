@@ -26,6 +26,14 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.upda
 import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.update.di.LoginEditFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.update.di.LoginEditFragmentModule
 import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.update.ui.LoginEditFragmentView
+import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.create.di.DaggerPlayerCreateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.create.di.PlayerCreateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.create.di.PlayerCreateFragmentModule
+import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.create.ui.PlayerCreateFragmentView
+import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.di.DaggerPlayerUpdateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.di.PlayerUpdateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.di.PlayerUpdateFragmentModule
+import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.ui.PlayerUpdateFragmentView
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.di.DaggerTeamCreateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.di.TeamCreateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.di.TeamCreateFragmentModule
@@ -214,6 +222,24 @@ class TheSportsBillboardInstitutionApp : Application() {
                 .builder()
                 .libsModule(LibsModule(fragment))
                 .teamUpdateFragmentModule(TeamUpdateFragmentModule(view, listener))
+                .build()
+
+    }
+
+    fun getPlayerCreateFragmentComponent(view: PlayerCreateFragmentView, fragment: Fragment): PlayerCreateFragmentComponent {
+        return DaggerPlayerCreateFragmentComponent
+                .builder()
+                .libsModule(LibsModule(fragment))
+                .playerCreateFragmentModule(PlayerCreateFragmentModule(view, fragment.activity))
+                .build()
+
+    }
+
+    fun getPlayerUpdateFragmentComponent(view: PlayerUpdateFragmentView, listener: com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.ui.adapter.OnItemClickListener, fragment: Fragment): PlayerUpdateFragmentComponent {
+        return DaggerPlayerUpdateFragmentComponent
+                .builder()
+                .libsModule(LibsModule(fragment))
+                .playerUpdateFragmentModule(PlayerUpdateFragmentModule(view, listener))
                 .build()
 
     }

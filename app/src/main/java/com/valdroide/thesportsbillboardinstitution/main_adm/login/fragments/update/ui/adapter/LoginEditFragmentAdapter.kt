@@ -35,7 +35,7 @@ class LoginEditFragmentAdapter(private var logins: MutableList<Login>?, private 
             with(login) {
                 itemView.textViewUser.text = USER
                 itemView.textViewPass.text = PASS
-                itemView.textViewActive.text = if(IS_ACTIVE == 0) "Inactivo" else "Activo"
+                itemView.textViewActive.text = if (IS_ACTIVE == 0) "Inactivo" else "Activo"
             }
             setOnItemClickListener(listener, position, login, fragment)
         }
@@ -47,13 +47,14 @@ class LoginEditFragmentAdapter(private var logins: MutableList<Login>?, private 
         }
 
         private fun showPopupMenu(view: View, context: Context, position: Int, login: Login, listener: OnItemClickListener) {
-            val popup = PopupMenu(context, view)
+            val popup = PopupMenu(context, view, Gravity.RIGHT)
             if (login.IS_ACTIVE == 1)
                 popup.getMenu().add(Menu.NONE, 1, 1, "Desactiva")
             else
                 popup.getMenu().add(Menu.NONE, 2, 2, "Activar")
 
             popup.getMenu().add(Menu.NONE, 3, 3, "Editar Login")
+            popup.getMenu().add(Menu.NONE, 4, 4, "Eliminar Login")
             popup.setOnMenuItemClickListener(MenuItemClickListener(context, position, login, listener))
             popup.show()
         }
@@ -77,6 +78,10 @@ class LoginEditFragmentAdapter(private var logins: MutableList<Login>?, private 
                         listener.onClickEditLogin(position, login)
                         return true
                     }
+                    4 -> {
+                        listener.onClickDeleteLogin(position, login)
+                        return true
+                    }
                 }
                 return false
             }
@@ -92,5 +97,8 @@ class LoginEditFragmentAdapter(private var logins: MutableList<Login>?, private 
         notifyDataSetChanged()
     }
 
-
+    fun deleteLogin(position: Int) {
+        logins!!.removeAt(position)
+        notifyDataSetChanged()
+    }
 }

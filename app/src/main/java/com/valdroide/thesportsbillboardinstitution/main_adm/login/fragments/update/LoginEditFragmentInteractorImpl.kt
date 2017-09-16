@@ -12,4 +12,8 @@ class LoginEditFragmentInteractorImpl(val repository: LoginEditFragmentRepositor
     override fun activeOrUnActiveLogins(context: Context, login: Login) {
         repository.activeOrUnActiveLogins(context, login)
     }
+
+    override fun deleteLogin(context: Context, login: Login) {
+        repository.deleteLogin(context, login)
+    }
 }

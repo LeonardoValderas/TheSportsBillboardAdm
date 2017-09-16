@@ -9,6 +9,7 @@ import org.greenrobot.eventbus.Subscribe
 
 class LoginEditFragmentPresenterImpl(var view: LoginEditFragmentView, val event: EventBus, val interactor: LoginEditFragmentInteractor) : LoginEditFragmentPresenter {
 
+
     override fun getViewPresenter(): LoginEditFragmentView = view
 
     override fun setViewPresenter(view: LoginEditFragmentView) {
@@ -27,6 +28,10 @@ class LoginEditFragmentPresenterImpl(var view: LoginEditFragmentView, val event:
         interactor.getLogins(context)
     }
 
+    override fun deleteLogin(context: Context, login: Login) {
+        interactor.deleteLogin(context, login)
+    }
+
     override fun activeOrUnActiveLogins(context: Context, login: Login) {
         interactor.activeOrUnActiveLogins(context, login)
     }
@@ -40,7 +45,11 @@ class LoginEditFragmentPresenterImpl(var view: LoginEditFragmentView, val event:
             }
             LoginEditFragmentEvent.EDIT -> {
                 view.hideSwipeRefreshLayout()
-                view.loginUpdate()
+                view.updateLoginSuccess()
+            }
+            LoginEditFragmentEvent.DELETE -> {
+                view.hideSwipeRefreshLayout()
+                view.deleteLoginSuccess()
             }
             LoginEditFragmentEvent.ERROR -> {
                 view.hideSwipeRefreshLayout()

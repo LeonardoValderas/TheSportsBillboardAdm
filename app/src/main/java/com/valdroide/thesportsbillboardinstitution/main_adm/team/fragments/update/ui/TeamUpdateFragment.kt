@@ -18,7 +18,6 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.updat
 import com.valdroide.thesportsbillboardinstitution.model.entities.Team
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.fragment_fixture.*
-import kotlinx.android.synthetic.main.gridview_item_leaderboard.*
 
 class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, OnItemClickListener {
 
@@ -64,8 +63,8 @@ class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, OnItemClickListen
         }
     }
 
-    fun showAlertDialog(context: Context, title: String, msg: String, team: Team) {
-        val alertDilog = AlertDialog.Builder(context).create()
+    fun showAlertDialog(title: String, msg: String, team: Team) {
+        val alertDilog = AlertDialog.Builder(activity).create()
         alertDilog.setTitle(title)
         alertDilog.setMessage(msg)
 
@@ -83,8 +82,7 @@ class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, OnItemClickListen
     open fun getPresenterInj(): TeamUpdateFragmentPresenter = component.getPresenter()
 
 
-    open fun getAdapter(): TeamUpdateFragmentAdapter =
-            component.getAdapter()
+    open fun getAdapter(): TeamUpdateFragmentAdapter = component.getAdapter()
 
     override fun onClickUpdateTeam(position: Int, team: Team) {
         val i = Intent(activity, TabTeamActivity::class.java)
@@ -95,7 +93,7 @@ class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, OnItemClickListen
 
     override fun onClickDeleteTeam(position: Int, team: Team) {
         this.position = position
-        showAlertDialog(activity, getString(R.string.alert_title), getString(R.string.alert_msg_team), team)
+        showAlertDialog( getString(R.string.alert_title), getString(R.string.alert_msg_team), team)
     }
 
     override fun onClickActiveTeam(position: Int, team: Team) {

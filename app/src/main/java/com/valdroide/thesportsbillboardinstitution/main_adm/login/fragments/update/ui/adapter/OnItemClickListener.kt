@@ -4,6 +4,7 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.Login
 
 interface OnItemClickListener {
     fun onClickEditLogin(position: Int, login: Login)
+    fun onClickDeleteLogin(position: Int, login: Login)
     fun onClickActiveLogin(position: Int, login: Login)
     fun onClickUnActiveLogin(position: Int, login: Login)
 }

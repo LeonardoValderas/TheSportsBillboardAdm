@@ -41,7 +41,10 @@
         <activity
             android:name=".main_adm.login.activity.TabLoginActivity"
             android:label="@string/title_activity_tab"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" >
+
+
+    </activity>
         <activity
             android:name=".main_adm.account.ui.AccountAdmActivity"
             android:label="@string/title_activity_account"
@@ -55,12 +58,18 @@
             android:name=".main_adm.team.activity.TabTeamActivity"
             android:label="@string/title_activity_tab"
             android:theme="@style/AppTheme.NoActionBar">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+        </activity>
+        <activity
+            android:name=".main_adm.player.activity.TabPlayerActivity"
+            android:label="@string/title_activity_tab"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

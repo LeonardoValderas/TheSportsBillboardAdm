@@ -3,6 +3,7 @@ package com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.upd
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -25,12 +26,11 @@ class LoginEditFragment : Fragment(), LoginEditFragmentView, OnItemClickListener
     lateinit var adapterLogin: LoginEditFragmentAdapter
     var logins: MutableList<Login> = arrayListOf()
     private var isRegister: Boolean = false
-//    private var isClick: Boolean = false
-//    private var id_sub_menu: Int = 0
+    private var position: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
-            inflater!!.inflate(R.layout.fragment_fixture, container, false)
+            inflater!!.inflate(R.layout.frame_recycler_refresh, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -78,12 +78,17 @@ class LoginEditFragment : Fragment(), LoginEditFragmentView, OnItemClickListener
 
     override fun onClickActiveLogin(position: Int, login: Login) {
         showSwipeRefreshLayout()
-        presenter.activeOrUnActiveLogins(context, login)
+        presenter.activeOrUnActiveLogins(activity, login)
     }
 
     override fun onClickUnActiveLogin(position: Int, login: Login) {
         showSwipeRefreshLayout()
-        presenter.activeOrUnActiveLogins(context, login)
+        presenter.activeOrUnActiveLogins(activity, login)
+    }
+
+    override fun onClickDeleteLogin(position: Int, login: Login) {
+        this.position = position
+        showAlertDialog(activity.getString(R.string.alert_title), "Desea eliminar el login?", login)
     }
 
     private fun initRecyclerView() {
@@ -99,9 +104,14 @@ class LoginEditFragment : Fragment(), LoginEditFragmentView, OnItemClickListener
         adapterLogin.setLogins(logins)
     }
 
-    override fun loginUpdate() {
+    override fun updateLoginSuccess() {
         adapterLogin.notifyDataSetChanged()
         Utils.showSnackBar(conteiner, activity.getString(R.string.login_edit_success))
+    }
+
+    override fun deleteLoginSuccess() {
+        adapterLogin.deleteLogin(position)
+        Utils.showSnackBar(conteiner, activity.getString(R.string.login_delete_success))
     }
 
     override fun setError(error: String) {
@@ -114,6 +124,22 @@ class LoginEditFragment : Fragment(), LoginEditFragmentView, OnItemClickListener
 
     override fun showSwipeRefreshLayout() {
         verifySwipeRefresh(true)
+    }
+
+    fun showAlertDialog(title: String, msg: String, login: Login) {
+        val alertDilog = AlertDialog.Builder(activity).create()
+        alertDilog.setTitle(title)
+        alertDilog.setMessage(msg)
+
+        alertDilog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", { dialogInterface, i ->
+            showSwipeRefreshLayout()
+            presenter.deleteLogin(activity, login)
+        })
+
+        alertDilog.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCELAR", { dialogInterface, j ->
+            alertDilog.dismiss()
+        })
+        alertDilog.show()
     }
 
     private fun verifySwipeRefresh(show: Boolean) {

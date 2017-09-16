@@ -6,4 +6,5 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.Login
 interface LoginEditFragmentRepository {
     fun getLogins(context: Context)
     fun activeOrUnActiveLogins(context: Context, login: Login)
+    fun deleteLogin(context: Context, login: Login)
 }

@@ -64,13 +64,18 @@ interface ApiService {
     @FormUrlEncoded
     @POST("adm/login/saveLogin.php")
     fun saveLogin(@Field("user") user: String, @Field("pass") pass: String, @Field("type") type: Int,
-                  @Field("user_work") user_work: Int): Single<WSResponse>
+                  @Field("user_work") user_work: Int, @Field("date_create") date_create: String): Single<WSResponse>
 
     @FormUrlEncoded
     @POST("adm/login/updateLogin.php")
     fun editLogin(@Field("id_login") id_login: Int, @Field("user") user: String, @Field("pass") pass: String,
                   @Field("type") type: Int, @Field("is_active") is_active: Int,
-                  @Field("user_work") user_work: Int): Single<WSResponse>
+                  @Field("user_work") user_work: Int, @Field("date_update") date_create: String): Single<WSResponse>
+
+    @FormUrlEncoded
+    @POST("adm/login/deleteLogin.php")
+    fun deleteLogin(@Field("id_login") id_team: Int, @Field("user_work") user_work: Int,
+                    @Field("date_delete") date_delete: String): Single<WSResponse>
 
     @GET("adm/login/getLogins.php")
     fun getLogins(): Observable<LoginResponse>
@@ -78,7 +83,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("adm/login/activeOrUnActiveLogin.php")
     fun activeOrUnActiveLogin(@Field("id_login") id_login: Int, @Field("is_active") is_active: Int,
-                              @Field("user_work") user_work: Int): Single<WSResponse>
+                              @Field("user_work") user_work: Int, @Field("date_update") date_create: String): Single<WSResponse>
     //ACCOUNT
     @FormUrlEncoded
     @POST("adm/account/saveAccount.php")
@@ -117,5 +122,46 @@ interface ApiService {
     @FormUrlEncoded
     @POST("adm/team/deleteTeam.php")
     fun deleteTeam(@Field("id_team") id_team: Int, @Field("user_work") user_work: Int, @Field("date_delete") date_delete: String): Single<WSResponse>
+    //POSITION
+    @FormUrlEncoded
+    @POST("adm/position/savePosition.php")
+    fun savePosition(@Field("position") position: String, @Field("user_work") user_work: Int,
+                   @Field("date_create") date_create: String): Single<WSResponse>
+
+    @FormUrlEncoded
+    @POST("adm/position/updatePosition.php")
+    fun updatePosition(@Field("id_position") id_position: Int, @Field("position") position: String,
+                       @Field("user_work") user_work: Int, @Field("date_update") date_update: String): Single<WSResponse>
+
+    @GET("adm/position/getPositionsSubMenus.php")
+    fun getPositionsSubMenus(): Observable<PositionAndSubMenuResponse>
+    //PLAYER
+    @FormUrlEncoded
+    @POST("adm/player/getPlayer.php")
+    fun getPlayer(@Field("id_player") id_player: Int): Observable<PlayerResponse>
+
+    @FormUrlEncoded
+    @POST("adm/player/savePlayer.php")
+    fun savePlayer(@Field("name") name: String, @Field("id_position") id_position : Int, @Field("id_submenu") id_submenu : Int,
+                   @Field("url_image") url_image: String, @Field("name_image") name_image: String, @Field("encode") encode: String,
+                   @Field("user_work") user_work: Int, @Field("date_create") date_create: String): Single<WSResponse>
+
+    @FormUrlEncoded
+    @POST("adm/player/updatePlayer.php")
+    fun updatePlayer(@Field("id_player") id_player: Int, @Field("name") name: String, @Field("id_position") id_position : Int, @Field("id_submenu") id_submenu : Int,
+                     @Field("url_image") url_image: String, @Field("name_image") name_image: String, @Field("encode") encode: String,
+                     @Field("before") before: String, @Field("is_active") is_active: Int, @Field("user_work") user_work: Int,
+                     @Field("date_update") date_update: String): Single<WSResponse>
+
+    @GET("adm/player/getPlayers.php")
+    fun getPlayers(): Observable<PlayerResponse>
+
+    @FormUrlEncoded
+    @POST("adm/player/activeOrUnActivePlayer.php")
+    fun activeOrUnActivePlayer(@Field("id_player") id_team: Int, @Field("is_active") is_active: Int,
+                             @Field("user_work") user_work: Int, @Field("date_update") date_update: String): Single<WSResponse>
+    @FormUrlEncoded
+    @POST("adm/player/deletePlayer.php")
+    fun deletePlayer(@Field("id_player") id_player: Int, @Field("user_work") user_work: Int, @Field("date_delete") date_delete: String): Single<WSResponse>
 
 }

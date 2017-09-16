@@ -9,6 +9,7 @@ import com.valdroide.thesportsbillboardinstitution.lib.base.SchedulersInterface
 import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.update.events.LoginEditFragmentEvent
 import com.valdroide.thesportsbillboardinstitution.model.entities.Login
 import com.valdroide.thesportsbillboardinstitution.model.entities.WSResponse
+import com.valdroide.thesportsbillboardinstitution.utils.Utils
 
 class LoginEditFragmentRepositoryImpl(val eventBus: EventBus, val apiService: ApiService, val scheduler: SchedulersInterface) : LoginEditFragmentRepository {
 
@@ -50,7 +51,7 @@ class LoginEditFragmentRepositoryImpl(val eventBus: EventBus, val apiService: Ap
 
     override fun activeOrUnActiveLogins(context: Context, login: Login) {
         try {
-            apiService.activeOrUnActiveLogin(login.ID_LOGIN_KEY, login.IS_ACTIVE, 1)
+            apiService.activeOrUnActiveLogin(login.ID_LOGIN_KEY, login.IS_ACTIVE, 1, Utils.getFechaOficialSeparate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->
@@ -59,6 +60,36 @@ class LoginEditFragmentRepositoryImpl(val eventBus: EventBus, val apiService: Ap
                             if (response != null) {
                                 if (response?.SUCCESS.equals("0")) {
                                     post(LoginEditFragmentEvent.EDIT)
+                                } else {
+                                    post(LoginEditFragmentEvent.ERROR, response?.MESSAGE)
+                                }
+                            } else {
+                                post(LoginEditFragmentEvent.ERROR, context.getString(R.string.null_response))
+                            }
+                        } else {
+                            post(LoginEditFragmentEvent.ERROR, context.getString(R.string.null_process))
+                        }
+                    }, { e ->
+                        post(LoginEditFragmentEvent.ERROR, e.message)
+                        FirebaseCrash.report(e)
+                    })
+        } catch (e: Exception) {
+            FirebaseCrash.report(e)
+            post(LoginEditFragmentEvent.ERROR, e.message)
+        }
+    }
+
+    override fun deleteLogin(context: Context, login: Login) {
+        try {
+            apiService.deleteLogin(login.ID_LOGIN_KEY, 1, Utils.getFechaOficialSeparate())
+                    .subscribeOn(scheduler.schedulerIO())
+                    .observeOn(scheduler.schedulerMainThreader())
+                    .subscribe({ result ->
+                        if (result != null) {
+                            response = result
+                            if (response != null) {
+                                if (response?.SUCCESS.equals("0")) {
+                                    post(LoginEditFragmentEvent.DELETE)
                                 } else {
                                     post(LoginEditFragmentEvent.ERROR, response?.MESSAGE)
                                 }

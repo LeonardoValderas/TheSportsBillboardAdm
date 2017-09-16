@@ -184,7 +184,7 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
         is_update = activity.intent.getBooleanExtra("is_update", false)
         if (is_update) {
             id_team = activity.intent.getIntExtra("id_team", 0)
-            buttonSave.text = "Editar"
+            textViewButton.text = "Editar Equipo"
         }
     }
 
@@ -242,7 +242,6 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
     override fun cleanViews() {
         team = Team()
         editTextNameTeam.text.clear()
-        buttonSave.text = "Guardar"
         is_update = false
         url_image = ""
         name_image = ""

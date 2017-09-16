@@ -46,7 +46,7 @@ open class FixtureFragment : Fragment(), FixtureFragmentView, OnItemClickListene
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
-            inflater!!.inflate(R.layout.fragment_fixture, container, false)
+            inflater!!.inflate(R.layout.frame_recycler_refresh, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

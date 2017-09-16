@@ -9,7 +9,8 @@ class LoginEditFragmentEvent {
 
     companion object {
         const val LOGINS: Int = 0
-        const val EDIT: Int =  2
-        const val ERROR: Int =  1
+        const val EDIT: Int =  1
+        const val DELETE: Int =  2
+        const val ERROR: Int =  3
     }
 }

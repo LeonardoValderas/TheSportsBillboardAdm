@@ -5,7 +5,8 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.Login
 interface LoginEditFragmentView {
     fun setAllLogins(logins: MutableList<Login>)
     fun setError(error: String)
-    fun loginUpdate()
+    fun updateLoginSuccess()
+    fun deleteLoginSuccess()
     fun hideSwipeRefreshLayout()
     fun showSwipeRefreshLayout()
 }
