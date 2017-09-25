@@ -20,6 +20,7 @@ import com.valdroide.thesportsbillboardinstitution.main_user.navigation.ui.adapt
 import com.valdroide.thesportsbillboardinstitution.model.entities.MenuDrawer
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import kotlinx.android.synthetic.main.activity_tab.*
 import kotlinx.android.synthetic.main.content_navigation.*
 import java.util.*
 

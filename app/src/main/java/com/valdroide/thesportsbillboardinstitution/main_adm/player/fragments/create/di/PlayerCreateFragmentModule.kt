@@ -71,6 +71,4 @@ class PlayerCreateFragmentModule(val view: PlayerCreateFragmentView, val context
     @Provides
     @Singleton
     fun provideLayoutResourceId(): Int = android.R.layout.simple_list_item_1
-
-
 }

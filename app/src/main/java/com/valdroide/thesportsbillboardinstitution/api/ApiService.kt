@@ -84,6 +84,48 @@ interface ApiService {
     @POST("adm/login/activeOrUnActiveLogin.php")
     fun activeOrUnActiveLogin(@Field("id_login") id_login: Int, @Field("is_active") is_active: Int,
                               @Field("user_work") user_work: Int, @Field("date_update") date_create: String): Single<WSResponse>
+    //MENUS - SUBMENUS
+    @GET("adm/menu/getMenusSubMenus.php")
+    fun getMenusSubMenus(): Observable<MenuSubMenuResponse>
+    //MENU
+    @FormUrlEncoded
+    @POST("adm/menu/saveMenu.php")
+    fun saveMenu(@Field("menu") user: String, @Field("user_work") user_work: Int,
+                 @Field("date_create") date_create: String): Single<WSResponse>
+
+    @FormUrlEncoded
+    @POST("adm/menu/updateMenu.php")
+    fun updateMenu(@Field("id_menu") id_menu: Int, @Field("menu") menu: String, @Field("is_active") is_active: Int,
+                  @Field("user_work") user_work: Int, @Field("date_update") date_create: String): Single<WSResponse>
+    @FormUrlEncoded
+    @POST("adm/menu/activeOrUnActiveMenu.php")
+    fun activeOrUnActiveMenu(@Field("id_menu") id_menu: Int, @Field("is_active") is_active: Int,
+                              @Field("user_work") user_work: Int, @Field("date_update") date_create: String): Single<WSResponse>
+    @FormUrlEncoded
+    @POST("adm/menu/deleteMenu.php")
+    fun deleteMenu(@Field("id_menu") id_menu: Int, @Field("user_work") user_work: Int,
+                    @Field("date_delete") date_delete: String): Single<WSResponse>
+
+    //SUBMENU
+    @FormUrlEncoded
+    @POST("adm/submenu/saveSubMenu.php")
+    fun saveSubMenu(@Field("submenu") user: String, @Field("id_menu") id_menu: Int,
+                    @Field("user_work") user_work: Int, @Field("date_create") date_create: String): Single<WSResponse>
+
+    @FormUrlEncoded
+    @POST("adm/submenu/updateSubMenu.php")
+    fun updateSubMenu(@Field("id_submenu") id_submenu: Int, @Field("submenu") submenu: String,
+                      @Field("id_menu") id_menu: Int, @Field("is_active") is_active: Int,
+                      @Field("user_work") user_work: Int, @Field("date_update") date_create: String): Single<WSResponse>
+    @FormUrlEncoded
+    @POST("adm/submenu/activeOrUnActiveSubMenu.php")
+    fun activeOrUnActiveSubMenu(@Field("id_submenu") id_submenu: Int, @Field("is_active") is_active: Int,
+                             @Field("user_work") user_work: Int, @Field("date_update") date_create: String): Single<WSResponse>
+    @FormUrlEncoded
+    @POST("adm/submenu/deleteSubMenu.php")
+    fun deleteSubMenu(@Field("id_submenu") id_submenu: Int, @Field("user_work") user_work: Int,
+                   @Field("date_delete") date_delete: String): Single<WSResponse>
+
     //ACCOUNT
     @FormUrlEncoded
     @POST("adm/account/saveAccount.php")

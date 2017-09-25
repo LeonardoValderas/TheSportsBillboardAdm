@@ -36,6 +36,9 @@
     <color name="myWindowBackground">#DEDEDE</color>
     <color name="myNavigationColor">#000000</color>
 
+    <color name="greenColor">#178F5F</color>
+    <color name="redColor">#FF440B</color>
+
 
 
 </resources>

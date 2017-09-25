@@ -61,5 +61,14 @@
     <string name="update.player.button">Editar Juagador</string>
     <string name="position.empty.player">Debe cargar una posición desde el botón (+).</string>
     <string name="submenu.empty.player">Debe cargar un submenu desde el botón (+).</string>
-    <string name="menu.submenu.player.adapter">%1$s - %2$d.</string>
+    <string name="add.menu.hint">Ingrese el nuevo menu.</string>
+    <string name="add.menu.error.empty">Debe ingresar un %1$s.</string>
+    <string name="save.menu.success">%1$s guardado correctamente.</string>
+    <string name="update.menu.success">%1$s actualizado correctamente.</string>
+    <string name="active.menu.alerte.msg">Desea %1$s el %2$s?</string>
+    <string name="delete.menu.alerte.msg">Desea eliminar el %1$s? se borraran todos los dato relacionado a el.</string>
+    <string name="delete.menu.success">%1$s eliminado correctamente.</string>
+    <string name="menus.empty.submenu">Debe generar al menos un menu.</string>
+    <string name="submenu.empty">Debe generar al menos un submenu.</string>
+
 </resources>

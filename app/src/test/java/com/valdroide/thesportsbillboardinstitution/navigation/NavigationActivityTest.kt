@@ -14,6 +14,7 @@ import com.valdroide.thesportsbillboardinstitution.main_user.account.ui.AccountA
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.ui.NavigationActivity
 import com.valdroide.thesportsbillboardinstitution.main_user.tab.TabActivity
 import kotlinx.android.synthetic.main.app_bar_navigation.*
+import kotlinx.android.synthetic.main.toolbar_layout.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

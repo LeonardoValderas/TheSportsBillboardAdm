@@ -23,6 +23,7 @@ import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.activity_adm_account.*
 import kotlinx.android.synthetic.main.content_adm_account.*
 import com.theartofdev.edmodo.cropper.CropImage
+import kotlinx.android.synthetic.main.activity_tab.*
 import java.io.IOException
 
 

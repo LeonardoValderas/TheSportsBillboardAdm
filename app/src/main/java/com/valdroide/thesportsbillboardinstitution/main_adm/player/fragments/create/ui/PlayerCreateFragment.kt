@@ -32,7 +32,6 @@ class PlayerCreateFragment : Fragment(), PlayerCreateFragmentView, View.OnClickL
 
     private lateinit var component: PlayerCreateFragmentComponent
     private lateinit var presenter: PlayerCreateFragmentPresenter
-    //   private lateinit var adapter: PlayerCreateFragmentAdapter
     private lateinit var adapterSpinnerPosition: ArrayAdapter<Position>
     private lateinit var adapterSpinnerSubMenus: ArrayAdapter<SubMenuDrawer>
     private lateinit var communication: Communicator

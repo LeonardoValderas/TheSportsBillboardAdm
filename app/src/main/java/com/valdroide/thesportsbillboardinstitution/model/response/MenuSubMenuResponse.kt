@@ -12,8 +12,8 @@ data class MenuSubMenuResponse(
         var wsResponse: WSResponse?,
         @SerializedName("menu")
         @Expose
-        var menus: List<MenuDrawer>?,
+        var menus: MutableList<MenuDrawer>?,
         @SerializedName("submenu")
         @Expose
-        var submenus: List<SubMenuDrawer>?
+        var submenus: MutableList<SubMenuDrawer>?
 )

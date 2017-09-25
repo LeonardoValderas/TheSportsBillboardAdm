@@ -26,6 +26,10 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.upda
 import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.update.di.LoginEditFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.update.di.LoginEditFragmentModule
 import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.update.ui.LoginEditFragmentView
+import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.di.DaggerMenuSubMenuActivityComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.di.MenuSubMenuActivityComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.di.MenuSubMenuActivityModule
+import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui.MenuSubMenuActivityView
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.create.di.DaggerPlayerCreateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.create.di.PlayerCreateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.create.di.PlayerCreateFragmentModule
@@ -197,6 +201,15 @@ class TheSportsBillboardInstitutionApp : Application() {
                 .libsModule(LibsModule(fragment))
                 .loginEditFragmentModule(LoginEditFragmentModule(view, onItemClickListener))
                 .build()
+    }
+
+    fun getMenuSubMenuActivityComponent(view: MenuSubMenuActivityView, activity: Activity): MenuSubMenuActivityComponent {
+        return DaggerMenuSubMenuActivityComponent
+                .builder()
+                .libsModule(LibsModule(activity))
+                .menuSubMenuActivityModule(MenuSubMenuActivityModule(view, activity))
+                .build()
+
     }
 
     fun getAccountAdmActivityComponent(view: AccountAdmActivityView, activity: Activity): AccountAdmActivityComponent {

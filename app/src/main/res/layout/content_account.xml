@@ -147,11 +147,6 @@
                     android:text="Instagram"
                     android:textSize="18sp" />
             </LinearLayout>
-            <!--<TextView-->
-            <!--style="@style/TextViewContact_Style"-->
-            <!--android:text="Icon by MarkHawkinsDesigns"-->
-            <!--android:textSize="10dp" />-->
-
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

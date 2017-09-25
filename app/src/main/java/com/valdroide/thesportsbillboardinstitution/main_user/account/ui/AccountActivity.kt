@@ -19,6 +19,7 @@ import android.support.annotation.NonNull
 import android.content.Intent
 import android.net.Uri
 import android.webkit.URLUtil
+import kotlinx.android.synthetic.main.activity_tab.*
 
 open class AccountActivity : AppCompatActivity(), AccountActivityView, View.OnClickListener {
 
