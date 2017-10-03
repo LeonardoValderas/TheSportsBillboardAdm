@@ -55,6 +55,7 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
         setupInjection()
         communication = activity as Communicator
         register()
+        linearConteinerPlayer.visibility = View.GONE
         isTeamUpdate()
         if (is_update) {
             setVisibilityViews(View.INVISIBLE)

@@ -7,6 +7,9 @@ data class Fixture(
         @SerializedName("id")
         @Expose
         var ID_FIXTURE_KEY: Int = 0,
+        @SerializedName("id_submenu")
+        @Expose
+        var ID_SUBMENU_KEY: Int = 0,
         @SerializedName("id_local_team")
         @Expose
         var ID_LOCAL_TEAM: Int = 0,
@@ -18,7 +21,7 @@ data class Fixture(
         var URL_LOCAL_TEAM: String = "",
         @SerializedName("id_visit_team")
         @Expose
-        var ID_VISIT_TEAM: Int = 0,
+        var ID_VISITE_TEAM: Int = 0,
         @SerializedName("name_visit_team")
         @Expose
         var NAME_VISITA_TEAM: String = "",
@@ -36,7 +39,7 @@ data class Fixture(
         var RESULT_LOCAL: String = "",
         @SerializedName("result_visit")
         @Expose
-        var RESULT_VISIT: String = "",
+        var RESULT_VISITE: String = "",
         @SerializedName("id_times_match")
         @Expose
         var ID_TIMES_MATCH: Int = 0,
@@ -55,9 +58,6 @@ data class Fixture(
         @SerializedName("observation")
         @Expose
         var OBSERVATION: String = "",
-        @SerializedName("id_division")
-        @Expose
-        var ID_DIVISION: Int = 0,
         @SerializedName("id_tournament")
         @Expose
         var ID_TOURNAMENT: Int = 0,

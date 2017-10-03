@@ -206,4 +206,112 @@ interface ApiService {
     @POST("adm/player/deletePlayer.php")
     fun deletePlayer(@Field("id_player") id_player: Int, @Field("user_work") user_work: Int, @Field("date_delete") date_delete: String): Single<WSResponse>
 
+    //NEWS
+    @FormUrlEncoded
+    @POST("adm/news/getNews.php")
+    fun getNew(@Field("id_news") id_news: Int): Observable<NewsResponse>
+
+    @FormUrlEncoded
+    @POST("adm/news/saveNews.php")
+    fun saveNews(@Field("title") title: String, @Field("description") description: String, @Field("id_submenu") id_submenu : Int,
+                   @Field("url_image") url_image: String, @Field("name_image") name_image: String, @Field("encode") encode: String,
+                   @Field("user_work") user_work: Int, @Field("date_create") date_create: String): Single<WSResponse>
+
+    @FormUrlEncoded
+    @POST("adm/news/updateNews.php")
+    fun updateNews(@Field("id_news") id_news: Int, @Field("title") title: String, @Field("description") description: String, @Field("id_submenu") id_submenu : Int,
+                     @Field("url_image") url_image: String, @Field("name_image") name_image: String, @Field("encode") encode: String,
+                     @Field("before") before: String, @Field("is_active") is_active: Int, @Field("user_work") user_work: Int,
+                     @Field("date_update") date_update: String): Single<WSResponse>
+
+    @GET("adm/news/getNewsList.php")
+    fun getNewsList(): Observable<NewsResponse>
+
+    @FormUrlEncoded
+    @POST("adm/news/activeOrUnActiveNews.php")
+    fun activeOrUnActiveNews(@Field("id_news") id_news: Int, @Field("is_active") is_active: Int,
+                               @Field("user_work") user_work: Int, @Field("date_update") date_update: String): Single<WSResponse>
+    @FormUrlEncoded
+    @POST("adm/news/deleteNews.php")
+    fun deleteNews(@Field("id_news") id_news: Int, @Field("user_work") user_work: Int, @Field("date_delete") date_delete: String): Single<WSResponse>
+
+    //SANCTION
+    @GET("adm/sanction/getSubMenusAndPlayers.php")
+    fun getSubMenusAndPlayers(): Observable<SanctionResponse>
+
+    @FormUrlEncoded
+    @POST("adm/sanction/getSanction.php")
+    fun getSanction(@Field("id_sanction") id_sanction: Int): Observable<SanctionResponse>
+
+    @FormUrlEncoded
+    @POST("adm/sanction/getPlayerForIdSubMenu.php")
+    fun getPlayerForIdSubMenu(@Field("id_submenu") id_submenu: Int): Observable<SanctionResponse>
+
+
+    @FormUrlEncoded
+    @POST("adm/sanction/saveSanction.php")
+    fun saveSanction(@Field("yellow") yellow: String, @Field("red") red: String, @Field("sanction") sanction: String,
+                     @Field("observation") observation: String, @Field("id_submenu") id_submenu : Int, @Field("id_player") id_player: Int,
+                     @Field("user_work") user_work: Int, @Field("date_create") date_create: String): Single<WSResponse>
+
+    @FormUrlEncoded
+    @POST("adm/sanction/updateSanction.php")
+    fun updateSanction(@Field("id_sanction") id_sanction: Int, @Field("yellow") yellow: String, @Field("red") red: String, @Field("sanction") sanction: String,
+                       @Field("observation") observation: String, @Field("id_submenu") id_submenu : Int, @Field("id_player") id_player: Int,
+                       @Field("user_work") user_work: Int, @Field("date_update") date_update: String): Single<WSResponse>
+
+    @GET("adm/sanction/getSanctions.php")
+    fun getSanctions(): Observable<SanctionResponse>
+
+    @FormUrlEncoded
+    @POST("adm/sanction/deleteSanction.php")
+    fun deleteSanction(@Field("id_sanction") id_sanction: Int, @Field("user_work") user_work: Int, @Field("date_delete") date_delete: String): Single<WSResponse>
+
+    //FIXTURE
+    @GET("adm/fixture/getSpinnersData.php")
+    fun getSpinnersData(): Observable<FixtureResponse>
+
+    @FormUrlEncoded
+    @POST("adm/fixture/getFixture.php")
+    fun getFixture(@Field("id_fixture") id_fixture: Int): Observable<FixtureResponse>
+
+    @FormUrlEncoded
+    @POST("adm/fixture/saveFixture.php")
+    fun saveFixture(@Field("id_tournament") id_tournament: Int,
+                    @Field("id_team_local") id_team_local: Int,
+                    @Field("id_team_visite") id_team_visite: Int,
+                    @Field("id_submenu") id_submenu: Int,
+                    @Field("id_field") id_field: Int,
+                    @Field("id_time") id_time: Int,
+                    @Field("result_local") result_local: String,
+                    @Field("result_visite") result_visite: String,
+                    @Field("day") day: String,
+                    @Field("hour") hour: String,
+                    @Field("observation") observation: String,
+                    @Field("user_work") user_work: Int,
+                    @Field("date_create") date_create: String): Single<WSResponse>
+
+    @FormUrlEncoded
+    @POST("adm/fixture/updateFixture.php")
+    fun updateFixture(@Field("id_fixture") id_fixture: Int,
+                      @Field("id_tournament") id_tournament: Int,
+                      @Field("id_team_local") id_team_local: Int,
+                      @Field("id_team_visite") id_team_visite: Int,
+                      @Field("id_submenu") id_submenu: Int,
+                      @Field("id_field") id_field: Int,
+                      @Field("id_time") id_time: Int,
+                      @Field("result_local") result_local: String,
+                      @Field("result_visite") result_visite: String,
+                      @Field("day") day: String,
+                      @Field("hour") hour: String,
+                      @Field("observation") observation: String,
+                      @Field("user_work") user_work: Int,
+                      @Field("date_update") date_update: String): Single<WSResponse>
+
+    @GET("adm/fixture/getFixtures.php")
+    fun getFixtures(): Observable<FixtureResponse>
+
+    @FormUrlEncoded
+    @POST("adm/fixture/deleteFixture.php")
+    fun deleteFixture(@Field("id_fixture") id_fixture: Int, @Field("user_work") user_work: Int, @Field("date_delete") date_delete: String): Single<WSResponse>
 }

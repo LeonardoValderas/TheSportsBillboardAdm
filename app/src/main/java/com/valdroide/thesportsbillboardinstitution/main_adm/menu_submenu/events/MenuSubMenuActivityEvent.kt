@@ -1,6 +1,5 @@
 package com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.events
 
-import com.valdroide.thesportsbillboardinstitution.model.entities.Account
 import com.valdroide.thesportsbillboardinstitution.model.entities.MenuDrawer
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 
@@ -21,16 +20,7 @@ open class MenuSubMenuActivityEvent {
     var subMenuDrawers: MutableList<SubMenuDrawer>? = null
     companion object {
         const val GETMENUSUBMENU: Int = 0
-        //const val SAVEMENU: Int = 1
-        //const val UPDATEMENU: Int = 2
         const val EVENTSUCCESS: Int =  1
-//        const val UPDATEMENU: Int = 2
-//        const val UPDATESUBMENU: Int =  3
-//        const val ACTIVEORUNACTIVEMENU: Int = 4
-//        const val ACTIVEORUNACTIVESUBMENU: Int =  5
-//        const val DELETEMENU: Int = 6
-//        const val DELETESUBMENU: Int =  7
         const val ERROR: Int =  3
-
     }
 }

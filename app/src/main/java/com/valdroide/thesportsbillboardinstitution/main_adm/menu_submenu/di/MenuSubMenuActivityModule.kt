@@ -65,7 +65,7 @@ class MenuSubMenuActivityModule(val view: MenuSubMenuActivityView, val context: 
     @Provides
     @Singleton
     fun provideSubMenuActivityAdapter(context: Activity, @Named("resourceMenu") resourceSubMenu: Int, submenus: MutableList<SubMenuDrawer>): SubMenuActivityAdapter =
-            SubMenuActivityAdapter(context, resourceSubMenu, submenus)
+            SubMenuActivityAdapter(context, null, resourceSubMenu, submenus)
 
     @Provides
     @Singleton

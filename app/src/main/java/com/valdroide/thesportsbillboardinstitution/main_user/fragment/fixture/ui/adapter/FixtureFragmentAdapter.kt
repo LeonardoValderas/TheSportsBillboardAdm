@@ -45,11 +45,12 @@ class FixtureFragmentAdapter(private var fixtures: MutableList<Fixture>?, privat
         fun bindData(fixture: Fixture, position: Int, listener: OnItemClickListener, fragment: Fragment) {
             //   YoYo.with(Techniques.FlipInX).playOn(holder.card_view);
             with(fixture) {
-                itemView.textViewDateHour.text = DATE_MATCH + " - " + HOUR_MATCH +" hs."
+                val date_hour = DATE_MATCH + " - " + HOUR_MATCH + " hs."
+                itemView.textViewDateHour.text = date_hour
                 Utils.setPicasso(fragment.activity, URL_LOCAL_TEAM, R.drawable.lacumbre, itemView.imageViewLocalTeam)
                 Utils.setPicasso(fragment.activity, URL_VISIT_TEAM, R.drawable.lacumbre, itemView.imageViewVisitTeam)
                 itemView.textViewLocalResult.text = RESULT_LOCAL
-                itemView.textViewVisitResult.text = RESULT_VISIT
+                itemView.textViewVisitResult.text = RESULT_VISITE
                 itemView.textViewLocalName.text = NAME_LOCAL_TEAM
                 itemView.textViewVisitName.text = NAME_VISITA_TEAM
                 itemView.textViewFieldMatch.text = NAME_FIELD

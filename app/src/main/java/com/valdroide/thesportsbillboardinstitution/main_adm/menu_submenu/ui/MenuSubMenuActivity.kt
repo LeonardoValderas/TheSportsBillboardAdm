@@ -286,25 +286,6 @@ open class MenuSubMenuActivity : AppCompatActivity(), MenuSubMenuActivityView, V
             isRegister = false
         }
     }
-//
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.account_menu, menu)
-//        this.menu = menu
-//        menuVisibility(false, true)
-//        return super.onCreateOptionsMenu(menu)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-//        val id = item!!.itemId
-//        if (id == R.id.action_save) {
-//            presenter.saveAccount(this, fillAccount())
-//        } else if (id == R.id.action_edit) {
-//
-//            setEnableViews(true)
-//            menuVisibility(true, false)
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 
     override fun onPause() {
         super.onPause()

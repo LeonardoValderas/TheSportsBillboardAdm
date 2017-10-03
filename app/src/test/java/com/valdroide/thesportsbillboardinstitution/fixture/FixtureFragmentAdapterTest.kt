@@ -126,7 +126,7 @@ class FixtureFragmentAdapterTest : BaseTest() {
         whenever(fixture.URL_LOCAL_TEAM).thenReturn(URL_LOCAL)
         whenever(fixture.URL_VISIT_TEAM).thenReturn(URL_VISIT)
         whenever(fixture.RESULT_LOCAL).thenReturn(r_l)
-        whenever(fixture.RESULT_VISIT).thenReturn(r_v)
+        whenever(fixture.RESULT_VISITE).thenReturn(r_v)
         whenever(fixture.NAME_FIELD).thenReturn(fiel)
         whenever(fixture.ADDRESS).thenReturn(address)
         whenever(fixture.OBSERVATION).thenReturn(obser)

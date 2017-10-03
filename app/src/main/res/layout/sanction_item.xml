@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/conteiner"
     android:layout_margin="5dp"
     android:orientation="vertical"
     app:cardCornerRadius="5dp">
@@ -46,72 +47,40 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="8"
-                    android:gravity="center"
-                    android:text="Amarillas"
-                    android:textColor="@color/colorPrimary_text" />
-
-                <TextView
                     android:id="@+id/textViewYellow"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="8"
+                    android:drawableTop="@drawable/yellow_card"
                     android:gravity="center"
                     android:text="2"
                     android:textColor="@color/colorPrimary_text"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="8"
-                    android:gravity="center"
-                    android:text="Roja"
-                    android:textColor="@color/colorPrimary_text" />
 
                 <TextView
                     android:id="@+id/textViewRed"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="8"
+                    android:drawableTop="@drawable/red_card"
                     android:gravity="center"
                     android:text="2"
                     android:textColor="@color/colorPrimary_text"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="8"
-                    android:gravity="center"
-                    android:text="Sanción"
-                    android:textColor="@color/colorPrimary_text"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textViewSanction"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+
                     android:layout_weight="8"
+                    android:drawableTop="@drawable/sanction_icon"
                     android:gravity="center"
                     android:text="2"
                     android:textColor="@color/colorPrimary_text"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
@@ -120,7 +89,8 @@
             android:id="@+id/linearFieldMatch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/relativeCenter">
+            android:layout_below="@+id/relativeCenter"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textViewObsevation"
@@ -133,6 +103,16 @@
                 android:textColor="@color/colorSecondary_text"
                 android:textSize="13sp" />
 
+            <TextView
+                android:id="@+id/textViewSubMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textAppearance="?android:textAppearanceListItemSmall"
+                android:textColor="@color/colorSecondary_text"
+                android:textSize="13sp"
+                android:visibility="gone" />
         </LinearLayout>
 
     </RelativeLayout>

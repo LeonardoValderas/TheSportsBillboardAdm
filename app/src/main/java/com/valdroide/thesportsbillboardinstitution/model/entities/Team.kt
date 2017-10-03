@@ -24,4 +24,6 @@ data class Team(
         var ENCODE: String = "",
         @SerializedName("before")
         @Expose
-        var BEFORE: String = "")
+        var BEFORE: String = "") {
+    override fun toString(): String = NAME
+}

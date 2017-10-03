@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/conteiner"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.ui.TeamCreateFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/linearConteinerSanction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="SubMenu"
+                    android:textColor="@color/colorPrimary" />
+
+                <Spinner
+                    android:id="@+id/spinnerSubMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/border_style_spinner" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="Jugador"
+                    android:textColor="@color/colorPrimary" />
+
+                <Spinner
+                    android:id="@+id/spinnerPlayer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/border_style_spinner" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editTextYellow"
+                        android:layout_width="0dp"
+                        android:layout_weight="32"
+                        android:layout_height="wrap_content"
+                        android:maxLength="2"
+                        android:inputType="number"
+                        android:drawableLeft="@drawable/yellow_card"
+                        android:textSize="18sp"/>
+
+                    <EditText
+                        android:id="@+id/editTextRed"
+                        android:layout_width="0dp"
+                        android:layout_weight="32"
+                        android:layout_height="wrap_content"
+                        android:maxLength="2"
+                        android:inputType="number"
+                        android:drawableLeft="@drawable/red_card"
+                        android:textSize="18sp"/>
+
+                    <EditText
+                        android:id="@+id/editTextSanction"
+                        android:layout_width="0dp"
+                        android:layout_weight="36"
+                        android:layout_height="wrap_content"
+                        android:maxLength="2"
+                        android:inputType="number"
+                        android:drawableLeft="@drawable/sanction_icon"
+                        android:textSize="18sp"/>
+
+                </LinearLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayoutObservation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp">
+
+                    <EditText
+                        android:id="@+id/editTextObservation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Observaciones"
+                        android:maxLength="200"
+                        android:textSize="18sp">
+
+                        <requestFocus />
+                    </EditText>
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+
+            <com.brouding.blockbutton.BlockButton
+                android:id="@+id/buttonSave"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:buttonColor="@color/colorPrimary"
+                app:buttonDisabledColor="#999999"
+                app:buttonDisabledGapColor="@color/colorSecondary_text"
+                app:buttonGapColor="@color/colorPrimaryDark"
+                app:pushDepthDp="2">
+
+                <TextView
+                    android:id="@+id/textViewButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/text.button.save.sanction"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+
+            </com.brouding.blockbutton.BlockButton>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

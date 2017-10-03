@@ -18,6 +18,14 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.account.di.AccountAd
 import com.valdroide.thesportsbillboardinstitution.main_adm.account.di.AccountAdmActivityModule
 import com.valdroide.thesportsbillboardinstitution.main_adm.account.di.DaggerAccountAdmActivityComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.account.ui.AccountAdmActivityView
+import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.di.DaggerFixtureCreateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.di.FixtureCreateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.di.FixtureCreateFragmentModule
+import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.ui.FixtureCreateFragmentView
+import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.di.DaggerFixtureUpdateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.di.FixtureUpdateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.di.FixtureUpdateFragmentModule
+import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.ui.FixtureUpdateFragmentView
 import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.create.di.DaggerLoginCreateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.create.di.LoginCreateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.create.di.LoginCreateFragmentModule
@@ -30,6 +38,14 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.di.Dagg
 import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.di.MenuSubMenuActivityComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.di.MenuSubMenuActivityModule
 import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui.MenuSubMenuActivityView
+import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.create.di.DaggerNewsCreateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.create.di.NewsCreateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.create.di.NewsCreateFragmentModule
+import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.create.ui.NewsCreateFragmentView
+import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.update.di.DaggerNewsUpdateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.update.di.NewsUpdateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.update.di.NewsUpdateFragmentModule
+import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.update.ui.NewsUpdateFragmentView
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.create.di.DaggerPlayerCreateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.create.di.PlayerCreateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.create.di.PlayerCreateFragmentModule
@@ -38,6 +54,14 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.upd
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.di.PlayerUpdateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.di.PlayerUpdateFragmentModule
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.ui.PlayerUpdateFragmentView
+import com.valdroide.thesportsbillboardinstitution.main_adm.sanction.fragments.create.di.DaggerSanctionCreateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.sanction.fragments.create.di.SanctionCreateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.sanction.fragments.create.di.SanctionCreateFragmentModule
+import com.valdroide.thesportsbillboardinstitution.main_adm.sanction.fragments.create.ui.SanctionCreateFragmentView
+import com.valdroide.thesportsbillboardinstitution.main_adm.sanction.fragments.update.di.DaggerSanctionUpdateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.sanction.fragments.update.di.SanctionUpdateFragmentComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.sanction.fragments.update.di.SanctionUpdateFragmentModule
+import com.valdroide.thesportsbillboardinstitution.main_adm.sanction.fragments.update.ui.SanctionUpdateFragmentView
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.di.DaggerTeamCreateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.di.TeamCreateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.di.TeamCreateFragmentModule
@@ -75,6 +99,7 @@ import com.valdroide.thesportsbillboardinstitution.main_user.navigation.di.Dagge
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.di.NavigationActivityComponent
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.di.NavigationActivityModule
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.ui.NavigationActivityView
+import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener_2
 
 
 class TheSportsBillboardInstitutionApp : Application() {
@@ -254,6 +279,53 @@ class TheSportsBillboardInstitutionApp : Application() {
                 .libsModule(LibsModule(fragment))
                 .playerUpdateFragmentModule(PlayerUpdateFragmentModule(view, listener))
                 .build()
+    }
 
+    fun getNewsCreateFragmentComponent(view: NewsCreateFragmentView, fragment: Fragment): NewsCreateFragmentComponent {
+        return DaggerNewsCreateFragmentComponent
+                .builder()
+                .libsModule(LibsModule(fragment))
+                .newsCreateFragmentModule(NewsCreateFragmentModule(view, fragment.activity))
+                .build()
+    }
+
+    fun getNewsUpdateFragmentComponent(view: NewsUpdateFragmentView, listener: com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.update.ui.adapter.OnItemClickListener, fragment: Fragment): NewsUpdateFragmentComponent {
+        return DaggerNewsUpdateFragmentComponent
+                .builder()
+                .libsModule(LibsModule(fragment))
+                .newsUpdateFragmentModule(NewsUpdateFragmentModule(view, listener))
+                .build()
+    }
+
+    fun getSanctionCreateFragmentComponent(view: SanctionCreateFragmentView, fragment: Fragment): SanctionCreateFragmentComponent {
+        return DaggerSanctionCreateFragmentComponent
+                .builder()
+                .libsModule(LibsModule(fragment))
+                .sanctionCreateFragmentModule(SanctionCreateFragmentModule(view, fragment.activity))
+                .build()
+    }
+
+    fun getSanctionUpdateFragmentComponent(view: SanctionUpdateFragmentView, listener: GenericOnItemClickListener_2, fragment: Fragment): SanctionUpdateFragmentComponent {
+        return DaggerSanctionUpdateFragmentComponent
+                .builder()
+                .libsModule(LibsModule(fragment))
+                .sanctionUpdateFragmentModule(SanctionUpdateFragmentModule(view, listener))
+                .build()
+    }
+
+    fun getFixtureCreateFragmentComponent(view: FixtureCreateFragmentView, fragment: Fragment): FixtureCreateFragmentComponent {
+        return DaggerFixtureCreateFragmentComponent
+                .builder()
+                .libsModule(LibsModule(fragment))
+                .fixtureCreateFragmentModule(FixtureCreateFragmentModule(view, fragment.activity))
+                .build()
+    }
+
+    fun getFixtureUpdateFragmentComponent(view: FixtureUpdateFragmentView, listener: GenericOnItemClickListener_2, fragment: Fragment): FixtureUpdateFragmentComponent {
+        return DaggerFixtureUpdateFragmentComponent
+                .builder()
+                .libsModule(LibsModule(fragment))
+                .fixtureUpdateFragmentModule(FixtureUpdateFragmentModule(view, listener))
+                .build()
     }
 }

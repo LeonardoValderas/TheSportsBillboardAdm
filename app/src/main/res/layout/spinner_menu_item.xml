@@ -9,26 +9,23 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-
         <TextView
-            android:id="@+id/textViewMenu"
+            android:id="@+id/textViewMain"
+            style="?android:attr/spinnerDropDownItemStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="?android:attr/spinnerDropDownItemStyle"
-            android:layout_marginLeft="15dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
             android:layout_weight="80"
             android:text="Hola" />
 
         <ImageView
-            android:id="@+id/imageViewMenu"
+            android:id="@+id/imageViewMain"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="20"
+            android:layout_marginRight="10dp"
+            android:layout_weight="10"
             android:src="@android:drawable/btn_radio" />
-
     </LinearLayout>
-
-
 </LinearLayout>

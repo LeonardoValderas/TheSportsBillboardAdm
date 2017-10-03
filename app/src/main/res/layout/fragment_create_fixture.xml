@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/conteiner"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.ui.TeamCreateFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/linearConteinerFixture"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:background="@drawable/border_style_spinner"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="80"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="SubMenu"
+                                android:textColor="@color/colorPrimary" />
+
+                            <Spinner
+                                android:id="@+id/spinnerSubMenu"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/border_style_spinner" />
+                        </LinearLayout>
+
+                        <com.github.clans.fab.FloatingActionButton
+                            android:id="@+id/fabGoToSubMenu"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@android:drawable/ic_menu_set_as"
+                            android:tint="@color/colorWhite"
+                            fab:fab_colorNormal="@color/colorPrimary"
+                            fab:fab_colorPressed="@color/colorPrimaryDark"
+                            fab:fab_colorRipple="@color/colorAccent"
+                            fab:fab_size="mini" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:background="@drawable/border_style_spinner"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:id="@+id/sss"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="80"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Torneo"
+                                android:textColor="@color/colorPrimary" />
+
+                            <Spinner
+                                android:id="@+id/spinnerTournament"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/border_style_spinner" />
+                        </LinearLayout>
+
+                        <com.github.clans.fab.FloatingActionButton
+                            android:id="@+id/fabTournament"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@android:drawable/ic_dialog_info"
+                            android:tint="@color/colorWhite"
+                            fab:fab_colorNormal="@color/greenColor"
+                            fab:fab_colorPressed="@color/colorPrimary_light"
+                            fab:fab_colorRipple="@color/colorAccent"
+                            fab:fab_size="mini" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:orientation="horizontal">
+
+                        <com.brouding.blockbutton.BlockButton
+                            android:id="@+id/buttonDay"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="10dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="50"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:buttonColor="@color/colorPrimary_light"
+                            app:buttonDisabledColor="#999999"
+                            app:buttonDisabledGapColor="@color/colorSecondary_text"
+                            app:buttonGapColor="@color/colorPrimaryDark"
+                            app:pushDepthDp="2">
+
+                            <TextView
+                                android:id="@+id/textViewDay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="10dp"
+                                android:paddingLeft="12dp"
+                                android:paddingRight="12dp"
+                                android:paddingTop="10dp"
+                                android:text="@string/day"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
+
+                        </com.brouding.blockbutton.BlockButton>
+
+                        <com.brouding.blockbutton.BlockButton
+                            android:id="@+id/buttonHour"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="10dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="50"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            app:buttonColor="@color/colorPrimary_light"
+                            app:buttonDisabledColor="#999999"
+                            app:buttonDisabledGapColor="@color/colorSecondary_text"
+                            app:buttonGapColor="@color/colorPrimaryDark"
+                            app:pushDepthDp="2">
+
+                            <TextView
+                                android:id="@+id/textViewHour"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="10dp"
+                                android:paddingLeft="12dp"
+                                android:paddingRight="12dp"
+                                android:paddingTop="10dp"
+                                android:text="@string/hour"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
+
+                        </com.brouding.blockbutton.BlockButton>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:background="@drawable/border_style_spinner"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="50"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="Equipo Local"
+                                    android:textColor="@color/colorPrimary" />
+
+                                <Spinner
+                                    android:id="@+id/spinnerTeamLocal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:background="@drawable/border_style_spinner" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <com.github.clans.fab.FloatingActionButton
+                                    android:id="@+id/fabGoToTeam"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:src="@android:drawable/ic_menu_set_as"
+                                    android:tint="@color/colorWhite"
+                                    fab:fab_colorNormal="@color/colorPrimary"
+                                    fab:fab_colorPressed="@color/colorPrimaryDark"
+                                    fab:fab_colorRipple="@color/colorAccent"
+                                    fab:fab_size="mini" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="50"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="Equipo Visitante"
+                                    android:textColor="@color/colorPrimary" />
+
+                                <Spinner
+                                    android:id="@+id/spinnerTeamVisite"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:background="@drawable/border_style_spinner" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:background="@drawable/border_style_spinner"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="50"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Lugar"
+                                android:textColor="@color/colorPrimary" />
+
+                            <Spinner
+                                android:id="@+id/spinnerFieldMatch"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/border_style_spinner" />
+
+                        </LinearLayout>
+
+                        <com.github.clans.fab.FloatingActionButton
+                            android:id="@+id/fabField"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@android:drawable/ic_dialog_info"
+                            android:tint="@color/colorWhite"
+                            fab:fab_colorNormal="@color/greenColor"
+                            fab:fab_colorPressed="@color/colorPrimary_light"
+                            fab:fab_colorRipple="@color/colorAccent"
+                            fab:fab_size="mini" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="50"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Tiempo"
+                                android:textColor="@color/colorPrimary" />
+
+                            <Spinner
+                                android:id="@+id/spinnerTimeMatch"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/border_style_spinner" />
+
+                        </LinearLayout>
+
+                        <com.github.clans.fab.FloatingActionButton
+                            android:id="@+id/fabTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@android:drawable/ic_dialog_info"
+                            android:tint="@color/colorWhite"
+                            fab:fab_colorNormal="@color/greenColor"
+                            fab:fab_colorPressed="@color/colorPrimary_light"
+                            fab:fab_colorRipple="@color/colorAccent"
+                            fab:fab_size="mini" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:background="@drawable/border_style_spinner"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="30"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Local" />
+
+                            <EditText
+                                android:id="@+id/editTextResultLocal"
+                                android:layout_width="150dp"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/soccer_ball"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:maxLength="2" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="30"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Visitante" />
+
+                            <EditText
+                                android:id="@+id/editTextResultVisite"
+                                android:layout_width="150dp"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/soccer_ball"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:maxLength="2" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/textInputLayoutObservation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp">
+
+                        <EditText
+                            android:id="@+id/editTextObservation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:hint="Observación"
+                            android:maxLength="50"
+                            android:textSize="18sp" />
+
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
+
+                <com.brouding.blockbutton.BlockButton
+                    android:id="@+id/buttonSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:buttonColor="@color/colorPrimary"
+                    app:buttonDisabledColor="#999999"
+                    app:buttonDisabledGapColor="@color/colorSecondary_text"
+                    app:buttonGapColor="@color/colorPrimaryDark"
+                    app:pushDepthDp="2">
+
+                    <TextView
+                        android:id="@+id/textViewButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        android:paddingTop="10dp"
+                        android:text="@string/save.fixture.button"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
+
+                </com.brouding.blockbutton.BlockButton>
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+
+</FrameLayout>

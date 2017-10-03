@@ -29,8 +29,8 @@ class MenuActivityAdapter(var contextAdapter: Activity, var resource: Int, var m
 
         val menuDrawer = menuDrawers[p0]
 
-        val textViewMenu = row!!.findViewById<TextView>(R.id.textViewMenu)
-        val imageViewMenu = row.findViewById<ImageView>(R.id.imageViewMenu)
+        val textViewMenu = row!!.findViewById<TextView>(R.id.textViewMain)
+        val imageViewMenu = row.findViewById<ImageView>(R.id.imageViewMain)
         textViewMenu!!.text = menuDrawer.MENU
         if (menuDrawer.IS_ACTIVE == 0)
             imageViewMenu.setColorFilter(ContextCompat.getColor(contextAdapter, R.color.redColor))

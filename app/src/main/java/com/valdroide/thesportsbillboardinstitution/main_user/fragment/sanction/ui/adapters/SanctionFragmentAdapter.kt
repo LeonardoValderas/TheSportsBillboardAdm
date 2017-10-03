@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.gson.reflect.TypeToken
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.sanction.ui.SanctionFragment
 import com.valdroide.thesportsbillboardinstitution.model.entities.Sanction
@@ -24,7 +25,8 @@ class SanctionFragmentAdapter(private var sanctions: MutableList<Sanction>?, fra
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindData(sanctions!!.get(position), fragment)
+
+        holder.bindData(sanctions!![position], fragment)
     }
 
     class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
@@ -35,7 +37,7 @@ class SanctionFragmentAdapter(private var sanctions: MutableList<Sanction>?, fra
                 itemView.textViewName.text = NAME
                 itemView.textViewYellow.text = YELLOW
                 itemView.textViewRed.text = RED
-                itemView.textViewSanction.text = SANCTIONS
+                itemView.textViewSanction.text = SANCTION
                 itemView.textViewObsevation.text = OBSERVATION
             }
         }

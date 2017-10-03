@@ -8,6 +8,9 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.WSResponse
 data class NewsResponse(@SerializedName("response")
                         @Expose
                         var wsResponse: WSResponse?,
+                        @SerializedName("new")
+                        @Expose
+                        var new: News?,
                         @SerializedName("news")
                         @Expose
                         var news: MutableList<News>?)

@@ -57,7 +57,7 @@
     <string name="player.update.success">Jugador actualizado correctamente.</string>
     <string name="player.delete.success">Jugador eliminado correctamente.</string>
     <string name="alert.msg.player">Desea eliminar el jugador?</string>
-    <string name="save.player.button">Guardar Juagador</string>
+    <string name="save.player.button">Guardar Jugador</string>
     <string name="update.player.button">Editar Juagador</string>
     <string name="position.empty.player">Debe cargar una posición desde el botón (+).</string>
     <string name="submenu.empty.player">Debe cargar un submenu desde el botón (+).</string>
@@ -66,9 +66,32 @@
     <string name="save.menu.success">%1$s guardado correctamente.</string>
     <string name="update.menu.success">%1$s actualizado correctamente.</string>
     <string name="active.menu.alerte.msg">Desea %1$s el %2$s?</string>
+    <string name="save.fixture.button">Guardar Fixture</string>
     <string name="delete.menu.alerte.msg">Desea eliminar el %1$s? se borraran todos los dato relacionado a el.</string>
     <string name="delete.menu.success">%1$s eliminado correctamente.</string>
     <string name="menus.empty.submenu">Debe generar al menos un menu.</string>
     <string name="submenu.empty">Debe generar al menos un submenu.</string>
+    <string name="text.button.save.news">Guardar Noticia</string>
+    <string name="text.button.save.sanction">Guardar Sanción</string>
+    <string name="players.empty">Debe generar al menos un jugador.</string>
+    <string name="sanction.empty">Debe ingresa la sanción.</string>-->
+
+    <!--GENERAL-->
+    <string name="save.button">Guardar %1$s</string>
+    <string name="update.button">Editar %1$s</string>
+    <string name="save.success">%1$s guardado correctamente.</string>
+    <string name="update.success">%1$s actualizado correctamente.</string>
+    <string name="delete.success">%1$s eliminado correctamente.</string>
+    <string name="delete.alerte.msg">Desea eliminar %1$s? se borraran todos los dato relacionado a el.</string>
+    <string name="delete.simple.alerte.msg">Desea eliminar %1$s?</string>
+    <string name="spinner.empty">Debe generar al menos %1$s.</string>
+
+
+
+    <string name="news_title_error_empty">Ingrese el titulo de la noticia.</string>
+    <string name="news_body_error_empty">Ingrese la descripción de la noticia.</string>
+    <string name="day">Día</string>
+    <string name="hour">Hora</string>
+
 
 </resources>
