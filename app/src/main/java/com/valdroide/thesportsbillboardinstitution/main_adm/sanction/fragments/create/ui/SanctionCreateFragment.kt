@@ -141,9 +141,9 @@ class SanctionCreateFragment : Fragment(), SanctionCreateFragmentView, View.OnCl
 
     override fun onClickButtonSave() {
         if (subMenuDrawers.isEmpty())
-            setError(getString(R.string.menus_empty_submenu))
+            setError(getString(R.string.spinner_empty, "un submenu"))
         if (players.isEmpty())
-            setError(getString(R.string.players_empty))
+            setError(getString(R.string.spinner_empty, "un jugador"))
         else if (editTextSanction.text.isEmpty())
             editTextSanction.error = getString(R.string.sanction_empty)
         else

@@ -8,11 +8,12 @@ import android.view.*
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.ui.FixtureUpdateFragment
 import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
+import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener_2
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.fixture_item.view.*
 
-class FixtureUpdateFragmentAdapter(private var fixtures: MutableList<Fixture>?, private var listener: GenericOnItemClickListener_2,
+class FixtureUpdateFragmentAdapter(private var fixtures: MutableList<Fixture>?, private var listener: GenericOnItemClickListener.fixture,
                                    fragment: Fragment) : RecyclerView.Adapter<FixtureUpdateFragmentAdapter.ViewHolder>() {
 
     private val fragment: Fragment
@@ -32,15 +33,16 @@ class FixtureUpdateFragmentAdapter(private var fixtures: MutableList<Fixture>?, 
 
     class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindData(fixture: Fixture, position: Int, listener: GenericOnItemClickListener_2, fragment: Fragment) {
+        fun bindData(fixture: Fixture, position: Int, listener: GenericOnItemClickListener.fixture, fragment: Fragment) {
             //   YoYo.with(Techniques.FlipInX).playOn(holder.card_view);
             with(fixture) {
                 val date_hour = DATE_MATCH + " - " + HOUR_MATCH + " hs."
                 itemView.textViewDateHour.text = date_hour
-                Utils.setPicasso(fragment.activity, URL_LOCAL_TEAM, R.drawable.lacumbre, itemView.imageViewLocalTeam)
-                Utils.setPicasso(fragment.activity, URL_VISIT_TEAM, R.drawable.lacumbre, itemView.imageViewVisitTeam)
+                Utils.setPicasso(fragment.activity, URL_LOCAL_TEAM, R.drawable.empty_shield_icon, itemView.imageViewLocalTeam)
+                Utils.setPicasso(fragment.activity, URL_VISIT_TEAM, R.drawable.empty_shield_icon, itemView.imageViewVisitTeam)
                 itemView.textViewLocalResult.text = RESULT_LOCAL
                 itemView.textViewVisitResult.text = RESULT_VISITE
+                itemView.textViewTimes.text = TIMES_MATCH
                 itemView.textViewLocalName.text = NAME_LOCAL_TEAM
                 itemView.textViewVisitName.text = NAME_VISITA_TEAM
                 itemView.textViewFieldMatch.text = NAME_FIELD
@@ -55,27 +57,27 @@ class FixtureUpdateFragmentAdapter(private var fixtures: MutableList<Fixture>?, 
             setOnItemClickListener(listener, position, fixture, fragment)
         }
 
-        fun setOnItemClickListener(listener: GenericOnItemClickListener_2, position: Int, Fixture: Fixture, fragment: Fragment) {
+        fun setOnItemClickListener(listener: GenericOnItemClickListener.fixture, position: Int, Fixture: Fixture, fragment: Fragment) {
             itemView.setOnClickListener {
                 showPopupMenu(itemView.conteiner, fragment.activity, position, Fixture, listener);
             }
         }
 
-        private fun showPopupMenu(view: View, context: Context, position: Int, Fixture: Fixture, listener: GenericOnItemClickListener_2) {
+        private fun showPopupMenu(view: View, context: Context, position: Int, Fixture: Fixture, listener: GenericOnItemClickListener.fixture) {
             val popup = PopupMenu(context, view, Gravity.END)
-            popup.getMenu().add(Menu.NONE, 1, 1, "Agregar/Editar Resultado")
+            popup.getMenu().add(Menu.NONE, 1, 1, "Editar Resultado")
             popup.getMenu().add(Menu.NONE, 2, 2, "Editar Fixture")
             popup.getMenu().add(Menu.NONE, 3, 3, "Eliminar Fixture")
             popup.setOnMenuItemClickListener(MenuItemClickListener(position, Fixture, listener))
             popup.show()
         }
 
-        private class MenuItemClickListener(internal var position: Int, internal var Fixture: Fixture, internal var listener: GenericOnItemClickListener_2) : PopupMenu.OnMenuItemClickListener {
+        private class MenuItemClickListener(internal var position: Int, internal var Fixture: Fixture, internal var listener: GenericOnItemClickListener.fixture) : PopupMenu.OnMenuItemClickListener {
 
             override fun onMenuItemClick(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
                     1 -> {
-                        listener.onClickUpdate(position, Fixture)
+                        listener.onClickResult(position, Fixture)
                         return true
                     }
                     2 -> {
@@ -97,6 +99,12 @@ class FixtureUpdateFragmentAdapter(private var fixtures: MutableList<Fixture>?, 
 
     fun setFixture(fixtures: MutableList<Fixture>) {
         this.fixtures = fixtures
+        notifyDataSetChanged()
+    }
+
+    fun updateFixture(position: Int, fixture: Fixture) {
+        fixtures!!.removeAt(position)
+        fixtures!!.add(position, fixture)
         notifyDataSetChanged()
     }
 

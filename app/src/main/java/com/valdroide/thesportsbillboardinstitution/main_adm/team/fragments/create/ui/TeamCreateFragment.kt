@@ -23,6 +23,8 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.Team
 import com.valdroide.thesportsbillboardinstitution.utils.Communicator
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.fragment_create_team.*
+import org.jetbrains.anko.support.v4.alert
+import org.jetbrains.anko.yesButton
 import java.io.IOException
 
 class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListener {
@@ -54,6 +56,7 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
         super.onActivityCreated(savedInstanceState)
         setupInjection()
         communication = activity as Communicator
+        textViewButton.text = getString(R.string.save_button, "Equipo")
         register()
         linearConteinerPlayer.visibility = View.GONE
         isTeamUpdate()
@@ -68,13 +71,26 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
     private fun setOnclik() {
         imageViewTeam.setOnClickListener(this)
         buttonSave.setOnClickListener(this)
+        imageViewInformationTeam.setOnClickListener(this)
     }
 
     override fun onClick(onclick: View?) {
-        if (onclick == imageViewTeam)
-            onClickPhoto()
-        else if (onclick == buttonSave)
-            onClickButtonSave()
+        when (onclick) {
+            imageViewTeam -> onClickPhoto()
+            buttonSave -> onClickButtonSave()
+            imageViewInformationTeam -> showAlertInformation()
+        }
+    }
+
+    private fun showAlertInformation() {
+        alert("En esta opción usted podrá realizar acciones sobre los equipos que componen la institución.\n" +
+                "Para crear un equipo debe ingresar su nombre y si posee su escudo puede agregarlo presionado la imagen superior.\n" +
+                "En la sopala Editar usted podrá actualizar los datos de los equipo como también eliminarlos.\n" +
+                "Existe la opción de activar o desactivar un equipo en el caso de no querer eliminar al mismo. Un equipo inactivo no será visible para el usuario.") {
+            title = "EQUIPOS"
+            yesButton {
+            }
+        }.show()
     }
 
     override fun onClickButtonSave() {
@@ -249,7 +265,7 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
         name_before = ""
         encode = ""
         imageByte = null
-        imageViewTeam.setImageResource(android.R.drawable.ic_menu_camera)
+        imageViewTeam.setImageResource(R.drawable.empty_shield_icon)
     }
 
     override fun setVisibilityViews(isVisible: Int) {

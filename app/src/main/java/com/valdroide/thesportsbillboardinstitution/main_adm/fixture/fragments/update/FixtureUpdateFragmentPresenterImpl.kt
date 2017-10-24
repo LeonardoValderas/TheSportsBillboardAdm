@@ -27,6 +27,10 @@ class FixtureUpdateFragmentPresenterImpl(var view: FixtureUpdateFragmentView, va
         interactor.getFixture(context)
     }
 
+    override fun setResultFixture(context: Context, fixture: Fixture) {
+        interactor.setResultFixture(context, fixture)
+    }
+
     override fun deleteFixture(context: Context, fixture: Fixture) {
         interactor.deleteFixture(context, fixture)
     }
@@ -36,7 +40,11 @@ class FixtureUpdateFragmentPresenterImpl(var view: FixtureUpdateFragmentView, va
         when (event.type) {
             FixtureUpdateFragmentEvent.FIXTURES -> {
                 view.hideSwipeRefreshLayout()
-                view.setAllFixture(event.Fixtures!!)
+                view.setAllFixture(event.fixtures!!, event.times!!)
+            }
+            FixtureUpdateFragmentEvent.UPDATE-> {
+                view.updateFixtureSuccess(event.fixture!!)
+                view.hideSwipeRefreshLayout()
             }
             FixtureUpdateFragmentEvent.DELETE -> {
                 view.hideSwipeRefreshLayout()

@@ -9,13 +9,14 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.up
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.ui.FixtureUpdateFragmentView
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.ui.adapter.FixtureUpdateFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
+import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener_2
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class FixtureUpdateFragmentModule(val view: FixtureUpdateFragmentView, val listener: GenericOnItemClickListener_2) {
+class FixtureUpdateFragmentModule(val view: FixtureUpdateFragmentView, val listener: GenericOnItemClickListener.fixture) {
 
     @Provides
     @Singleton
@@ -45,7 +46,7 @@ class FixtureUpdateFragmentModule(val view: FixtureUpdateFragmentView, val liste
 
     @Provides
     @Singleton
-    fun provideFixtureUpdateFragmentAdapter(fixture: MutableList<Fixture>, listener: GenericOnItemClickListener_2, fragment: Fragment): FixtureUpdateFragmentAdapter
+    fun provideFixtureUpdateFragmentAdapter(fixture: MutableList<Fixture>, listener: GenericOnItemClickListener.fixture, fragment: Fragment): FixtureUpdateFragmentAdapter
             = FixtureUpdateFragmentAdapter(fixture, listener, fragment)
 
     @Provides
@@ -54,5 +55,5 @@ class FixtureUpdateFragmentModule(val view: FixtureUpdateFragmentView, val liste
 
     @Provides
     @Singleton
-    fun provideOnItemClickListener(): GenericOnItemClickListener_2 = listener
+    fun provideOnItemClickListener(): GenericOnItemClickListener.fixture = listener
 }

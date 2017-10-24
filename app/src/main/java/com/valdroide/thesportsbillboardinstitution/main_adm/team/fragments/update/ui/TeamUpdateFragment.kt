@@ -15,9 +15,13 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.updat
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.di.TeamUpdateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.ui.adapter.OnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.ui.adapter.TeamUpdateFragmentAdapter
+import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
 import com.valdroide.thesportsbillboardinstitution.model.entities.Team
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.fragment_fixture.*
+import org.jetbrains.anko.noButton
+import org.jetbrains.anko.support.v4.alert
+import org.jetbrains.anko.yesButton
 
 class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, OnItemClickListener {
 
@@ -63,20 +67,15 @@ class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, OnItemClickListen
         }
     }
 
-    fun showAlertDialog(title: String, msg: String, team: Team) {
-        val alertDilog = AlertDialog.Builder(activity).create()
-        alertDilog.setTitle(title)
-        alertDilog.setMessage(msg)
-
-        alertDilog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", { dialogInterface, i ->
-            showSwipeRefreshLayout()
-            presenter.deleteTeam(activity, team)
-        })
-
-        alertDilog.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCELAR", { dialogInterface, j ->
-            alertDilog.dismiss()
-        })
-        alertDilog.show()
+    private fun showAlertDialog(titleText: String, msg: String, team: Team) {
+        alert(msg) {
+            title = titleText
+            yesButton {
+                showSwipeRefreshLayout()
+                presenter.deleteTeam(activity, team)
+            }
+            noButton{}
+        }.show()
     }
 
     open fun getPresenterInj(): TeamUpdateFragmentPresenter = component.getPresenter()

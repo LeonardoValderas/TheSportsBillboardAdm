@@ -62,9 +62,7 @@ class FixtureCreateFragmentPresenterImpl(var view: FixtureCreateFragmentView, va
                 view.cleanViews()
             }
             FixtureCreateFragmentEvent.GETSPINNERSDATA-> {
-                view.setVisibilityViews(View.VISIBLE)
                 view.setSpinnersData(event.subMenuDrawers!!, event.fieldMatchs!!, event.timeMatchs!!, event.tournaments!!, event.teams!!)
-                view.hideProgressDialog()
             }
             FixtureCreateFragmentEvent.ERROR -> {
                 view.hideProgressDialog()

@@ -97,7 +97,7 @@ class PlayerCreateFragment : Fragment(), PlayerCreateFragmentView, View.OnClickL
         is_update = activity.intent.getBooleanExtra("is_update", false)
         if (is_update) {
             id_player = activity.intent.getIntExtra("id_player", 0)
-            textViewButton.text = getString(R.string.update_player_button)
+            textViewButton.text = getString(R.string.update_button, "Jugador")
         }
     }
 
@@ -310,7 +310,7 @@ class PlayerCreateFragment : Fragment(), PlayerCreateFragmentView, View.OnClickL
         player = Player()
         submenu = SubMenuDrawer()
         editTextName.text.clear()
-        textViewButton.text = getString(R.string.save_player_button)
+        textViewButton.text = getString(R.string.save_button, "Jugador")
         is_update = false
         url_image = ""
         name_image = ""

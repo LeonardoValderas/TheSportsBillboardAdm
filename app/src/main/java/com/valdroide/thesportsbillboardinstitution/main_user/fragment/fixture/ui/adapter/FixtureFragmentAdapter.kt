@@ -47,8 +47,8 @@ class FixtureFragmentAdapter(private var fixtures: MutableList<Fixture>?, privat
             with(fixture) {
                 val date_hour = DATE_MATCH + " - " + HOUR_MATCH + " hs."
                 itemView.textViewDateHour.text = date_hour
-                Utils.setPicasso(fragment.activity, URL_LOCAL_TEAM, R.drawable.lacumbre, itemView.imageViewLocalTeam)
-                Utils.setPicasso(fragment.activity, URL_VISIT_TEAM, R.drawable.lacumbre, itemView.imageViewVisitTeam)
+                Utils.setPicasso(fragment.activity, URL_LOCAL_TEAM, R.drawable.empty_shield_icon, itemView.imageViewLocalTeam)
+                Utils.setPicasso(fragment.activity, URL_VISIT_TEAM, R.drawable.empty_shield_icon, itemView.imageViewVisitTeam)
                 itemView.textViewLocalResult.text = RESULT_LOCAL
                 itemView.textViewVisitResult.text = RESULT_VISITE
                 itemView.textViewLocalName.text = NAME_LOCAL_TEAM

@@ -14,9 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main_user.splash.ui.SplashActivity">
 
-        </activity>
+        <!--SECTION USER-->
+
+        <activity android:name=".main_user.splash.ui.SplashActivity"></activity>
         <activity
             android:name=".main_user.account.ui.AccountActivity"
             android:label="@string/title_activity_account"
@@ -27,74 +28,103 @@
         </activity>
         <activity
             android:name=".main_user.navigation.ui.NavigationActivity"
-            android:label="@string/title_activity_navigation"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".main_user.tab.TabActivity"
-            android:label="@string/title_activity_tab"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".main_user.navigation.ui.NavigationActivity" />
         </activity>
 
-        <activity
-            android:name=".main_adm.login.activity.TabLoginActivity"
-            android:label="@string/title_activity_tab"
-            android:theme="@style/AppTheme.NoActionBar" >
+        <!--SECTION ADMINISTRATOR-->
 
-    </activity>
         <activity
-            android:name=".main_adm.menu_submenu.ui.MenuSubMenuActivity"
-            android:label="@string/title_activity_account"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".main_adm.navigation.ui.NavigationAdmActivity"
+            android:label="@string/title_activity_navigation_adm"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
-            android:name=".main_adm.account.ui.AccountAdmActivity"
-            android:label="@string/title_activity_account"
+            android:name=".main_adm.login.activity.TabLoginActivity"
+            android:label="@string/login_title_tab"
             android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main_user.navigation.ui.NavigationActivity" />
+        </activity>
+        <activity
+            android:name=".main_adm.menu_submenu.ui.MenuSubMenuActivity"
+            android:label="@string/menu_submenu_title_tab"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main_user.navigation.ui.NavigationActivity" />
+        </activity>
+        <activity
+            android:name=".main_adm.account.ui.AccountAdmActivity"
+            android:label="@string/account_title_tab"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main_user.navigation.ui.NavigationActivity" />
         </activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
             android:name=".main_adm.team.activity.TabTeamActivity"
-            android:label="@string/title_activity_tab"
+            android:label="@string/team_title_tab"
             android:theme="@style/AppTheme.NoActionBar">
-
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main_user.navigation.ui.NavigationActivity" />
         </activity>
         <activity
             android:name=".main_adm.player.activity.TabPlayerActivity"
-            android:label="@string/title_activity_tab"
+            android:label="@string/player_title_tab"
             android:theme="@style/AppTheme.NoActionBar">
-
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main_user.navigation.ui.NavigationActivity" />
         </activity>
-
         <activity
             android:name=".main_adm.news.activity.TabNewsActivity"
-            android:label="@string/title_activity_tab"
+            android:label="@string/news_title_tab"
             android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main_user.navigation.ui.NavigationActivity" />
         </activity>
-
         <activity
             android:name=".main_adm.sanction.activity.TabSanctionActivity"
-            android:label="@string/title_activity_tab"
+            android:label="@string/sanction_title_tab"
             android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main_user.navigation.ui.NavigationActivity" />
         </activity>
-
         <activity
             android:name=".main_adm.fixture.activity.TabFixtureActivity"
-            android:label="@string/title_activity_tab"
+            android:label="@string/fixture_title_tab"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main_user.navigation.ui.NavigationActivity" />
         </activity>
-
+        <activity
+            android:name=".main_adm.tournament.ui.TournamentActivity"
+            android:label="@string/tournament_title_tab"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main_user.navigation.ui.NavigationActivity" />
+        </activity>
     </application>
-
 </manifest>

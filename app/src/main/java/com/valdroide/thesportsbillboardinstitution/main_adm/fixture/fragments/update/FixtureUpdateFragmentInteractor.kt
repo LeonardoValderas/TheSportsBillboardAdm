@@ -5,5 +5,6 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
 
 interface FixtureUpdateFragmentInteractor {
     fun getFixture(context: Context)
+    fun setResultFixture(context: Context, fixture: Fixture)
     fun deleteFixture(context: Context, fixture: Fixture)
  }

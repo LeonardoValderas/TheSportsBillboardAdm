@@ -49,7 +49,7 @@ open class TabActivity : AppCompatActivity() {
 //     ADEFUL
     private fun setPagerAdapter() {
         val titles = arrayOf(getString(R.string.news_title_tab), getString(R.string.fixture_title_tab),
-                getString(R.string.table_title_tab), getString(R.string.sanstion_title_tab))
+                getString(R.string.table_title_tab), getString(R.string.sanction_title_tab))
         val fragments = arrayOf(NewsFragment(), FixtureFragment(), LeaderBoardFragment(), SanctionFragment())
         adapter = SectionsPagerAdapter(supportFragmentManager, titles, fragments)
     }

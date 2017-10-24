@@ -8,6 +8,7 @@ import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
 import com.valdroide.thesportsbillboardinstitution.lib.base.SchedulersInterface
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.*
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.ui.FixtureCreateFragmentView
+import com.valdroide.thesportsbillboardinstitution.model.entities.*
 import com.valdroide.thesportsbillboardinstitution.utils.GenericSpinnerAdapter
 import dagger.Module
 import dagger.Provides
@@ -45,45 +46,55 @@ class FixtureCreateFragmentModule(val view: FixtureCreateFragmentView, val conte
 
     @Provides
     @Named("spinner_menu")
-    fun provideSubMenuSpinnerAdapter(context: Fragment, submenus: MutableList<Any>): GenericSpinnerAdapter =
+    fun provideSubMenuSpinnerAdapter(context: Fragment, submenus: MutableList<SubMenuDrawer>): GenericSpinnerAdapter =
             GenericSpinnerAdapter(null, context, submenus, 1)
-//    @Provides
-//    @Named("submenu_list")
-//    fun provideSubmenuList(): MutableList<Any> = arrayListOf()
+
+    @Provides
+    @Singleton
+    fun provideSubmenuList(): MutableList<SubMenuDrawer> = arrayListOf()
 
     @Provides
     @Named("spinner_field")
-    fun provideFieldSpinnerAdapter(context: Fragment, fields: MutableList<Any>): GenericSpinnerAdapter =
+    fun provideFieldSpinnerAdapter(context: Fragment, fields: MutableList<FieldMatch>): GenericSpinnerAdapter =
             GenericSpinnerAdapter(null, context, fields, 4)
 
-//    @Provides
-//    @Named("field_list")
-//    fun provideFieldList(): MutableList<Any> = arrayListOf()
+    @Provides
+    @Singleton
+    fun provideFieldList(): MutableList<FieldMatch> = arrayListOf()
 
     @Provides
     @Named("spinner_time")
-    fun provideTimeSpinnerAdapter(context: Fragment, times: MutableList<Any>): GenericSpinnerAdapter =
+    fun provideTimeSpinnerAdapter(context: Fragment, times: MutableList<TimeMatch>): GenericSpinnerAdapter =
             GenericSpinnerAdapter(null, context, times, 5)
 
-//    @Provides
-//    @Named("time_list")
-//    fun provideTimeList(): MutableList<Any> = arrayListOf()
+    @Provides
+    @Singleton
+    fun provideTimeList(): MutableList<TimeMatch> = arrayListOf()
 
     @Provides
     @Named("spinner_tournament")
-    fun provideTournamentSpinnerAdapter(context: Fragment, tournaments: MutableList<Any>): GenericSpinnerAdapter =
+    fun provideTournamentSpinnerAdapter(context: Fragment, tournaments: MutableList<Tournament>): GenericSpinnerAdapter =
             GenericSpinnerAdapter(null, context, tournaments, 6)
 
     @Provides
+    @Singleton
+    fun provideTournamentList(): MutableList<Tournament> = arrayListOf()
+
+    @Provides
     @Named("spinner_team_local")
-    fun provideTeamLocalSpinnerAdapter(context: Fragment, teams_local: MutableList<Any>): GenericSpinnerAdapter =
+    fun provideTeamLocalSpinnerAdapter(context: Fragment, @Named("teams_local")teams_local: MutableList<Team>): GenericSpinnerAdapter =
             GenericSpinnerAdapter(null, context, teams_local, 7)
 
     @Provides
     @Named("spinner_team_visite")
-    fun provideTeamVisiteSpinnerAdapter(context: Fragment, teams_visite: MutableList<Any>): GenericSpinnerAdapter =
+    fun provideTeamVisiteSpinnerAdapter(context: Fragment, @Named("teams_visite")teams_visite: MutableList<Team>): GenericSpinnerAdapter =
             GenericSpinnerAdapter(null, context, teams_visite, 7)
 
     @Provides
-   fun provideList(): MutableList<Any> = arrayListOf()
+    @Named("teams_local")
+    fun provideTeamsLocalList(): MutableList<Team> = arrayListOf()
+
+    @Provides
+    @Named("teams_visite")
+    fun provideTeamsVisiteList(): MutableList<Team> = arrayListOf()
 }

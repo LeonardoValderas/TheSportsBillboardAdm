@@ -1,6 +1,5 @@
 package com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.Editable
@@ -19,11 +18,13 @@ import com.valdroide.thesportsbillboardinstitution.utils.GenericSpinnerAdapter
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.fragment_create_fixture.*
 import com.github.clans.fab.FloatingActionButton
-import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui.MenuSubMenuActivity
-import com.valdroide.thesportsbillboardinstitution.main_adm.team.activity.TabTeamActivity
+import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment
+import com.codetroopers.betterpickers.timepicker.TimePickerDialogFragment
+import com.codetroopers.betterpickers.timepicker.TimePickerBuilder
+import org.jetbrains.anko.support.v4.alert
+import org.jetbrains.anko.yesButton
 
-
-class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClickListener {
+class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClickListener, CalendarDatePickerDialogFragment.OnDateSetListener, TimePickerDialogFragment.TimePickerDialogHandler {
 
     private lateinit var component: FixtureCreateFragmentComponent
     private lateinit var presenter: FixtureCreateFragmentPresenter
@@ -52,6 +53,9 @@ class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClic
     private lateinit var adapterSpinnerTeamVisite: GenericSpinnerAdapter
     private var is_update: Boolean = false
     private var id_fixture: Int = 0
+    private var day: String = ""
+    private var hour: String = ""
+    private val FRAG_TAG_DATE_PICKER = "fragment_date_picker_name"
 
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -63,16 +67,11 @@ class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClic
         setupInjection()
         communication = activity as Communicator
         register()
+        textViewButton.text = getString(R.string.save_button, "Fixture")
         isFixtureUpdate()
         initSpinnerAdapter()
-        getSubMenuAndPlayers()
-        if (is_update) {
-            setVisibilityViews(View.INVISIBLE)
-            presenter.getFixture(activity, id_fixture)
-        } else
-            setVisibilityViews(View.VISIBLE)
+        getSpinnerData()
         setOnclik()
-
     }
 
     private fun setupInjection() {
@@ -89,23 +88,54 @@ class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClic
     }
 
     override fun onClick(onclick: View?) {
-        when(onclick){
+        when (onclick) {
             buttonSave -> onClickButtonSave()
-            fabGoToSubMenu -> startActivity(Intent(activity, MenuSubMenuActivity::class.java))
-            fabGoToTeam -> startActivity(Intent(activity, TabTeamActivity::class.java))
+            buttonDay -> openCalendar()
+            buttonHour -> openTimer()
+            imageViewInformationFixture -> showAlertInformation()
+        //   fabGoToSubMenu -> startActivity(Intent(activity, MenuSubMenuActivity::class.java))
+        //   fabGoToTeam -> startActivity(Intent(activity, TabTeamActivity::class.java))
         }
 
     }
 
     private fun setOnclik() {
         buttonSave.setOnClickListener(this)
-        fabGoToSubMenu.setOnClickListener(this)
-        fabGoToTeam.setOnClickListener(this)
+        buttonDay.setOnClickListener(this)
+        buttonHour.setOnClickListener(this)
+        imageViewInformationFixture.setOnClickListener(this)
+        //  fabGoToSubMenu.setOnClickListener(this)
+        // fabGoToTeam.setOnClickListener(this)
 //        fabConteiner.setOnMenuToggleListener(FloatingActionMenu.OnMenuToggleListener { opened ->
 //            setVisivilityFab(fabCreateTournament, opened)
 //            setVisivilityFab(fabUpdateTournament, opened)
 //            setVisivilityFab(fabDeleteTournament, opened)
 //        })
+    }
+
+    private fun openCalendar() {
+        val cdp = CalendarDatePickerDialogFragment()
+                .setOnDateSetListener(this)
+        cdp.show(fragmentManager, FRAG_TAG_DATE_PICKER)
+    }
+
+    override fun onDateSet(dialog: CalendarDatePickerDialogFragment?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+        day = "$dayOfMonth-$monthOfYear-$year" //"$year-$monthOfYear-$dayOfMonth"
+        //textViewDay.text = "$dayOfMonth-$monthOfYear-$year"
+        textViewDay.text = day
+    }
+
+    private fun openTimer() {
+        val tpb = TimePickerBuilder()
+                .setFragmentManager(fragmentManager)
+                .setTargetFragment(this)
+                .setStyleResId(R.style.BetterPickersDialogFragment)
+        tpb.show()
+    }
+
+    override fun onDialogTimeSet(reference: Int, hourOfDay: Int, minute: Int) {
+        hour = "$hourOfDay:$minute"
+        textViewHour.text = hour
     }
 
     private fun setVisivilityFab(fab: FloatingActionButton, isOpened: Boolean) {
@@ -118,10 +148,24 @@ class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClic
         }
     }
 
+    private fun showAlertInformation() {
+        alert("En esta opción usted podrá realizar acciones sobre los fixtures.\n" +
+                "Para crear un fixture debe seleccionar el submenu, el torneo(ver información sobre torneo actual en la opción 'Torneos'), dia y hora del partido, lugar donde se disputara el encuentro, el equipo local y el visitante(no pueden ser iguales). Ingresar el resultado(esta opción puede quedar vacia en el caso que el encuentro todavia no se haya jugado), seleccionar estado de partido e ingresar una observación(optional).\n" +
+                "En la sopala Editar usted podrá actualizar los datos de los fixture, modificar los resultados como también eliminarlos.") {
+            title = "FIXTURE"
+            yesButton {
+            }
+        }.show()
+    }
 
-    private fun getSubMenuAndPlayers() {
-        showProgressDialog()
+    private fun getSpinnerData() {
+        showProgressAndSetVisivility()
         presenter.getSpinnerData(activity)
+    }
+
+    private fun showProgressAndSetVisivility() {
+        showProgressDialog()
+        setVisibilityViews(View.INVISIBLE)
     }
 
     override fun setSpinnersData(submenus: MutableList<SubMenuDrawer>,
@@ -140,6 +184,12 @@ class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClic
         adapterSpinnerTournament.refresh(tournaments, 6)
         adapterSpinnerTeamLocal.refresh(teams, 7)
         adapterSpinnerTeamVisite.refresh(teams, 7)
+        if (is_update) {
+            presenter.getFixture(activity, id_fixture)
+        } else {
+            hideProgressDialog()
+            setVisibilityViews(View.VISIBLE)
+        }
     }
 
     private fun getPresenterInj(): FixtureCreateFragmentPresenter =
@@ -170,7 +220,6 @@ class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClic
             textViewButton.text = getString(R.string.update_button, "Fixture")
         }
     }
-
 
     private fun initSpinnerAdapter() {
         spinnerSubMenu.adapter = adapterSpinnerSubMenus
@@ -237,28 +286,37 @@ class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClic
 
     override fun onClickButtonSave() {
         if (subMenuDrawers.isEmpty())
-            setError(getString(R.string.spinner_empty, "un menu"))
+            setError(getString(R.string.spinner_empty, "un submenu."))
         else if (fieldMatchs.isEmpty())
-            setError(getString(R.string.spinner_empty, "un lugar"))
+            setError(getString(R.string.spinner_empty, "un lugar."))
         else if (timeMatchs.isEmpty())
-            setError(getString(R.string.spinner_empty, "un tiempo"))
+            setError(getString(R.string.spinner_empty, "un tiempo."))
         else if (tournaments.isEmpty())
-            setError(getString(R.string.spinner_empty, "un torneo"))
+            setError(getString(R.string.spinner_empty, "un torneo."))
+        else if (teamsLocal.isEmpty() || teamsVisite.isEmpty())
+            setError(getString(R.string.spinner_empty, "un equipo."))
+        else if (teamLocal.ID_TEAM_KEY == teamVisite.ID_TEAM_KEY)
+            setError(getString(R.string.same_team_error))
+        else if (day.isEmpty())
+            setError(getString(R.string.day_empty))
+        else if (hour.isEmpty())
+            setError(getString(R.string.hour_empty))
         else
             fillFixtureEntity()
     }
 
     private fun fillFixtureEntity() {
-        showProgressDialog()
-        setVisibilityViews(View.INVISIBLE)
+        showProgressAndSetVisivility()
         fixture.ID_SUBMENU_KEY = subMenuDrawer.ID_SUBMENU_KEY
         fixture.ID_LOCAL_TEAM = localTeam.ID_TEAM_KEY
         fixture.ID_VISITE_TEAM = visiteTeam.ID_TEAM_KEY
         fixture.ID_FIELD_MATCH = fieldMatch.ID_FIELD_MATCH_KEY
         fixture.ID_TIMES_MATCH = timeMatch.ID_TIME_MATCH_KEY
         fixture.ID_TOURNAMENT = tournament.ID_TOURNAMENT_KEY
-        // fixture.DATE_MATCH =
-        //fixture.HOUR_MATCH =
+        fixture.ID_LOCAL_TEAM = teamLocal.ID_TEAM_KEY
+        fixture.ID_VISITE_TEAM = teamVisite.ID_TEAM_KEY
+        fixture.DATE_MATCH = day
+        fixture.HOUR_MATCH = hour
         fixture.OBSERVATION = editTextObservation.text.toString()
         fixture.RESULT_LOCAL = editTextResultLocal.text.toString()
         fixture.RESULT_VISITE = editTextResultVisite.text.toString()
@@ -303,8 +361,12 @@ class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClic
             spinnerFieldMatch.setSelection(getPositionSpinners(ID_FIELD_MATCH, 2))
             spinnerTimeMatch.setSelection(getPositionSpinners(ID_TIMES_MATCH, 3))
             spinnerTournament.setSelection(getPositionSpinners(ID_TOURNAMENT, 4))
-            textViewDay.text = DATE_MATCH
-            textViewHour.text = HOUR_MATCH
+            spinnerTeamLocal.setSelection(getPositionSpinners(ID_LOCAL_TEAM, 5))
+            spinnerTeamVisite.setSelection(getPositionSpinners(ID_VISITE_TEAM, 6))
+            day = DATE_MATCH
+            hour = HOUR_MATCH
+            textViewDay.text = day
+            textViewHour.text = hour
             editTextResultLocal.text = Editable.Factory.getInstance().newEditable(RESULT_LOCAL)
             editTextResultVisite.text = Editable.Factory.getInstance().newEditable(RESULT_VISITE)
             editTextObservation.text = Editable.Factory.getInstance().newEditable(OBSERVATION)
@@ -342,6 +404,22 @@ class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClic
             4 -> {
                 for (i in 0 until tournaments.size) {
                     if (tournaments[i].ID_TOURNAMENT_KEY == id) {
+                        index = i
+                        return index
+                    }
+                }
+            }
+            5 -> {
+                for (i in 0 until teamsLocal.size) {
+                    if (teamsLocal[i].ID_TEAM_KEY == id) {
+                        index = i
+                        return index
+                    }
+                }
+            }
+            6 -> {
+                for (i in 0 until teamsVisite.size) {
+                    if (teamsVisite[i].ID_TEAM_KEY == id) {
                         index = i
                         return index
                     }
@@ -389,6 +467,12 @@ class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClic
         buttonSave.visibility = isVisible
     }
 
+    private fun calendarOnResume(){
+        val calendarDatePickerDialogFragment = fragmentManager
+                .findFragmentByTag(FRAG_TAG_DATE_PICKER) as CalendarDatePickerDialogFragment?
+        calendarDatePickerDialogFragment?.setOnDateSetListener(this)
+    }
+
     override fun onPause() {
         unregister()
         super.onPause()
@@ -397,11 +481,13 @@ class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClic
     override fun onResume() {
         super.onResume()
         register()
+        calendarOnResume()
 //        mAd.resume(this)
 //        if (mAdView != null) {
 //            mAdView.resume()
 //        }
     }
+
 
     override fun onStart() {
         super.onStart()

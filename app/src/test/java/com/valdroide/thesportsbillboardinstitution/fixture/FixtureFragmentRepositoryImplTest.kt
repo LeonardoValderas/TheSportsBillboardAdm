@@ -66,7 +66,7 @@ class FixtureFragmentRepositoryImplTest : BaseTest() {
     @Test
     fun shouldSetFixturesFromService() {
         swResponse = WSResponse(0, "0", "ok")
-        val fixtureResponse = FixtureResponse(swResponse, fixtures, null, null, null, null, null)
+        val fixtureResponse = FixtureResponse(swResponse, fixtures, null, null, null, null, null, null)
         whenever(service.getFixtureForDivision(1,0)).thenReturn(Observable.just(fixtureResponse))
         repository.getFixtures(context, 1, 0)
         verify(service).getFixtureForDivision(1, 0)
@@ -81,7 +81,7 @@ class FixtureFragmentRepositoryImplTest : BaseTest() {
     @Test
     fun shouldSetErrorResponseNotZeroPostEventGetFixtureForDivision() {
         swResponse = WSResponse(0, "2", "Error")
-        val fixtureResponse = FixtureResponse(swResponse, fixtures, null, null, null, null, null)
+        val fixtureResponse = FixtureResponse(swResponse, fixtures, null, null, null, null, null, null)
         whenever(service.getFixtureForDivision(1, 0)).thenReturn(Observable.just(fixtureResponse))
         repository.getFixtures(context, 1, 0)
         verify(service).getFixtureForDivision(1, 0)
@@ -95,7 +95,7 @@ class FixtureFragmentRepositoryImplTest : BaseTest() {
 
     @Test
     fun shouldSetErrorResponseNullPostEventGetFixtureForDivision() {
-        whenever(service.getFixtureForDivision(1, 0)).thenReturn(Observable.just(FixtureResponse(null, null, null, null, null, null, null)))
+        whenever(service.getFixtureForDivision(1, 0)).thenReturn(Observable.just(FixtureResponse(null, null, null, null, null, null, null, null)))
         repository.getFixtures(context, 1, 0)
         verify(service).getFixtureForDivision(1, 0)
         argumentCaptor<FixtureFragmentEvent>().apply {

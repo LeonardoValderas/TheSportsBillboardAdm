@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Adapter
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.MenuSubMenuActivityPresenter
@@ -109,13 +108,13 @@ open class MenuSubMenuActivity : AppCompatActivity(), MenuSubMenuActivityView, V
                         msg = getString(R.string.active_menu_alerte_msg, "desactivar", "menu")
                     showAlertDialog(getString(R.string.alert_title), msg, menuDrawer, null, true, false)
                 } else
-                    setError(getString(R.string.menus_empty_submenu))
+                    setError(getString(R.string.spinner_empty, "un menu"))
             }
             fabDeleteMenu -> {
                 if (menuDrawers.isNotEmpty())
                     showAlertDialog(getString(R.string.alert_title), getString(R.string.delete_menu_alerte_msg, "menu"), menuDrawer, null, true, true)
                 else
-                    setError(getString(R.string.menus_empty_submenu))
+                    setError(getString(R.string.spinner_empty, "un menu"))
             }
             fabCreateSubMenu ->
                 saveSubMenuAlert()
@@ -129,13 +128,13 @@ open class MenuSubMenuActivity : AppCompatActivity(), MenuSubMenuActivityView, V
                         msg = getString(R.string.active_menu_alerte_msg, "desactivar", "submenu")
                     showAlertDialog(getString(R.string.alert_title), msg, null, subMenuDrawer, false, false)
                 } else
-                    setError(getString(R.string.submenu_empty))
+                    setError(getString(R.string.spinner_empty, "un submenu"))
             }
             fabDeleteSubMenu -> {
                 if (subMenuDrawers.isNotEmpty())
                     showAlertDialog(getString(R.string.alert_title), getString(R.string.delete_menu_alerte_msg, "submenu"), null, subMenuDrawer, false, true)
                 else
-                    setError(getString(R.string.submenu_empty))
+                    setError(getString(R.string.spinner_empty, "un submenu"))
             }
         }
     }
@@ -196,7 +195,7 @@ open class MenuSubMenuActivity : AppCompatActivity(), MenuSubMenuActivityView, V
 
     private fun updateMenuAlert() {
         if (menuDrawers.isEmpty()) {
-            setError(getString(R.string.menus_empty_submenu))
+            setError(getString(R.string.spinner_empty, "un menu"))
         } else {
             alert = CustomDialog.Builder(this).isMenu(true).isUpdate(true).withMenu(menuDrawer).setOnClick(this).getDialog()
             alert!!.show()
@@ -213,7 +212,7 @@ open class MenuSubMenuActivity : AppCompatActivity(), MenuSubMenuActivityView, V
 
     private fun saveSubMenuAlert() {
         if (menuDrawers.isEmpty())
-            setError(getString(R.string.menus_empty_submenu))
+            setError(getString(R.string.spinner_empty, "un menu"))
         else {
             alert = CustomDialog.Builder(this).isMenu(false).isUpdate(false).withSubMenu(menuDrawers, subMenuDrawer).setOnClick(this).getDialog()
             alert!!.show()
@@ -222,9 +221,9 @@ open class MenuSubMenuActivity : AppCompatActivity(), MenuSubMenuActivityView, V
 
     private fun updateSubMenuAlert() {
         if (menuDrawers.isEmpty())
-            setError(getString(R.string.menus_empty_submenu))
+            setError(getString(R.string.spinner_empty, "un menu"))
         else if (subMenuDrawers.isEmpty())
-            setError(getString(R.string.submenu_empty))
+            setError(getString(R.string.spinner_empty, "un submenu"))
         else {
             alert = CustomDialog.Builder(this).isMenu(false).isUpdate(true).withSubMenu(menuDrawers, subMenuDrawer).setOnClick(this).getDialog()
             alert!!.show()

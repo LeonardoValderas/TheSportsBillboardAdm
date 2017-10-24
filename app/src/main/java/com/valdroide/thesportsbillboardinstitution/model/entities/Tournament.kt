@@ -9,6 +9,9 @@ data class Tournament(
         var ID_TOURNAMENT_KEY: Int = 0,
         @SerializedName("tournament")
         @Expose
-        var TOURNAMENT: String = "") {
+        var TOURNAMENT: String = "",
+        @SerializedName("is_active")
+        @Expose
+        var IS_ACTIVE: Int = 0) {
     override fun toString(): String = TOURNAMENT
 }

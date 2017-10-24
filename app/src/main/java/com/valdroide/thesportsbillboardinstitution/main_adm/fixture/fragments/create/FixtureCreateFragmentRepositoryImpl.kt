@@ -7,6 +7,7 @@ import com.valdroide.thesportsbillboardinstitution.api.ApiService
 import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
 import com.valdroide.thesportsbillboardinstitution.lib.base.SchedulersInterface
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.events.FixtureCreateFragmentEvent
+import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.events.TeamCreateFragmentEvent
 import com.valdroide.thesportsbillboardinstitution.model.entities.*
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 
@@ -19,6 +20,7 @@ class FixtureCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService
     private var timeMatchs: MutableList<TimeMatch>? = null
     private var tournaments: MutableList<Tournament>? = null
     private var teams: MutableList<Team>? = null
+    private var id_user = 1
 
     override fun getFixture(context: Context, id_fixture: Int) {
         //internet connection
@@ -87,70 +89,79 @@ class FixtureCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService
     }
 
     override fun saveFixture(context: Context, fixture: Fixture) {
-        try {
-            apiService.saveFixture(fixture.ID_TOURNAMENT,
-                    fixture.ID_LOCAL_TEAM, fixture.ID_VISITE_TEAM,
-                    fixture.ID_SUBMENU_KEY, fixture.ID_FIELD_MATCH,
-                    fixture.ID_TIMES_MATCH, fixture.RESULT_LOCAL, fixture.RESULT_VISITE, fixture.DATE_MATCH,
-                    fixture.HOUR_MATCH, fixture.OBSERVATION, 1, Utils.getFechaOficialSeparate())
-                    .subscribeOn(scheduler.schedulerIO())
-                    .observeOn(scheduler.schedulerMainThreader())
-                    .subscribe({ result ->
-                        if (result != null) {
-                            response = result
-                            if (response != null) {
-                                if (response?.SUCCESS.equals("0")) {
-                                    post(FixtureCreateFragmentEvent.SAVEFIXTURE)
+        if (id_user != 0) {
+            try {
+                apiService.saveFixture(fixture.ID_TOURNAMENT,
+                        fixture.ID_LOCAL_TEAM, fixture.ID_VISITE_TEAM,
+                        fixture.ID_SUBMENU_KEY, fixture.ID_FIELD_MATCH,
+                        fixture.ID_TIMES_MATCH, fixture.RESULT_LOCAL, fixture.RESULT_VISITE, fixture.DATE_MATCH,
+                        fixture.HOUR_MATCH, fixture.OBSERVATION, id_user, Utils.getFechaOficialSeparate())
+                        .subscribeOn(scheduler.schedulerIO())
+                        .observeOn(scheduler.schedulerMainThreader())
+                        .subscribe({ result ->
+                            if (result != null) {
+                                response = result
+                                if (response != null) {
+                                    if (response?.SUCCESS.equals("0")) {
+                                        post(FixtureCreateFragmentEvent.SAVEFIXTURE)
+                                    } else {
+                                        post(FixtureCreateFragmentEvent.ERROR, response?.MESSAGE)
+                                    }
                                 } else {
-                                    post(FixtureCreateFragmentEvent.ERROR, response?.MESSAGE)
+                                    post(FixtureCreateFragmentEvent.ERROR, context.getString(R.string.null_response))
                                 }
                             } else {
-                                post(FixtureCreateFragmentEvent.ERROR, context.getString(R.string.null_response))
+                                post(FixtureCreateFragmentEvent.ERROR, context.getString(R.string.null_process))
                             }
-                        } else {
-                            post(FixtureCreateFragmentEvent.ERROR, context.getString(R.string.null_process))
-                        }
-                    }, { e ->
-                        post(FixtureCreateFragmentEvent.ERROR, e.message)
-                        FirebaseCrash.report(e)
-                    })
-        } catch (e: Exception) {
-            FirebaseCrash.report(e)
-            post(FixtureCreateFragmentEvent.ERROR, e.message)
+                        }, { e ->
+                            post(FixtureCreateFragmentEvent.ERROR, e.message)
+                            FirebaseCrash.report(e)
+                        })
+            } catch (e: Exception) {
+                FirebaseCrash.report(e)
+                post(FixtureCreateFragmentEvent.ERROR, e.message)
+            }
+        } else {
+            post(FixtureCreateFragmentEvent.ERROR, context.getString(R.string.error_id_user_zero))
         }
+
     }
 
     override fun updateFixture(context: Context, fixture: Fixture) {
-        try {
-            apiService.updateFixture(fixture.ID_FIXTURE_KEY, fixture.ID_TOURNAMENT,
-                    fixture.ID_LOCAL_TEAM, fixture.ID_VISITE_TEAM,
-                    fixture.ID_SUBMENU_KEY, fixture.ID_FIELD_MATCH,
-                    fixture.ID_TIMES_MATCH, fixture.RESULT_LOCAL, fixture.RESULT_VISITE, fixture.DATE_MATCH,
-                    fixture.HOUR_MATCH, fixture.OBSERVATION, 1, Utils.getFechaOficialSeparate())
-                    .subscribeOn(scheduler.schedulerIO())
-                    .observeOn(scheduler.schedulerMainThreader())
-                    .subscribe({ result ->
-                        if (result != null) {
-                            response = result
-                            if (response != null) {
-                                if (response?.SUCCESS.equals("0")) {
-                                    post(FixtureCreateFragmentEvent.UPDATEFIXTURE)
+        if (id_user != 0) {
+            try {
+                apiService.updateFixture(fixture.ID_FIXTURE_KEY, fixture.ID_TOURNAMENT,
+                        fixture.ID_LOCAL_TEAM, fixture.ID_VISITE_TEAM,
+                        fixture.ID_SUBMENU_KEY, fixture.ID_FIELD_MATCH,
+                        fixture.ID_TIMES_MATCH, fixture.RESULT_LOCAL, fixture.RESULT_VISITE, fixture.DATE_MATCH,
+                        fixture.HOUR_MATCH, fixture.OBSERVATION, id_user, Utils.getFechaOficialSeparate())
+                        .subscribeOn(scheduler.schedulerIO())
+                        .observeOn(scheduler.schedulerMainThreader())
+                        .subscribe({ result ->
+                            if (result != null) {
+                                response = result
+                                if (response != null) {
+                                    if (response?.SUCCESS.equals("0")) {
+                                        post(FixtureCreateFragmentEvent.UPDATEFIXTURE)
+                                    } else {
+                                        post(FixtureCreateFragmentEvent.ERROR, response?.MESSAGE)
+                                    }
                                 } else {
-                                    post(FixtureCreateFragmentEvent.ERROR, response?.MESSAGE)
+                                    post(FixtureCreateFragmentEvent.ERROR, context.getString(R.string.null_response))
                                 }
                             } else {
-                                post(FixtureCreateFragmentEvent.ERROR, context.getString(R.string.null_response))
+                                post(FixtureCreateFragmentEvent.ERROR, context.getString(R.string.null_process))
                             }
-                        } else {
-                            post(FixtureCreateFragmentEvent.ERROR, context.getString(R.string.null_process))
-                        }
-                    }, { e ->
-                        post(FixtureCreateFragmentEvent.ERROR, e.message)
-                        FirebaseCrash.report(e)
-                    })
-        } catch (e: Exception) {
-            FirebaseCrash.report(e)
-            post(FixtureCreateFragmentEvent.ERROR, e.message)
+                        }, { e ->
+                            post(FixtureCreateFragmentEvent.ERROR, e.message)
+                            FirebaseCrash.report(e)
+                        })
+            } catch (e: Exception) {
+                FirebaseCrash.report(e)
+                post(FixtureCreateFragmentEvent.ERROR, e.message)
+            }
+        } else {
+            post(FixtureCreateFragmentEvent.ERROR, context.getString(R.string.error_id_user_zero))
         }
     }
 

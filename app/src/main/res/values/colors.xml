@@ -7,16 +7,14 @@
     <!--<color name="colorPrimary_light">#0E940E</color>-->
     <!---->
 
+
     <!--ADEFUL-->
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorPrimary_light">#C5CAE9</color>
+    <color name="colorAccent">#607D8B</color>
 
-
-    <color name="colorAccent">#273de3</color>
-
-
-
+    <color name="colorYellow">#c6d206</color>
 
     <color name="colorPrimary_text">#212121</color>
     <color name="colorSecondary_text">#757575</color>

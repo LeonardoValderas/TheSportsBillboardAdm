@@ -158,7 +158,7 @@ open class AccountActivity : AppCompatActivity(), AccountActivityView, View.OnCl
         }
     */
     private fun snackBarEmptyData() {
-        Utils.showSnackBar(conteiner, getString(R.string.datp_empty_account))
+        Utils.showSnackBar(conteiner, getString(R.string.data_empty_account))
     }
 
     override fun onClickFabPhone() {

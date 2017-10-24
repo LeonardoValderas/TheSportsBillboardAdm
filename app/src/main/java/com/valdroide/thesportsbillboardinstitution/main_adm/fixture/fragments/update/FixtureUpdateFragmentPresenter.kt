@@ -11,6 +11,7 @@ interface FixtureUpdateFragmentPresenter {
     fun getViewPresenter(): FixtureUpdateFragmentView
     fun setViewPresenter(view: FixtureUpdateFragmentView)
     fun getFixture(context: Context)
+    fun setResultFixture(context: Context, fixture: Fixture)
     fun deleteFixture(context: Context, fixture: Fixture)
     fun onEventMainThread(event: FixtureUpdateFragmentEvent)
 }

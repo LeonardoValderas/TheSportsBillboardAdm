@@ -24,14 +24,15 @@ import android.content.DialogInterface
 import android.net.Uri
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
-import android.text.BoringLayout
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.support.v4.alert
+import org.jetbrains.anko.yesButton
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 object Utils {
 
@@ -55,6 +56,18 @@ object Utils {
     fun hasPermission(activity: Activity, manifestPermission: String): Boolean {
         val permissionCheck = ContextCompat.checkSelfPermission(activity, manifestPermission)
         return permissionCheck == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun setUserWork(context: Context, id: Int) {
+        val shared: SharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_id_user_work), Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = shared.edit()
+        editor.putInt(context.getString(R.string.shared_id_user), id)
+        editor.apply()
+    }
+
+    fun getIdUserWork(context: Context): Int {
+        val shared: SharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_id_user_work), Context.MODE_PRIVATE)
+        return shared.getInt(context.getString(R.string.shared_id_user), 0)
     }
 
     fun setSubmenuIdTitle(context: Context, id: Int, title: String) {
@@ -91,7 +104,6 @@ object Utils {
         } catch (e: Exception) {
             return false
         }
-
     }
 
     private fun internetConnectionAvailable(timeOut: Long): Boolean {
@@ -143,6 +155,14 @@ object Utils {
         myAlertDialog.show()
     }
 
+    fun showAlertInformation(activity: Activity, titleText: String, messageText: String) {
+        activity.alert(titleText) {
+            title = messageText
+            yesButton {
+            }
+        }.show()
+    }
+
     fun startCropImageActivity(activity: Activity?, fragment: Fragment?, imageUri: Uri) {
         if (activity != null) {
             CropImage.activity(imageUri)
@@ -177,14 +197,10 @@ object Utils {
         val bufferSize = 1024
         val buffer = ByteArray(bufferSize)
 
-        //  val len = inputStream.read(buffer)
         var len = 0
         while (inputStream.read(buffer).let { len = it; it != -1 }) {
             byteBuffer.write(buffer, 0, len)
         }
-//        while (len != -1) {
-//            byteBuffer.write(buffer, 0, len)
-//        }
         return byteBuffer.toByteArray()
     }
 
@@ -206,7 +222,6 @@ object Utils {
                     }
                 })
     }
-
 
     fun setPicassoWithOutRoundedConrners(context: Context, url: String, resource: Int, imageView: ImageView) {
         var urlStrin = url

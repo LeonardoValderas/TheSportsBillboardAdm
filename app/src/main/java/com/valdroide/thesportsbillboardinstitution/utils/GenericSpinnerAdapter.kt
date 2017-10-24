@@ -13,7 +13,8 @@ import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.model.entities.*
 import java.util.*
 
-class GenericSpinnerAdapter(var contextActivity: Activity?, var contextFragment: Fragment?, var list :MutableList<*>, var type: Int)
+class GenericSpinnerAdapter(var contextActivity: Activity?, var contextFragment: Fragment?,
+                            var list :MutableList<*>, var type: Int)
     : BaseAdapter() {
 
     var any: Any? = null
@@ -78,7 +79,7 @@ class GenericSpinnerAdapter(var contextActivity: Activity?, var contextFragment:
             6 -> {
                 val tournament = any as Tournament
                 textViewMenu.text = tournament.TOURNAMENT
-                setActiveImage(1)
+                setActiveImage(tournament.IS_ACTIVE)
             }
             7 -> {
                 val team = any as Team

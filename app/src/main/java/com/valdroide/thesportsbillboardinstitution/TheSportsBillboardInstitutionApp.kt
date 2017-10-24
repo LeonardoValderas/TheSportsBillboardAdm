@@ -70,6 +70,10 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.updat
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.di.TeamUpdateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.di.TeamUpdateFragmentModule
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.ui.TeamUpdateFragmentView
+import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.di.DaggerTournamentActivityComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.di.TournamentActivityComponent
+import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.di.TournamentActivityModule
+import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.ui.TournamentActivityView
 import com.valdroide.thesportsbillboardinstitution.main_user.account.di.AccountActivityComponent
 import com.valdroide.thesportsbillboardinstitution.main_user.account.di.AccountActivityModule
 import com.valdroide.thesportsbillboardinstitution.main_user.account.di.DaggerAccountActivityComponent
@@ -99,6 +103,7 @@ import com.valdroide.thesportsbillboardinstitution.main_user.navigation.di.Dagge
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.di.NavigationActivityComponent
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.di.NavigationActivityModule
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.ui.NavigationActivityView
+import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener_2
 
 
@@ -234,7 +239,6 @@ class TheSportsBillboardInstitutionApp : Application() {
                 .libsModule(LibsModule(activity))
                 .menuSubMenuActivityModule(MenuSubMenuActivityModule(view, activity))
                 .build()
-
     }
 
     fun getAccountAdmActivityComponent(view: AccountAdmActivityView, activity: Activity): AccountAdmActivityComponent {
@@ -252,7 +256,6 @@ class TheSportsBillboardInstitutionApp : Application() {
                 .libsModule(LibsModule(fragment))
                 .teamCreateFragmentModule(TeamCreateFragmentModule(view))
                 .build()
-
     }
 
     fun getTeamUpdateFragmentComponent(view: TeamUpdateFragmentView, listener: com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.ui.adapter.OnItemClickListener, fragment: Fragment): TeamUpdateFragmentComponent {
@@ -261,7 +264,6 @@ class TheSportsBillboardInstitutionApp : Application() {
                 .libsModule(LibsModule(fragment))
                 .teamUpdateFragmentModule(TeamUpdateFragmentModule(view, listener))
                 .build()
-
     }
 
     fun getPlayerCreateFragmentComponent(view: PlayerCreateFragmentView, fragment: Fragment): PlayerCreateFragmentComponent {
@@ -321,11 +323,19 @@ class TheSportsBillboardInstitutionApp : Application() {
                 .build()
     }
 
-    fun getFixtureUpdateFragmentComponent(view: FixtureUpdateFragmentView, listener: GenericOnItemClickListener_2, fragment: Fragment): FixtureUpdateFragmentComponent {
+    fun getFixtureUpdateFragmentComponent(view: FixtureUpdateFragmentView, listener: GenericOnItemClickListener.fixture, fragment: Fragment): FixtureUpdateFragmentComponent {
         return DaggerFixtureUpdateFragmentComponent
                 .builder()
                 .libsModule(LibsModule(fragment))
                 .fixtureUpdateFragmentModule(FixtureUpdateFragmentModule(view, listener))
+                .build()
+    }
+
+    fun getTournamentActivityComponent(view: TournamentActivityView, activity: Activity, listener: GenericOnItemClickListener.actualUnActual): TournamentActivityComponent {
+        return DaggerTournamentActivityComponent
+                .builder()
+                .libsModule(LibsModule(activity))
+                .tournamentActivityModule(TournamentActivityModule(view, listener))
                 .build()
     }
 }

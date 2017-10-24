@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="General" >
+        <menu>
+            <item
+                android:id="@+id/nav_team"
+                android:icon="@drawable/shield_team"
+                android:title="Equipos" />
+            <item
+                android:id="@+id/nav_tournament"
+                android:icon="@drawable/tournament_icon"
+                android:title="Torneos" />
+            <item
+                android:id="@+id/nav_fixture"
+                android:icon="@drawable/fixture_icon"
+                android:title="Fixture" />
+            <item
+                android:id="@+id/nav_player"
+                android:icon="@drawable/player_icon"
+                android:title="Jugadores" />
+            <item
+                android:id="@+id/nav_sanctions"
+                android:icon="@drawable/sanction_menu_icon"
+                android:title="Sanciones" />
+
+            <item
+                android:id="@+id/nav_news"
+                android:icon="@drawable/news_icon"
+                android:title="Noticias" />
+        </menu>
+    </item>
+
+    <item android:title="Institucional">
+        <menu>
+            <item
+                android:id="@+id/nav_account"
+                android:icon="@drawable/ic_home"
+                android:title="Mi Cuenta" />
+            <item
+                android:id="@+id/nav_menu_submenu"
+                android:icon="@drawable/submenu_icon"
+                android:title="Menus y Submenus" />
+            <item
+                android:id="@+id/nav_login"
+                android:icon="@drawable/login_icon"
+                android:title="Logines" />
+            <item
+                android:id="@+id/nav_notification"
+                android:icon="@drawable/notification_icon"
+                android:title="Notificaciones" />
+        </menu>
+    </item>
+
+</menu>

@@ -1,9 +1,9 @@
 package com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,19 +13,25 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.activity.Tab
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.FixtureUpdateFragmentPresenter
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.di.FixtureUpdateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.ui.adapter.FixtureUpdateFragmentAdapter
+import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.ui.dialog.CustomDialog
 import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
-import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener_2
+import com.valdroide.thesportsbillboardinstitution.model.entities.TimeMatch
+import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.frame_recycler_refresh.*
+import org.jetbrains.anko.*
+import org.jetbrains.anko.support.v4.alert
 
-class FixtureUpdateFragment : Fragment(), FixtureUpdateFragmentView, GenericOnItemClickListener_2 {
+class FixtureUpdateFragment : Fragment(), FixtureUpdateFragmentView, GenericOnItemClickListener.fixture {
 
     private lateinit var component: FixtureUpdateFragmentComponent
     lateinit var presenter: FixtureUpdateFragmentPresenter
     lateinit var adapterFixture: FixtureUpdateFragmentAdapter
-    var Fixtures: MutableList<Fixture> = arrayListOf()
+    var fixtures: MutableList<Fixture> = arrayListOf()
+    var times: MutableList<TimeMatch> = arrayListOf()
     private var isRegister: Boolean = false
     private var position: Int = 0
+    private var alert: CustomDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
@@ -62,26 +68,38 @@ class FixtureUpdateFragment : Fragment(), FixtureUpdateFragmentView, GenericOnIt
         }
     }
 
-    fun showAlertDialog(title: String, msg: String, Fixture: Fixture) {
-        val alertDilog = AlertDialog.Builder(activity).create()
-        alertDilog.setTitle(title)
-        alertDilog.setMessage(msg)
-
-        alertDilog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", { dialogInterface, i ->
-            showSwipeRefreshLayout()
-            presenter.deleteFixture(activity, Fixture)
-        })
-
-        alertDilog.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCELAR", { dialogInterface, j ->
-            alertDilog.dismiss()
-        })
-        alertDilog.show()
+    private fun showAlertDialog(titleText: String, msg: String, fixture: Fixture) {
+        alert(msg) {
+            title = titleText
+            yesButton {
+                showSwipeRefreshLayout()
+                presenter.deleteFixture(activity, fixture)
+            }
+            noButton {}
+        }.show()
     }
 
     open fun getPresenterInj(): FixtureUpdateFragmentPresenter = component.getPresenter()
 
 
     open fun getAdapter(): FixtureUpdateFragmentAdapter = component.getAdapter()
+
+
+    override fun onClickResult(position: Int, any: Any) {
+        this.position = position
+        showAlertResult(any as Fixture, activity)
+    }
+
+    private fun showAlertResult(fixture: Fixture, activity: Activity) {
+        alert = CustomDialog.Builder(activity).setOnClick(this).withFixture(fixture).withTimes(times).getDialog()
+        alert!!.show()
+
+    }
+
+    override fun onSaveResult(any: Any) {
+        showSwipeRefreshLayout()
+        presenter.setResultFixture(activity, any as Fixture)
+    }
 
     override fun onClickUpdate(position: Int, any: Any) {
         val i = Intent(activity, TabFixtureActivity::class.java)
@@ -95,8 +113,8 @@ class FixtureUpdateFragment : Fragment(), FixtureUpdateFragmentView, GenericOnIt
         showAlertDialog(getString(R.string.alert_title), getString(R.string.delete_simple_alerte_msg, "el fixture"), any as Fixture)
     }
 
-    override fun updateFixtureSuccess() {
-        adapterFixture.notifyDataSetChanged()
+    override fun updateFixtureSuccess(fixture: Fixture) {
+        adapterFixture.updateFixture(position, fixture)
         Utils.showSnackBar(conteiner, getString(R.string.update_success, "Fixture"))
     }
 
@@ -108,9 +126,10 @@ class FixtureUpdateFragment : Fragment(), FixtureUpdateFragmentView, GenericOnIt
         }
     }
 
-    override fun setAllFixture(Fixtures: MutableList<Fixture>) {
-        this.Fixtures = Fixtures
-        adapterFixture.setFixture(Fixtures)
+    override fun setAllFixture(fixtures: MutableList<Fixture>, times: MutableList<TimeMatch>) {
+        this.fixtures = fixtures
+        this.times = times
+        adapterFixture.setFixture(fixtures)
     }
 
     override fun deleteFixtureSuccess() {
@@ -136,10 +155,12 @@ class FixtureUpdateFragment : Fragment(), FixtureUpdateFragmentView, GenericOnIt
                 if (show) {
                     if (!swipeRefreshLayout.isRefreshing()) {
                         swipeRefreshLayout.setRefreshing(true)
+                        recyclerView.visibility = View.INVISIBLE
                     }
                 } else {
                     if (swipeRefreshLayout.isRefreshing()) {
                         swipeRefreshLayout.setRefreshing(false)
+                        recyclerView.visibility = View.VISIBLE
                     }
                 }
             }

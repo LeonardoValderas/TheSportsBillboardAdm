@@ -1,45 +1,26 @@
 <resources>
+
+    <!--TITLES-->
     <string name="app_name">Adeful</string>
-    <string name="title_activity_account">Contactos</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="datp_empty_account">Dato vacio.</string>
-    <string name="web_address_invalid">Dirección Web invalida.</string>
-    <string name="title_activity_navigation">Adeful</string>
+    <string name="title_activity_account">Mi Cuenta</string>
+    <string name="title_activity_team">Equipos</string>
+    <string name="title_activity_player">Jugadores</string>
+    <string name="title_activity_tournament">Torneos</string>
+    <string name="title_activity_fixture">Fixtures</string>
+    <string name="title_activity_login">Loguines</string>
+    <string name="title_activity_sanction">Sanciones</string>
+    <string name="title_activity_news">Noticias</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <!--MENU SETTING-->
     <string name="action_settings">Settings</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_tab">TabActivity</string>
-    <string name="fixture_title_tab">Fixture</string>
-    <string name="table_title_tab">Tabla</string>
-    <string name="news_title_tab">Noticias</string>
-    <string name="sanstion_title_tab">Sanciones</string>
-
-
-    <!--RESPONSE-->
-    <string name="null_response">Respuesta nula.</string>
-    <string name="null_process">Proceso nulo.</string>
-    <string name="shared.id.title.submenu">shared.id.title.submenu</string>
-    <string name="shared.id">shared.id</string>
-    <string name="shared_title">shared_title</string>
-    <string name="pos.title">N°</string>
-    <string name="team.title">EQUIPO</string>
-    <string name="points.title">PTS</string>
-    <string name="pj.title">PJ</string>
-    <string name="pg.title">PG</string>
-    <string name="pe.title">PE</string>
-    <string name="pp.title">PP</string>
-    <string name="gf.title">GF</string>
-    <string name="ge.title">GE</string>
-    <string name="df.title">DF</string>
-    <string name="player.title.tab">JUGADORES</string>
-    <string name="create.title.tab">Crear</string>
-    <string name="edit.title.tab">Editar</string>
+    <!--SNACKBAR MESSAGE-->
+    <string name="data_empty_account">Dato vacio.</string>
+    <string name="web_address_invalid">Dirección Web invalida.</string>
+    <string name="player.error.empty">Ingrese el nombre del jugador.</string>
+    <string name="player.save.success">Jugador creado correctamente.</string>
+    <string name="player.update.success">Jugador actualizado correctamente.</string>
+    <string name="player.delete.success">Jugador eliminado correctamente.</string>
     <string name="login.save.success">Login creado correctamente.</string>
     <string name="login.edit.success">Login actualizado correctamente.</string>
     <string name="login.error.user">El usuario debe contener más de 4 letras.</string>
@@ -50,30 +31,66 @@
     <string name="team.save.success">Equipo creado correctamente.</string>
     <string name="team.update.success">Equipo actualizado correctamente.</string>
     <string name="team.delete.success">Equipo eliminado correctamente.</string>
-    <string name="alert.title">Atención</string>
-    <string name="alert.msg.team">Si elimina un equipo eliminará todos los fixtures asociados a el. Desea eliminar el equipo de todas formas?</string>
-    <string name="player.error.empty">Ingrese el nombre del jugador.</string>
-    <string name="player.save.success">Jugador creado correctamente.</string>
-    <string name="player.update.success">Jugador actualizado correctamente.</string>
-    <string name="player.delete.success">Jugador eliminado correctamente.</string>
-    <string name="alert.msg.player">Desea eliminar el jugador?</string>
-    <string name="save.player.button">Guardar Jugador</string>
-    <string name="update.player.button">Editar Juagador</string>
+    <string name="news_title_error_empty">Ingrese el titulo de la noticia.</string>
+    <string name="news_body_error_empty">Ingrese la descripción de la noticia.</string>
     <string name="position.empty.player">Debe cargar una posición desde el botón (+).</string>
     <string name="submenu.empty.player">Debe cargar un submenu desde el botón (+).</string>
-    <string name="add.menu.hint">Ingrese el nuevo menu.</string>
     <string name="add.menu.error.empty">Debe ingresar un %1$s.</string>
     <string name="save.menu.success">%1$s guardado correctamente.</string>
     <string name="update.menu.success">%1$s actualizado correctamente.</string>
+    <string name="same.team.error">El equipo local no puede ser igual al equipo visitante.</string>
+    <string name="isactual.error">El Submenu ya tiene un torneo asignado.</string>
+
+    <!--NAVIGATION DRAWER-->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--TITLES TABS-->
+    <string name="team_title_tab">EQUIPOS</string>
+    <string name="fixture_title_tab">FIXTURE</string>
+    <string name="table_title_tab">TABLA DE POSICIONES</string>
+    <string name="news_title_tab">NOTICIAS</string>
+    <string name="sanction_title_tab">SANCIONES</string>
+    <string name="tournament_title_tab">TORNEOS</string>
+    <string name="account_title_tab">MI CUENTA</string>
+    <string name="login_title_tab">LOGUINES</string>
+    <string name="menu_submenu_title_tab">MENU - SUBMENU</string>
+    <string name="player_title_tab">JUGADORES</string>
+    <string name="create.title.tab">CREAR</string>
+    <string name="edit.title.tab">EDITAR</string>
+
+    <!--RESPONSE-->
+    <string name="null_response">Respuesta nula.</string>
+    <string name="null_process">Proceso nulo.</string>
+
+    <!--SHARED-->
+    <string name="shared.id.title.submenu">shared.id.title.submenu</string>
+    <string name="shared.id">shared.id</string>
+    <string name="shared_title">shared_title</string>
+    <string name="shared_id_user_work">shared_id_user_work</string>
+    <string name="shared_id_user">id_user_work</string>
+
+    <!--LAYOUT-->
+    <string name="pos.title">N°</string>
+    <string name="team.title">EQUIPO</string>
+    <string name="points.title">PTS</string>
+    <string name="pj.title">PJ</string>
+    <string name="pg.title">PG</string>
+    <string name="pe.title">PE</string>
+    <string name="pp.title">PP</string>
+    <string name="gf.title">GF</string>
+    <string name="ge.title">GE</string>
+    <string name="df.title">DF</string>
+    <string name="day">Día</string>
+    <string name="hour">Hora</string>
+
+    <!--ALERT-->
+    <string name="alert.title">Atención</string>
+    <string name="alert.msg.team">Si elimina un equipo eliminará todos los fixtures asociados a el. Desea eliminar el equipo de todas formas?</string>
+    <string name="alert.msg.player">Desea eliminar el jugador?</string>
     <string name="active.menu.alerte.msg">Desea %1$s el %2$s?</string>
-    <string name="save.fixture.button">Guardar Fixture</string>
     <string name="delete.menu.alerte.msg">Desea eliminar el %1$s? se borraran todos los dato relacionado a el.</string>
     <string name="delete.menu.success">%1$s eliminado correctamente.</string>
-    <string name="menus.empty.submenu">Debe generar al menos un menu.</string>
-    <string name="submenu.empty">Debe generar al menos un submenu.</string>
-    <string name="text.button.save.news">Guardar Noticia</string>
-    <string name="text.button.save.sanction">Guardar Sanción</string>
-    <string name="players.empty">Debe generar al menos un jugador.</string>
     <string name="sanction.empty">Debe ingresa la sanción.</string>-->
 
     <!--GENERAL-->
@@ -85,13 +102,11 @@
     <string name="delete.alerte.msg">Desea eliminar %1$s? se borraran todos los dato relacionado a el.</string>
     <string name="delete.simple.alerte.msg">Desea eliminar %1$s?</string>
     <string name="spinner.empty">Debe generar al menos %1$s.</string>
+    <string name="editText.empty">Debe ingresar un %1$s.</string>
+    <string name="day.empty">Seleccione el día.</string>
+    <string name="hour.empty">Seleccione la hora.</string>
 
-
-
-    <string name="news_title_error_empty">Ingrese el titulo de la noticia.</string>
-    <string name="news_body_error_empty">Ingrese la descripción de la noticia.</string>
-    <string name="day">Día</string>
-    <string name="hour">Hora</string>
-
+    <string name="title_activity_navigation_adm">ADEFUL</string>
+    <string name="error.id.user.zero">Problemas para obtener su código de usuario. Reinicie la aplicación.</string>
 
 </resources>

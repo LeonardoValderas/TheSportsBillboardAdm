@@ -16,6 +16,7 @@ class TeamCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: A
 
     private var team: Team? = null
     private var response: WSResponse? = null
+    private var id_user = 1
 
     override fun getTeam(context: Context, id_team: Int) {
         //internet connection
@@ -51,69 +52,81 @@ class TeamCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: A
     }
 
     override fun saveTeam(context: Context, team: Team) {
-        try {
-            apiService.saveTeam(team.NAME, team.URL_IMAGE, team.NAME_IMAGE, team.ENCODE, 1, Utils.getFechaOficialSeparate())
-                    .subscribeOn(scheduler.schedulerIO())
-                    .observeOn(scheduler.schedulerMainThreader())
-                    .subscribe({ result ->
-                        if (result != null) {
-                            response = result
-                            if (response != null) {
-                                if (response?.SUCCESS.equals("0")) {
-                                    post(TeamCreateFragmentEvent.SAVETEAM)
+     //   id_user = Utils.getIdUserWork(context)
+        if (id_user != 0) {
+            try {
+                apiService.saveTeam(team.NAME, team.URL_IMAGE, team.NAME_IMAGE, team.ENCODE, id_user, Utils.getFechaOficialSeparate())
+                        .subscribeOn(scheduler.schedulerIO())
+                        .observeOn(scheduler.schedulerMainThreader())
+                        .subscribe({ result ->
+                            if (result != null) {
+                                response = result
+                                if (response != null) {
+                                    if (response?.SUCCESS.equals("0")) {
+                                        post(TeamCreateFragmentEvent.SAVETEAM)
+                                    } else {
+                                        post(TeamCreateFragmentEvent.ERROR, response?.MESSAGE)
+                                    }
                                 } else {
-                                    post(TeamCreateFragmentEvent.ERROR, response?.MESSAGE)
+                                    post(TeamCreateFragmentEvent.ERROR, context.getString(R.string.null_response))
                                 }
                             } else {
-                                post(TeamCreateFragmentEvent.ERROR, context.getString(R.string.null_response))
+                                post(TeamCreateFragmentEvent.ERROR, context.getString(R.string.null_process))
                             }
-                        } else {
-                            post(TeamCreateFragmentEvent.ERROR, context.getString(R.string.null_process))
-                        }
-                    }, { e ->
-                        post(TeamCreateFragmentEvent.ERROR, e.message)
-                        FirebaseCrash.report(e)
-                    })
-        } catch (e: Exception) {
-            FirebaseCrash.report(e)
-            post(TeamCreateFragmentEvent.ERROR, e.message)
+                        }, { e ->
+                            post(TeamCreateFragmentEvent.ERROR, e.message)
+                            FirebaseCrash.report(e)
+                        })
+            } catch (e: Exception) {
+                FirebaseCrash.report(e)
+                post(TeamCreateFragmentEvent.ERROR, e.message)
+            }
+        } else {
+            post(TeamCreateFragmentEvent.ERROR, context.getString(R.string.error_id_user_zero))
         }
     }
 
     override fun updateTeam(context: Context, team: Team) {
-        try {
-            apiService.updateTeam(team.ID_TEAM_KEY, team.NAME, team.URL_IMAGE, team.NAME_IMAGE, team.ENCODE, team.BEFORE,
-                                  team.IS_ACTIVE, 1, Utils.getFechaOficialSeparate())
-                    .subscribeOn(scheduler.schedulerIO())
-                    .observeOn(scheduler.schedulerMainThreader())
-                    .subscribe({ result ->
-                        if (result != null) {
-                            response = result
-                            if (response != null) {
-                                if (response?.SUCCESS.equals("0")) {
-                                    post(TeamCreateFragmentEvent.UPDATETEAM)
+      //  id_user = Utils.getIdUserWork(context)
+        if (id_user != 0) {
+            try {
+                apiService.updateTeam(team.ID_TEAM_KEY, team.NAME, team.URL_IMAGE,
+                        team.NAME_IMAGE, team.ENCODE, team.BEFORE,
+                        team.IS_ACTIVE, id_user, Utils.getFechaOficialSeparate())
+                        .subscribeOn(scheduler.schedulerIO())
+                        .observeOn(scheduler.schedulerMainThreader())
+                        .subscribe({ result ->
+                            if (result != null) {
+                                response = result
+                                if (response != null) {
+                                    if (response?.SUCCESS.equals("0")) {
+                                        post(TeamCreateFragmentEvent.UPDATETEAM)
+                                    } else {
+                                        post(TeamCreateFragmentEvent.ERROR, response?.MESSAGE)
+                                    }
                                 } else {
-                                    post(TeamCreateFragmentEvent.ERROR, response?.MESSAGE)
+                                    post(TeamCreateFragmentEvent.ERROR, context.getString(R.string.null_response))
                                 }
                             } else {
-                                post(TeamCreateFragmentEvent.ERROR, context.getString(R.string.null_response))
+                                post(TeamCreateFragmentEvent.ERROR, context.getString(R.string.null_process))
                             }
-                        } else {
-                            post(TeamCreateFragmentEvent.ERROR, context.getString(R.string.null_process))
-                        }
-                    }, { e ->
-                        post(TeamCreateFragmentEvent.ERROR, e.message)
-                        FirebaseCrash.report(e)
-                    })
-        } catch (e: Exception) {
-            FirebaseCrash.report(e)
-            post(TeamCreateFragmentEvent.ERROR, e.message)
+                        }, { e ->
+                            post(TeamCreateFragmentEvent.ERROR, e.message)
+                            FirebaseCrash.report(e)
+                        })
+            } catch (e: Exception) {
+                FirebaseCrash.report(e)
+                post(TeamCreateFragmentEvent.ERROR, e.message)
+            }
+        } else {
+            post(TeamCreateFragmentEvent.ERROR, context.getString(R.string.error_id_user_zero))
         }
     }
 
     fun post(types: Int) {
         post(types, null, null)
     }
+
     fun post(types: Int, error: String?) {
         post(types, null, error)
     }
