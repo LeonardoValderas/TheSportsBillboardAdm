@@ -12,8 +12,10 @@ import android.widget.TextView
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 
-class SubMenuActivityAdapter(var contextActivity: Activity?, var contextFragment: Fragment?, var resource: Int, var subMenuDrawers: MutableList<SubMenuDrawer>)
-    : BaseAdapter() {
+class SubMenuActivityAdapter(var contextActivity: Activity?,
+                             var contextFragment: Fragment?,
+                             var resource: Int,
+                             var subMenuDrawers: MutableList<SubMenuDrawer>) : BaseAdapter() {
 
 
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {

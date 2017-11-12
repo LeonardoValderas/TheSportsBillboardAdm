@@ -7,15 +7,15 @@ import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
 import com.valdroide.thesportsbillboardinstitution.lib.base.SchedulersInterface
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.*
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.ui.PlayerUpdateFragmentView
-import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.ui.adapter.OnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.ui.adapter.PlayerUpdateFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.model.entities.Player
+import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class PlayerUpdateFragmentModule(val view: PlayerUpdateFragmentView, val listener: OnItemClickListener) {
+class PlayerUpdateFragmentModule(val view: PlayerUpdateFragmentView, val listener: GenericOnItemClickListener.withActive) {
 
     @Provides
     @Singleton
@@ -45,7 +45,7 @@ class PlayerUpdateFragmentModule(val view: PlayerUpdateFragmentView, val listene
 
     @Provides
     @Singleton
-    fun providePlayerUpdateFragmentAdapter(players: MutableList<Player>, listener: OnItemClickListener, fragment: Fragment): PlayerUpdateFragmentAdapter
+    fun providePlayerUpdateFragmentAdapter(players: MutableList<Player>, listener: GenericOnItemClickListener.withActive, fragment: Fragment): PlayerUpdateFragmentAdapter
             = PlayerUpdateFragmentAdapter(players, listener, fragment)
 
     @Provides
@@ -54,5 +54,5 @@ class PlayerUpdateFragmentModule(val view: PlayerUpdateFragmentView, val listene
 
     @Provides
     @Singleton
-    fun provideOnItemClickListener(): OnItemClickListener = listener
+    fun provideOnItemClickListener(): GenericOnItemClickListener.withActive = listener
 }

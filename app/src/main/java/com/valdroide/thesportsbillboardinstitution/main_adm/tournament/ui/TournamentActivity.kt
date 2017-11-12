@@ -54,7 +54,6 @@ open class TournamentActivity : AppCompatActivity(), TournamentActivityView, Vie
     }
 
     private fun getSubMenusTournaments() {
-        showProgressBarHideLayout()
         presenter.getSubMenuTournaments(this)
     }
 
@@ -81,10 +80,10 @@ open class TournamentActivity : AppCompatActivity(), TournamentActivityView, Vie
     private fun getPresenter(): TournamentActivityPresenter =
             component.getPresenter()
 
-    private fun showProgressBarHideLayout() {
-        showProgressBar()
-        setVisibilityViews(View.INVISIBLE)
-    }
+//    private fun showProgressBarHideLayout() {
+//        showProgressBar()
+//        setVisibilityViews(View.INVISIBLE)
+//    }
 
     override fun setVisibilityViews(isVisible: Int) {
         conteinerContent.visibility = isVisible
@@ -151,7 +150,6 @@ open class TournamentActivity : AppCompatActivity(), TournamentActivityView, Vie
         alert(getString(R.string.delete_alerte_msg, "el torneo")) {
             title = "Atención"
             yesButton {
-                showProgressBarHideLayout()
                 presenter.deleteTournament(applicationContext, tournament)
             }
             noButton { }
@@ -162,7 +160,6 @@ open class TournamentActivity : AppCompatActivity(), TournamentActivityView, Vie
         if (tournaments.isEmpty())
             setError(getString(R.string.spinner_empty, "torneo"))
         else {
-            showProgressBarHideLayout()
             if (tournament.IS_ACTIVE == 0) tournament.IS_ACTIVE = 1 else tournament.IS_ACTIVE = 0
             presenter.activeOrUnActiveTournament(this, tournament)
         }
@@ -170,7 +167,6 @@ open class TournamentActivity : AppCompatActivity(), TournamentActivityView, Vie
 
     override fun boxEvent(position: Int, submenu: SubMenuDrawer, id_tournament: Int, isActual: Boolean) {
         this.position = position
-        showProgressBarHideLayout()
         presenter.assignationUnassignation(this, submenu, id_tournament, isActual)
     }
 
@@ -183,7 +179,6 @@ open class TournamentActivity : AppCompatActivity(), TournamentActivityView, Vie
         if (editTextTournament.text.isEmpty())
             editTextTournament.error = getString(R.string.editText_empty, "torneo")
         else {
-            showProgressBarHideLayout()
             if (isUpdate) {
                 tournament.TOURNAMENT = editTextTournament.text.toString()
                 presenter.updateTournament(this, tournament)

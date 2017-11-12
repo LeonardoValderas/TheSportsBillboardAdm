@@ -4,17 +4,11 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 
-class SectionsPagerAdapter(fm: FragmentManager, private val titles: Array<String>, private val fragments: Array<Fragment>) : FragmentPagerAdapter(fm) {
+class SectionsPagerAdapter(fm: FragmentManager,
+                           private val titles: Array<String>,
+                           private val fragments: Array<Fragment>) : FragmentPagerAdapter(fm) {
 
-    override fun getItem(position: Int): Fragment {
-        return fragments[position]
-    }
-
-    override fun getCount(): Int {
-        return fragments.size
-    }
-
-    override fun getPageTitle(position: Int): CharSequence {
-        return titles[position]
-    }
+    override fun getItem(position: Int): Fragment = fragments[position]
+    override fun getCount(): Int = fragments.size
+    override fun getPageTitle(position: Int): CharSequence = titles[position]
 }

@@ -25,20 +25,34 @@ class NewsCreateFragmentPresenterImpl(var view: NewsCreateFragmentView, val even
     }
 
     override fun getNews(context: Context, id_news: Int) {
+        showProgressAndSetVisivility()
         interactor.getNews(context, id_news)
     }
 
     override fun saveNews(context: Context, news: News) {
+        showProgressAndSetVisivility()
         interactor.saveNews(context, news)
     }
 
     override fun updateNews(context: Context, news: News) {
+        showProgressAndSetVisivility()
         interactor.updateNews(context, news)
     }
 
     override fun getSubMenus(context: Context) {
+        showProgressAndSetVisivility()
         interactor.getSubMenus(context)
     }
+
+    private fun showProgressAndSetVisivility(){
+        view.showProgressDialog()
+        view.setVisibilityViews(View.INVISIBLE)
+    }
+    private fun hideProgressAndSetVisivility(){
+        view.hideProgressDialog()
+        view.setVisibilityViews(View.VISIBLE)
+    }
+
 
     @Subscribe
     override fun onEventMainThread(event: NewsCreateFragmentEvent) {
@@ -46,29 +60,23 @@ class NewsCreateFragmentPresenterImpl(var view: NewsCreateFragmentView, val even
             NewsCreateFragmentEvent.GETNEWS -> {
                 view.setNewsUpdate(event.news!!)
                 view.fillViewUpdate()
-                view.hideProgressDialog()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressAndSetVisivility()
             }
             NewsCreateFragmentEvent.SAVENEWS -> {
-                view.hideProgressDialog()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressAndSetVisivility()
                 view.saveSuccess()
                 view.cleanViews()
             }
             NewsCreateFragmentEvent.UPDATENEWS -> {
-                view.hideProgressDialog()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressAndSetVisivility()
                 view.editSuccess()
                 view.cleanViews()
             }
             NewsCreateFragmentEvent.GETSUBMENU -> {
-                view.setVisibilityViews(View.VISIBLE)
                 view.setSubMenus(event.subMenuDrawers!!)
-                view.hideProgressDialog()
             }
             NewsCreateFragmentEvent.ERROR -> {
-                view.hideProgressDialog()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressAndSetVisivility()
                 view.setError(event.error!!)
             }
         }

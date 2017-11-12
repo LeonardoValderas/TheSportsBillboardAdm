@@ -28,10 +28,12 @@ class FixtureUpdateFragmentPresenterImpl(var view: FixtureUpdateFragmentView, va
     }
 
     override fun setResultFixture(context: Context, fixture: Fixture) {
+        view.showSwipeRefreshLayout()
         interactor.setResultFixture(context, fixture)
     }
 
     override fun deleteFixture(context: Context, fixture: Fixture) {
+        view.showSwipeRefreshLayout()
         interactor.deleteFixture(context, fixture)
     }
 

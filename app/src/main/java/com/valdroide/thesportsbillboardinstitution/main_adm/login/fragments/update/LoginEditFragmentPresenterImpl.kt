@@ -29,10 +29,12 @@ class LoginEditFragmentPresenterImpl(var view: LoginEditFragmentView, val event:
     }
 
     override fun deleteLogin(context: Context, login: Login) {
+        view.showSwipeRefreshLayout()
         interactor.deleteLogin(context, login)
     }
 
     override fun activeOrUnActiveLogins(context: Context, login: Login) {
+        view.showSwipeRefreshLayout()
         interactor.activeOrUnActiveLogins(context, login)
     }
 

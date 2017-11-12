@@ -60,7 +60,6 @@ open class MenuSubMenuActivity : AppCompatActivity(), MenuSubMenuActivityView, V
     }
 
     private fun getMenuSubMenu() {
-        showProgressBar()
         presenter.getMenuSubMenu(this)
     }
 
@@ -230,25 +229,30 @@ open class MenuSubMenuActivity : AppCompatActivity(), MenuSubMenuActivityView, V
         }
     }
 
-    fun showAlertDialog(title: String, msg: String, menu: MenuDrawer?, subMenu: SubMenuDrawer?, isMenu: Boolean, isDelete: Boolean) {
+    private fun showAlertDialog(title: String,
+                                msg: String,
+                                menu: MenuDrawer?,
+                                subMenu: SubMenuDrawer?,
+                                isMenu: Boolean,
+                                isDelete: Boolean) {
+
         val alertDilog = AlertDialog.Builder(this).create()
         alertDilog.setTitle(title)
         alertDilog.setMessage(msg)
 
         alertDilog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", { dialogInterface, i ->
-            showProgressBar()
             if (isMenu) {
                 if (!isDelete) {
                     menuDrawer.IS_ACTIVE = if (menuDrawer.IS_ACTIVE == 0) 1 else 0
-                    presenter.activeOrUnActiveMenu(this, menuDrawer)
+                    presenter.activeOrUnActiveMenu(this, menu!!)
                 } else
-                    presenter.deleteMenu(this, menuDrawer)
+                    presenter.deleteMenu(this, menu!!)
             } else {
                 if (!isDelete) {
                     subMenuDrawer.IS_ACTIVE = if (subMenuDrawer.IS_ACTIVE == 0) 1 else 0
-                    presenter.activeOrUnActiveSubMenu(this, subMenuDrawer)
+                    presenter.activeOrUnActiveSubMenu(this, subMenu!!)
                 } else
-                    presenter.deleteSubMenu(this, subMenuDrawer)
+                    presenter.deleteSubMenu(this, subMenu!!)
             }
         })
 

@@ -68,7 +68,6 @@ class NewsUpdateFragment : Fragment(), NewsUpdateFragmentView, OnItemClickListen
         alertDilog.setMessage(msg)
 
         alertDilog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", { dialogInterface, i ->
-            showSwipeRefreshLayout()
             presenter.deleteNews(activity, News)
         })
 
@@ -100,7 +99,6 @@ class NewsUpdateFragment : Fragment(), NewsUpdateFragmentView, OnItemClickListen
     }
 
     override fun onClickUnActiveNews(position: Int, News: News) {
-        showSwipeRefreshLayout()
         presenter.activeUnActiveNews(activity, News)
     }
 

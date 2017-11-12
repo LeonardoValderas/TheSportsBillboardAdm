@@ -28,10 +28,12 @@ class LoginCreateFragmentPresenterImpl(var view: LoginCreateFragmentView, val ev
     }
 
     override fun saveLogin(context: Context, login: Login) {
+        view.showProgressDialog()
         interactor.saveLogin(context, login)
     }
 
     override fun editLogin(context: Context, login: Login) {
+        view.showProgressDialog()
         interactor.editLogin(context, login)
     }
 

@@ -42,7 +42,6 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
     private var url_image: String = ""
     private var imageByte: ByteArray? = null
 
-
     companion object {
         const val PERMISSION_GALERY: Int = 101
         const val URL: String = "http://10.0.3.2:8080/the_sports_billboard_institution/adm/team/image_team/"
@@ -61,7 +60,6 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
         linearConteinerPlayer.visibility = View.GONE
         isTeamUpdate()
         if (is_update) {
-            setVisibilityViews(View.INVISIBLE)
             presenter.getTeam(activity, id_team)
         } else
             setVisibilityViews(View.VISIBLE)
@@ -140,7 +138,7 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
     }
 
     private fun assignImage(uri: Uri?) {
-        Utils.setPicasso(activity, uri.toString(), android.R.drawable.ic_menu_camera, imageViewTeam)
+        Utils.setPicasso(activity, uri.toString(), R.drawable.shield_icon, imageViewTeam)
         try {
             imageByte = Utils.readBytes(uri, activity)
         } catch (e: IOException) {
@@ -265,7 +263,7 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
         name_before = ""
         encode = ""
         imageByte = null
-        imageViewTeam.setImageResource(R.drawable.empty_shield_icon)
+        imageViewTeam.setImageResource(R.drawable.shield_icon)
     }
 
     override fun setVisibilityViews(isVisible: Int) {

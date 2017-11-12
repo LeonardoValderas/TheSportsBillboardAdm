@@ -2,6 +2,7 @@ package com.valdroide.thesportsbillboardinstitution.main_user.tab
 
 import android.os.Bundle
 import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 
 import com.valdroide.thesportsbillboardinstitution.R
@@ -13,24 +14,24 @@ import com.valdroide.thesportsbillboardinstitution.main_user.fragment.leaderboar
 import kotlinx.android.synthetic.main.content_tab.*
 import kotlinx.android.synthetic.main.activity_tab.*
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer
+import com.valdroide.thesportsbillboardinstitution.utils.BaseActivityTabs
 import com.valdroide.thesportsbillboardinstitution.utils.SectionsPagerAdapter
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 
 
-open class TabActivity : AppCompatActivity() {
+open class TabActivity : BaseActivityTabs() {
 
-    var adapter: SectionsPagerAdapter? = null
+    override val titles: Array<String>
+        get() = arrayOf(getString(R.string.news_title_tab), getString(R.string.fixture_title_tab),
+                getString(R.string.table_title_tab), getString(R.string.sanction_title_tab))
+    override val fragments: Array<Fragment>
+        get() = arrayOf(NewsFragment(), FixtureFragment(), LeaderBoardFragment(), SanctionFragment())
+
+    override fun getUpdateFragment(): Fragment = Fragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tab)
         initToobar()
-        setPagerAdapter()
-        setupNavigation()
-//        fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show()
-//        }
     }
 
     private fun initToobar(){
@@ -46,34 +47,5 @@ open class TabActivity : AppCompatActivity() {
 //        val fragments = arrayOf(NewsFragment(), FixtureFragment(), LeaderBoardFragment(), SanctionFragment(), PlayerFragment())
 //        adapter = SectionsPagerAdapter(supportFragmentManager, titles, fragments)
 //    }
-//     ADEFUL
-    private fun setPagerAdapter() {
-        val titles = arrayOf(getString(R.string.news_title_tab), getString(R.string.fixture_title_tab),
-                getString(R.string.table_title_tab), getString(R.string.sanction_title_tab))
-        val fragments = arrayOf(NewsFragment(), FixtureFragment(), LeaderBoardFragment(), SanctionFragment())
-        adapter = SectionsPagerAdapter(supportFragmentManager, titles, fragments)
-    }
 
-
-
-    private fun setupNavigation() {
-        viewPager.setAdapter(adapter)
-        viewPager.setPageTransformer(true, RotateUpTransformer())
-        tabs.setupWithViewPager(viewPager)
-        tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
-
-        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-  //              hideKeyBoard()
-            }
-
-            override fun onPageSelected(position: Int) {
-    //            hideKeyBoard()
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
-        })
-    }
 }

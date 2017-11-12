@@ -28,6 +28,7 @@ class SanctionUpdateFragmentPresenterImpl(var view: SanctionUpdateFragmentView, 
     }
 
     override fun deleteSanction(context: Context, sanction: Sanction) {
+        view.showSwipeRefreshLayout()
         interactor.deleteSanction(context, sanction)
     }
 

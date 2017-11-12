@@ -12,13 +12,16 @@ import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitution
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.activity.TabPlayerActivity
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.PlayerUpdateFragmentPresenter
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.di.PlayerUpdateFragmentComponent
-import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.ui.adapter.OnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.ui.adapter.PlayerUpdateFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.model.entities.Player
+import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.fragment_player.*
+import org.jetbrains.anko.noButton
+import org.jetbrains.anko.support.v4.alert
+import org.jetbrains.anko.yesButton
 
-class PlayerUpdateFragment : Fragment(), PlayerUpdateFragmentView, OnItemClickListener {
+class PlayerUpdateFragment : Fragment(), PlayerUpdateFragmentView, GenericOnItemClickListener.withActive {
 
     private lateinit var component: PlayerUpdateFragmentComponent
     lateinit var presenter: PlayerUpdateFragmentPresenter
@@ -62,20 +65,14 @@ class PlayerUpdateFragment : Fragment(), PlayerUpdateFragmentView, OnItemClickLi
         }
     }
 
-    fun showAlertDialog(title: String, msg: String, player: Player) {
-        val alertDilog = AlertDialog.Builder(activity).create()
-        alertDilog.setTitle(title)
-        alertDilog.setMessage(msg)
-
-        alertDilog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", { dialogInterface, i ->
-            showSwipeRefreshLayout()
-            presenter.deletePlayer(activity, player)
-        })
-
-        alertDilog.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCELAR", { dialogInterface, j ->
-            alertDilog.dismiss()
-        })
-        alertDilog.show()
+    private fun showAlertDialog(titleText: String, msg: String, player: Player) {
+        alert(msg) {
+            title = titleText
+            yesButton {
+                presenter.deletePlayer(activity, player)
+            }
+            noButton{}
+        }.show()
     }
 
     open fun getPresenterInj(): PlayerUpdateFragmentPresenter = component.getPresenter()
@@ -83,25 +80,24 @@ class PlayerUpdateFragment : Fragment(), PlayerUpdateFragmentView, OnItemClickLi
 
     open fun getAdapter(): PlayerUpdateFragmentAdapter = component.getAdapter()
 
-    override fun onClickUpdatePlayer(position: Int, player: Player) {
+    override fun onClickUpdate(position: Int, any: Any) {
         val i = Intent(activity, TabPlayerActivity::class.java)
         i.putExtra("is_update", true)
-        i.putExtra("id_player", player.ID_PLAYER_KEY)
+        i.putExtra("id_player", (any as Player).ID_PLAYER_KEY)
         startActivity(i)
     }
 
-    override fun onClickDeletePlayer(position: Int, Player: Player) {
+    override fun onClickDelete(position: Int, any: Any) {
         this.position = position
-        showAlertDialog( getString(R.string.alert_title), getString(R.string.alert_msg_player), Player)
+        showAlertDialog( getString(R.string.alert_title), getString(R.string.alert_msg_player), any as Player)
     }
 
-    override fun onClickActivePlayer(position: Int, Player: Player) {
-        presenter.activeUnActivePlayer(activity, Player)
+    override fun onClickActive(position: Int, any: Any) {
+        presenter.activeUnActivePlayer(activity, any as Player)
     }
 
-    override fun onClickUnActivePlayer(position: Int, Player: Player) {
-        showSwipeRefreshLayout()
-        presenter.activeUnActivePlayer(activity, Player)
+    override fun onClickUnActive(position: Int, any: Any) {
+        presenter.activeUnActivePlayer(activity, any as Player)
     }
 
     override fun updatePlayerSuccess() {
@@ -126,6 +122,9 @@ class PlayerUpdateFragment : Fragment(), PlayerUpdateFragmentView, OnItemClickLi
         adapterLogin.deletePlayer(position)
         Utils.showSnackBar(conteiner, activity.getString(R.string.player_delete_success))
     }
+
+    override fun onClickSave(position: Int, any: Any) {}
+
 
     override fun setError(error: String) {
         Utils.showSnackBar(conteiner, error)

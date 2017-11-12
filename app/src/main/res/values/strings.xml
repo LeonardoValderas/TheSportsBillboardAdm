@@ -91,7 +91,16 @@
     <string name="active.menu.alerte.msg">Desea %1$s el %2$s?</string>
     <string name="delete.menu.alerte.msg">Desea eliminar el %1$s? se borraran todos los dato relacionado a el.</string>
     <string name="delete.menu.success">%1$s eliminado correctamente.</string>
-    <string name="sanction.empty">Debe ingresa la sanción.</string>-->
+    <string name="sanction.empty">Debe ingresa la sanción.</string>
+
+    <string name="alert.info.player">En esta opción usted podrá realizar acciones sobre los jugadores que componen los equipos de la institución.
+        Para crear un jugador debe ingresar su nombre, seleccionar su posición de juego y su correspondiente submenu.
+        Usted puede crear o editar la posición de juego presionando la opción "mas" o la opción "lapiz".
+    En la sopala Editar usted podrá actualizar los datos de los equipo como también eliminarlos.
+    Existe la opción de activar o desactivar un equipo en el caso de no querer eliminar al mismo. Un equipo inactivo no será visible para el usuario.</string>
+
+
+
 
     <!--GENERAL-->
     <string name="save.button">Guardar %1$s</string>
@@ -108,5 +117,19 @@
 
     <string name="title_activity_navigation_adm">ADEFUL</string>
     <string name="error.id.user.zero">Problemas para obtener su código de usuario. Reinicie la aplicación.</string>
+
+    <!--ARRAY-->
+    <array name="menu_title_3">
+        <item>Editar Item</item>
+        <item>Activar/Desactivar Item</item>
+        <item>Eliminar Item</item>
+    </array>
+    <array name="menu_title_4">
+        <item>Editar Item</item>
+        <item>Activar/Desactivar Item</item>
+        <item>Eliminar Item</item>
+        <item>Otro</item>
+    </array>
+
 
 </resources>

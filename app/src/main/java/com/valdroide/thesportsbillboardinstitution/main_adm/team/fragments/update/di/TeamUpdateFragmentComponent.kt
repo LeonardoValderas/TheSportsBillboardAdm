@@ -9,7 +9,6 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = arrayOf(TeamUpdateFragmentModule::class, LibsModule::class))
 interface TeamUpdateFragmentComponent {
-
     fun getPresenter(): TeamUpdateFragmentPresenter
     fun getAdapter(): TeamUpdateFragmentAdapter
 }

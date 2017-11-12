@@ -20,37 +20,46 @@ class MenuSubMenuActivityPresenterImpl(val view: MenuSubMenuActivityView, val ev
     }
 
     override fun getMenuSubMenu(context: Context) {
+        view.showProgressBar()
         interactor.getMenuSubMenu(context)
     }
 
     override fun saveMenu(context: Context, menu: MenuDrawer) {
+        view.showProgressBar()
         interactor.saveMenu(context, menu)
     }
 
     override fun updateMenu(context: Context, menu: MenuDrawer) {
+        view.showProgressBar()
         interactor.updateMenu(context, menu)
     }
 
     override fun activeOrUnActiveMenu(context: Context, menu: MenuDrawer) {
+        view.showProgressBar()
         interactor.activeOrUnActiveMenu(context, menu)
     }
 
     override fun deleteMenu(context: Context, menu: MenuDrawer) {
+        view.showProgressBar()
         interactor.deleteMenu(context, menu)
     }
     override fun saveSubMenu(context: Context, subMenu: SubMenuDrawer) {
+        view.showProgressBar()
         interactor.saveSubMenu(context, subMenu)
     }
 
     override fun updateSubMenu(context: Context, subMenu: SubMenuDrawer) {
+        view.showProgressBar()
         interactor.updateSubMenu(context, subMenu)
     }
 
     override fun activeOrUnActiveSubMenu(context: Context, subMenu: SubMenuDrawer) {
+        view.showProgressBar()
         interactor.activeOrUnActiveSubMenu(context, subMenu)
     }
 
     override fun deleteSubMenu(context: Context, subMenu: SubMenuDrawer) {
+        view.showProgressBar()
         interactor.deleteSubMenu(context, subMenu)
     }
     

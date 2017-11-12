@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/conteiner"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -355,5 +356,61 @@
         </RelativeLayout>
     </ScrollView>
 
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fabConteiner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        fab:menu_animationDelayPerItem="0"
+        fab:menu_colorNormal="@color/colorPrimary"
+        fab:menu_colorPressed="@color/colorPrimary_light"
+        fab:menu_colorRipple="@color/colorPrimaryDark"
+        fab:menu_labels_hideAnimation="@anim/jump_to_down"
+        fab:menu_labels_showAnimation="@anim/jump_from_down"
+        fab:menu_labels_style="@style/MenuLabelsStyle"
+        fab:menu_shadowColor="#444">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabMenuSubMenu"
+            style="@style/MenuButtonsStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fixture_icon"
+            fab:fab_label="Ir a Menus" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabTournament"
+            style="@style/MenuButtonsStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tournament_icon"
+            fab:fab_label="Ir a Torneos" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabTeam"
+            style="@style/MenuButtonsStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/team_icon"
+            fab:fab_label="Ir a Equipos" />
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabField"
+            style="@style/MenuButtonsStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/field_icon"
+            fab:fab_label="Ir a Lugar" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabTimes"
+            style="@style/MenuButtonsStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/time_icon"
+            fab:fab_label="Ir a Tiempos" />
+
+    </com.github.clans.fab.FloatingActionMenu>
 
 </FrameLayout>

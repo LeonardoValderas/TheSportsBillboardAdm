@@ -64,7 +64,6 @@ open class AccountAdmActivity : AppCompatActivity(), AccountAdmActivityView {
     }
 
     private fun getAccount() {
-        showProgressBar()
         presenter.getAccount(this)
     }
 
@@ -254,7 +253,6 @@ open class AccountAdmActivity : AppCompatActivity(), AccountAdmActivityView {
         if (id == R.id.action_save) {
             presenter.saveAccount(this, fillAccount())
         } else if (id == R.id.action_edit) {
-
             setEnableViews(true)
             menuVisibility(true, false)
         }

@@ -77,12 +77,10 @@ class LoginEditFragment : Fragment(), LoginEditFragmentView, OnItemClickListener
     }
 
     override fun onClickActiveLogin(position: Int, login: Login) {
-        showSwipeRefreshLayout()
         presenter.activeOrUnActiveLogins(activity, login)
     }
 
     override fun onClickUnActiveLogin(position: Int, login: Login) {
-        showSwipeRefreshLayout()
         presenter.activeOrUnActiveLogins(activity, login)
     }
 
@@ -132,7 +130,6 @@ class LoginEditFragment : Fragment(), LoginEditFragmentView, OnItemClickListener
         alertDilog.setMessage(msg)
 
         alertDilog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", { dialogInterface, i ->
-            showSwipeRefreshLayout()
             presenter.deleteLogin(activity, login)
         })
 

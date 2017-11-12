@@ -38,8 +38,8 @@ class FixtureUpdateFragmentAdapter(private var fixtures: MutableList<Fixture>?, 
             with(fixture) {
                 val date_hour = DATE_MATCH + " - " + HOUR_MATCH + " hs."
                 itemView.textViewDateHour.text = date_hour
-                Utils.setPicasso(fragment.activity, URL_LOCAL_TEAM, R.drawable.empty_shield_icon, itemView.imageViewLocalTeam)
-                Utils.setPicasso(fragment.activity, URL_VISIT_TEAM, R.drawable.empty_shield_icon, itemView.imageViewVisitTeam)
+                Utils.setPicasso(fragment.activity, URL_LOCAL_TEAM, R.drawable.shield_icon, itemView.imageViewLocalTeam)
+                Utils.setPicasso(fragment.activity, URL_VISIT_TEAM, R.drawable.shield_icon, itemView.imageViewVisitTeam)
                 itemView.textViewLocalResult.text = RESULT_LOCAL
                 itemView.textViewVisitResult.text = RESULT_VISITE
                 itemView.textViewTimes.text = TIMES_MATCH
@@ -59,7 +59,7 @@ class FixtureUpdateFragmentAdapter(private var fixtures: MutableList<Fixture>?, 
 
         fun setOnItemClickListener(listener: GenericOnItemClickListener.fixture, position: Int, Fixture: Fixture, fragment: Fragment) {
             itemView.setOnClickListener {
-                showPopupMenu(itemView.conteiner, fragment.activity, position, Fixture, listener);
+                showPopupMenu(itemView.conteiner, fragment.activity, position, Fixture, listener)
             }
         }
 

@@ -29,15 +29,23 @@ class FixtureCreateFragmentPresenterImpl(var view: FixtureCreateFragmentView, va
     }
 
     override fun saveFixture(context: Context, fixture: Fixture) {
+        showProgressAndSetVisibility()
         interactor.saveFixture(context, fixture)
     }
 
     override fun updateFixture(context: Context, fixture: Fixture) {
+        showProgressAndSetVisibility()
         interactor.updateFixture(context, fixture)
     }
 
     override fun getSpinnerData(context: Context) {
+        showProgressAndSetVisibility()
         interactor.getSpinnerData(context)
+    }
+
+    private fun showProgressAndSetVisibility(){
+        view.showProgressDialog()
+        view.setVisibilityViews(View.INVISIBLE)
     }
 
     @Subscribe

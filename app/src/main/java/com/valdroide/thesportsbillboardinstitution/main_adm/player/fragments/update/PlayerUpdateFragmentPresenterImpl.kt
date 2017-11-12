@@ -24,14 +24,17 @@ class PlayerUpdateFragmentPresenterImpl(var view: PlayerUpdateFragmentView, val 
     }
 
     override fun getPlayers(context: Context) {
+        view.showSwipeRefreshLayout()
         interactor.getPlayers(context)
     }
 
     override fun activeUnActivePlayer(context: Context, player: Player) {
+        view.showSwipeRefreshLayout()
         interactor.activeUnActivePlayer(context, player)
     }
 
     override fun deletePlayer(context: Context, player: Player) {
+        view.showSwipeRefreshLayout()
         interactor.deletePlayer(context, player)
     }
 

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearDialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_style_linear"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:text="Editar"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/viewUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="5dp"
+        android:background="@color/colorPrimary_text"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/btnActive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:text="Active"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/viewActive"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="5dp"
+        android:background="@color/colorPrimary_text"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:text="delete"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/viewDelete"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="5dp"
+        android:background="@color/colorPrimary_text"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/btnOther"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:text="other"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+</LinearLayout>

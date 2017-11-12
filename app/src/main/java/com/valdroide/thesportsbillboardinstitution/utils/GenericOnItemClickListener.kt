@@ -1,8 +1,9 @@
 package com.valdroide.thesportsbillboardinstitution.utils
 
+import android.view.View
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 
-interface GenericOnItemClickListener {
+interface GenericOnItemClickListener<T> {
     interface withActive {
         fun onClickActive(position: Int, any: Any)
         fun onClickUnActive(position: Int, any: Any)

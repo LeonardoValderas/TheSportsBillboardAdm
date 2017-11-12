@@ -7,7 +7,9 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.account.ui.AccountAd
 import com.valdroide.thesportsbillboardinstitution.model.entities.Account
 import org.greenrobot.eventbus.Subscribe
 
-class AccountAdmActivityPresenterImpl(val view: AccountAdmActivityView, val event: EventBus, val interactor: AccountAdmActivityInteractor) : AccountAdmActivityPresenter {
+class AccountAdmActivityPresenterImpl(val view: AccountAdmActivityView,
+                                      val event: EventBus,
+                                      val interactor: AccountAdmActivityInteractor) : AccountAdmActivityPresenter {
 
     override fun onCreate() {
         event.register(this)
@@ -18,10 +20,12 @@ class AccountAdmActivityPresenterImpl(val view: AccountAdmActivityView, val even
     }
 
     override fun getAccount(context: Context) {
+        view.showProgressBar()
         interactor.getAccount(context)
     }
 
     override fun saveAccount(context: Context, account: Account) {
+        view.showProgressBar()
         interactor.saveAccount(context, account)
     }
 

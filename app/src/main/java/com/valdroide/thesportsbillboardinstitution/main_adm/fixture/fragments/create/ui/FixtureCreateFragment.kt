@@ -1,5 +1,7 @@
 package com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.Editable
@@ -21,10 +23,17 @@ import com.github.clans.fab.FloatingActionButton
 import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment
 import com.codetroopers.betterpickers.timepicker.TimePickerDialogFragment
 import com.codetroopers.betterpickers.timepicker.TimePickerBuilder
+import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui.MenuSubMenuActivity
+import com.valdroide.thesportsbillboardinstitution.main_adm.team.activity.TabTeamActivity
+import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.ui.TournamentActivity
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.yesButton
 
-class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClickListener, CalendarDatePickerDialogFragment.OnDateSetListener, TimePickerDialogFragment.TimePickerDialogHandler {
+class FixtureCreateFragment : Fragment(),
+                              FixtureCreateFragmentView,
+                              View.OnClickListener,
+                              CalendarDatePickerDialogFragment.OnDateSetListener,
+                              TimePickerDialogFragment.TimePickerDialogHandler {
 
     private lateinit var component: FixtureCreateFragmentComponent
     private lateinit var presenter: FixtureCreateFragmentPresenter
@@ -71,7 +80,7 @@ class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClic
         isFixtureUpdate()
         initSpinnerAdapter()
         getSpinnerData()
-        setOnclik()
+        setOnClick()
     }
 
     private fun setupInjection() {
@@ -93,24 +102,28 @@ class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClic
             buttonDay -> openCalendar()
             buttonHour -> openTimer()
             imageViewInformationFixture -> showAlertInformation()
-        //   fabGoToSubMenu -> startActivity(Intent(activity, MenuSubMenuActivity::class.java))
-        //   fabGoToTeam -> startActivity(Intent(activity, TabTeamActivity::class.java))
+            fabMenuSubMenu -> goToActivity(MenuSubMenuActivity())
+            fabTournament -> goToActivity(TournamentActivity())
+            fabTeam -> goToActivity(TabTeamActivity())
+         //   fabField -> goToActivity(Fie)
+          //  fabTimes ->
         }
+   }
 
-    }
-
-    private fun setOnclik() {
+    private fun setOnClick() {
         buttonSave.setOnClickListener(this)
         buttonDay.setOnClickListener(this)
         buttonHour.setOnClickListener(this)
         imageViewInformationFixture.setOnClickListener(this)
-        //  fabGoToSubMenu.setOnClickListener(this)
-        // fabGoToTeam.setOnClickListener(this)
-//        fabConteiner.setOnMenuToggleListener(FloatingActionMenu.OnMenuToggleListener { opened ->
-//            setVisivilityFab(fabCreateTournament, opened)
-//            setVisivilityFab(fabUpdateTournament, opened)
-//            setVisivilityFab(fabDeleteTournament, opened)
-//        })
+        fabMenuSubMenu.setOnClickListener(this)
+        fabTournament.setOnClickListener(this)
+        fabTeam.setOnClickListener(this)
+        fabField.setOnClickListener(this)
+        fabTimes.setOnClickListener(this)
+    }
+
+    private fun goToActivity(activity: Activity) {
+        startActivity(Intent(getActivity(), activity::class.java))
     }
 
     private fun openCalendar() {
@@ -138,15 +151,15 @@ class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClic
         textViewHour.text = hour
     }
 
-    private fun setVisivilityFab(fab: FloatingActionButton, isOpened: Boolean) {
-        if (isOpened) {
-            fab.visibility = View.VISIBLE
-            fab.show(true)
-        } else {
-            fab.visibility = View.GONE
-            fab.hide(true)
-        }
-    }
+//    private fun setVisivilityFab(fab: FloatingActionButton, isOpened: Boolean) {
+//        if (isOpened) {
+//            fab.visibility = View.VISIBLE
+//            fab.show(true)
+//        } else {
+//            fab.visibility = View.GONE
+//            fab.hide(true)
+//        }
+//    }
 
     private fun showAlertInformation() {
         alert("En esta opción usted podrá realizar acciones sobre los fixtures.\n" +
@@ -159,13 +172,7 @@ class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClic
     }
 
     private fun getSpinnerData() {
-        showProgressAndSetVisivility()
         presenter.getSpinnerData(activity)
-    }
-
-    private fun showProgressAndSetVisivility() {
-        showProgressDialog()
-        setVisibilityViews(View.INVISIBLE)
     }
 
     override fun setSpinnersData(submenus: MutableList<SubMenuDrawer>,
@@ -306,7 +313,6 @@ class FixtureCreateFragment : Fragment(), FixtureCreateFragmentView, View.OnClic
     }
 
     private fun fillFixtureEntity() {
-        showProgressAndSetVisivility()
         fixture.ID_SUBMENU_KEY = subMenuDrawer.ID_SUBMENU_KEY
         fixture.ID_LOCAL_TEAM = localTeam.ID_TEAM_KEY
         fixture.ID_VISITE_TEAM = visiteTeam.ID_TEAM_KEY

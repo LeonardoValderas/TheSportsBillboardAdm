@@ -56,8 +56,8 @@ class LoginCreateFragment : Fragment(), LoginCreateFragmentView {
         val obPass = RxTextView.textChanges(editTextPass).skip(1)
                 .debounce(500, TimeUnit.MILLISECONDS)
 
-        var isUser: Boolean = false
-        var isPass: Boolean = false
+        var isUser = false
+        var isPass = false
         val isLoginEnabled: Observable<Boolean> = Observable.combineLatest(
                 obUser,
                 obPass,
@@ -98,12 +98,10 @@ class LoginCreateFragment : Fragment(), LoginCreateFragmentView {
     }
 
     private fun saveLogin(login: Login) {
-        showProgressDialog()
         presenter.saveLogin(activity, login)
     }
 
     private fun editLogin(login: Login) {
-        showProgressDialog()
         presenter.editLogin(activity, login)
     }
 
@@ -112,7 +110,6 @@ class LoginCreateFragment : Fragment(), LoginCreateFragmentView {
         app.firebaseAnalyticsInstance().setCurrentScreen(activity, javaClass.simpleName, null)
         component = app.getLoginCreateFragmentComponent(this, this)
         presenter = getPresenterInj()
-        //    adapterFixture = getAdapter()
     }
 
     private fun getPresenterInj(): LoginCreateFragmentPresenter =
@@ -150,7 +147,6 @@ class LoginCreateFragment : Fragment(), LoginCreateFragmentView {
             id_login = ID_LOGIN_KEY
             editTextUser.text = Editable.Factory.getInstance().newEditable(USER)
             editTextPass.text = Editable.Factory.getInstance().newEditable(PASS)
-            //type
         }
     }
 

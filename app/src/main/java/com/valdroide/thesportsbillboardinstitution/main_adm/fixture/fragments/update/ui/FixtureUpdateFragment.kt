@@ -72,7 +72,6 @@ class FixtureUpdateFragment : Fragment(), FixtureUpdateFragmentView, GenericOnIt
         alert(msg) {
             title = titleText
             yesButton {
-                showSwipeRefreshLayout()
                 presenter.deleteFixture(activity, fixture)
             }
             noButton {}
@@ -93,11 +92,9 @@ class FixtureUpdateFragment : Fragment(), FixtureUpdateFragmentView, GenericOnIt
     private fun showAlertResult(fixture: Fixture, activity: Activity) {
         alert = CustomDialog.Builder(activity).setOnClick(this).withFixture(fixture).withTimes(times).getDialog()
         alert!!.show()
-
     }
 
     override fun onSaveResult(any: Any) {
-        showSwipeRefreshLayout()
         presenter.setResultFixture(activity, any as Fixture)
     }
 

@@ -61,16 +61,17 @@ class NewsCreateFragment : Fragment(), NewsCreateFragmentView, View.OnClickListe
         setupInjection()
         communication = activity as Communicator
         register()
+        textViewButton.text = getString(R.string.save_button, "Noticia")
         isNewsUpdate()
         initSpinnerAdapter()
         getSubMenu()
         if (is_update) {
-            setVisibilityViews(View.INVISIBLE)
             presenter.getNews(activity, id_news)
-        } else
+        } else {
             setVisibilityViews(View.VISIBLE)
+            hideProgressDialog()
+        }
         setOnclik()
-
     }
 
     private fun setupInjection() {
@@ -82,7 +83,6 @@ class NewsCreateFragment : Fragment(), NewsCreateFragmentView, View.OnClickListe
     }
 
     private fun getSubMenu() {
-        showProgressDialog()
         presenter.getSubMenus(activity)
     }
 
@@ -189,8 +189,6 @@ class NewsCreateFragment : Fragment(), NewsCreateFragmentView, View.OnClickListe
     }
 
     private fun fillNewsEntity() {
-        showProgressDialog()
-        setVisibilityViews(View.INVISIBLE)
         news.TITLE = editTextTitleNews.text.toString()
         news.DESCRIPTION = editTextBodyNews.text.toString()
         news.ID_SUB_MENU = subMenuDrawer.ID_SUBMENU_KEY

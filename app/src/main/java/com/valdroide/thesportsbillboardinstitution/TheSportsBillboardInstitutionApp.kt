@@ -103,6 +103,8 @@ import com.valdroide.thesportsbillboardinstitution.main_user.navigation.di.Dagge
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.di.NavigationActivityComponent
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.di.NavigationActivityModule
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.ui.NavigationActivityView
+import com.valdroide.thesportsbillboardinstitution.model.entities.Team
+import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClick
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener_2
 
@@ -258,11 +260,11 @@ class TheSportsBillboardInstitutionApp : Application() {
                 .build()
     }
 
-    fun getTeamUpdateFragmentComponent(view: TeamUpdateFragmentView, listener: com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.ui.adapter.OnItemClickListener, fragment: Fragment): TeamUpdateFragmentComponent {
+    fun getTeamUpdateFragmentComponent(view: TeamUpdateFragmentView, fragment: Fragment): TeamUpdateFragmentComponent {
         return DaggerTeamUpdateFragmentComponent
                 .builder()
                 .libsModule(LibsModule(fragment))
-                .teamUpdateFragmentModule(TeamUpdateFragmentModule(view, listener))
+                .teamUpdateFragmentModule(TeamUpdateFragmentModule(view, fragment.activity))
                 .build()
     }
 
@@ -275,7 +277,7 @@ class TheSportsBillboardInstitutionApp : Application() {
 
     }
 
-    fun getPlayerUpdateFragmentComponent(view: PlayerUpdateFragmentView, listener: com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.ui.adapter.OnItemClickListener, fragment: Fragment): PlayerUpdateFragmentComponent {
+    fun getPlayerUpdateFragmentComponent(view: PlayerUpdateFragmentView, listener: GenericOnItemClickListener.withActive, fragment: Fragment): PlayerUpdateFragmentComponent {
         return DaggerPlayerUpdateFragmentComponent
                 .builder()
                 .libsModule(LibsModule(fragment))

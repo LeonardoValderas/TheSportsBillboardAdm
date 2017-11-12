@@ -28,10 +28,12 @@ class NewsUpdateFragmentPresenterImpl(var view: NewsUpdateFragmentView, val even
     }
 
     override fun activeUnActiveNews(context: Context, news: News) {
+        view.showSwipeRefreshLayout()
         interactor.activeUnActiveNews(context, news)
     }
 
     override fun deleteNews(context: Context, News: News) {
+        view.showSwipeRefreshLayout()
         interactor.deleteNews(context, News)
     }
 

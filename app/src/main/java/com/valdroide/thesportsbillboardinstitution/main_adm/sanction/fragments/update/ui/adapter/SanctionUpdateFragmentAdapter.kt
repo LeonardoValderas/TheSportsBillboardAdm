@@ -11,7 +11,8 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.Sanction
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener_2
 import kotlinx.android.synthetic.main.sanction_item.view.*
 
-class SanctionUpdateFragmentAdapter(private var sanctions: MutableList<Sanction>?, private var listener: GenericOnItemClickListener_2,
+class SanctionUpdateFragmentAdapter(private var sanctions: MutableList<Sanction>?,
+                                    private var listener: GenericOnItemClickListener_2,
                                     fragment: Fragment) : RecyclerView.Adapter<SanctionUpdateFragmentAdapter.ViewHolder>() {
 
     private val fragment: Fragment
@@ -60,7 +61,9 @@ class SanctionUpdateFragmentAdapter(private var sanctions: MutableList<Sanction>
             popup.show()
         }
 
-        private class MenuItemClickListener(internal var position: Int, internal var sanction: Sanction, internal var listener: GenericOnItemClickListener_2) : PopupMenu.OnMenuItemClickListener {
+        private class MenuItemClickListener(internal var position: Int,
+                                            internal var sanction: Sanction,
+                                            internal var listener: GenericOnItemClickListener_2) : PopupMenu.OnMenuItemClickListener {
 
             override fun onMenuItemClick(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {

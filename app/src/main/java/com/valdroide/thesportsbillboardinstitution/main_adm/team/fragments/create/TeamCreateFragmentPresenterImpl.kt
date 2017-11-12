@@ -25,42 +25,50 @@ class TeamCreateFragmentPresenterImpl(var view: TeamCreateFragmentView, val even
     }
 
     override fun getTeam(context: Context, id_team: Int) {
+        showProgressAndSetVisibility()
         interactor.getTeam(context, id_team)
     }
 
     override fun saveTeam(context: Context, team: Team) {
+        showProgressAndSetVisibility()
         interactor.saveTeam(context, team)
     }
 
     override fun updateTeam(context: Context, team: Team) {
+        showProgressAndSetVisibility()
         interactor.updateTeam(context, team)
     }
 
+    private fun showProgressAndSetVisibility() {
+        view.showProgressDialog()
+        view.setVisibilityViews(View.INVISIBLE)
+    }
+
+    private fun hideProgressAndSetVisibility() {
+        view.hideProgressDialog()
+        view.setVisibilityViews(View.VISIBLE)
+    }
 
     @Subscribe
     override fun onEventMainThread(event: TeamCreateFragmentEvent) {
         when (event.type) {
             TeamCreateFragmentEvent.GETTEAM -> {
-                view.hideProgressDialog()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressAndSetVisibility()
                 view.setTeamEdit(event.team!!)
                 view.fillViewUpdate()
             }
             TeamCreateFragmentEvent.SAVETEAM -> {
-                view.hideProgressDialog()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressAndSetVisibility()
                 view.saveSuccess()
                 view.cleanViews()
             }
             TeamCreateFragmentEvent.UPDATETEAM -> {
-                view.hideProgressDialog()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressAndSetVisibility()
                 view.editSuccess()
                 view.cleanViews()
             }
             TeamCreateFragmentEvent.ERROR -> {
-                view.hideProgressDialog()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressAndSetVisibility()
                 view.setError(event.error!!)
             }
         }

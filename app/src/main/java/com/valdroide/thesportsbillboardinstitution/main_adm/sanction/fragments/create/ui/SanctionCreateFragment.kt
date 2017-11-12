@@ -36,7 +36,6 @@ class SanctionCreateFragment : Fragment(), SanctionCreateFragmentView, View.OnCl
     private var is_update: Boolean = false
     private var id_sanction: Int = 0
 
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
             inflater!!.inflate(R.layout.fragment_create_sanction, container, false)
@@ -46,14 +45,16 @@ class SanctionCreateFragment : Fragment(), SanctionCreateFragmentView, View.OnCl
         setupInjection()
         communication = activity as Communicator
         register()
+        textViewButton.text = getString(R.string.save_button, "Sanción")
         isSanctionUpdate()
         initSpinnerAdapter()
         getSubMenuAndPlayers()
         if (is_update) {
-            setVisibilityViews(View.INVISIBLE)
             presenter.getSanction(activity, id_sanction)
-        } else
+        } else {
             setVisibilityViews(View.VISIBLE)
+            hideProgressDialog()
+        }
         setOnclik()
     }
 
@@ -72,7 +73,6 @@ class SanctionCreateFragment : Fragment(), SanctionCreateFragmentView, View.OnCl
     }
 
     private fun getSubMenuAndPlayers() {
-        showProgressDialog()
         presenter.getSubMenusAndPlayers(activity)
     }
 
@@ -133,9 +133,7 @@ class SanctionCreateFragment : Fragment(), SanctionCreateFragmentView, View.OnCl
         }
     }
 
-    private fun getPlayerForIdSubMenu(id_submenu: Int){
-        showProgressDialog()
-        setVisibilityViews(View.INVISIBLE)
+    private fun getPlayerForIdSubMenu(id_submenu: Int) {
         presenter.getPlayerForIdSubMenu(activity, id_submenu)
     }
 
@@ -151,8 +149,6 @@ class SanctionCreateFragment : Fragment(), SanctionCreateFragmentView, View.OnCl
     }
 
     private fun fillSanctionEntity() {
-        showProgressDialog()
-        setVisibilityViews(View.INVISIBLE)
         sanction.YELLOW = editTextYellow.text.toString()
         sanction.RED = editTextRed.text.toString()
         sanction.SANCTION = editTextSanction.text.toString()
@@ -249,8 +245,6 @@ class SanctionCreateFragment : Fragment(), SanctionCreateFragmentView, View.OnCl
 
     override fun cleanViews() {
         sanction = Sanction()
-    //    subMenuDrawer = SubMenuDrawer()
-    //    player = Player()
         editTextYellow.text.clear()
         editTextRed.text.clear()
         editTextSanction.text.clear()

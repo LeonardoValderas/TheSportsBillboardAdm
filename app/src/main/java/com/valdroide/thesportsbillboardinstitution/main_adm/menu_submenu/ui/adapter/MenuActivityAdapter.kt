@@ -16,9 +16,9 @@ import android.widget.ImageView
 import org.jetbrains.anko.backgroundColor
 
 
-class MenuActivityAdapter(var contextAdapter: Activity, var resource: Int, var menuDrawers: MutableList<MenuDrawer>)
-    : BaseAdapter() {
-
+class MenuActivityAdapter(var contextAdapter: Activity,
+                          var resource: Int,
+                          var menuDrawers: MutableList<MenuDrawer>) : BaseAdapter() {
 
     override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
         var row = p1
@@ -45,7 +45,7 @@ class MenuActivityAdapter(var contextAdapter: Activity, var resource: Int, var m
 
     override fun getCount(): Int = menuDrawers.size
 
-    public fun refresh(menuDrawers: MutableList<MenuDrawer>){
+    fun refresh(menuDrawers: MutableList<MenuDrawer>){
         this.menuDrawers = menuDrawers
         notifyDataSetChanged()
     }

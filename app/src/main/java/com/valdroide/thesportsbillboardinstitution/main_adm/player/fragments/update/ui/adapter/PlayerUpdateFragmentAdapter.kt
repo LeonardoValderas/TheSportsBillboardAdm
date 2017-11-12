@@ -8,10 +8,12 @@ import android.view.*
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.ui.PlayerUpdateFragment
 import com.valdroide.thesportsbillboardinstitution.model.entities.Player
+import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.player_item.view.*
 
-class PlayerUpdateFragmentAdapter(private var players: MutableList<Player>?, private var listener: OnItemClickListener,
+class PlayerUpdateFragmentAdapter(private var players: MutableList<Player>?,
+                                  private var listener: GenericOnItemClickListener.withActive,
                                   fragment: Fragment) : RecyclerView.Adapter<PlayerUpdateFragmentAdapter.ViewHolder>() {
 
     private val fragment: Fragment
@@ -31,11 +33,14 @@ class PlayerUpdateFragmentAdapter(private var players: MutableList<Player>?, pri
 
     class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindData(player: Player, position: Int, listener: OnItemClickListener, fragment: Fragment) {
+        fun bindData(player: Player,
+                     position: Int,
+                     listener: GenericOnItemClickListener.withActive,
+                     fragment: Fragment) {
             //   YoYo.with(Techniques.FlipInX).playOn(holder.card_view);
             with(player) {
                 itemView.textViewName.text = NAME
-                Utils.setPicasso(fragment.activity, URL_IMAGE, R.mipmap.ic_launcher, itemView.imageViewPlayer)
+                Utils.setPicasso(fragment.activity, URL_IMAGE, R.drawable.players_icon, itemView.imageViewPlayer)
                 itemView.textViewPosition.text = POSITION
                 itemView.textViewMenuSubMenu.visibility = View.VISIBLE
                 val conca = MENU + " - " + SUBMENU
@@ -46,13 +51,19 @@ class PlayerUpdateFragmentAdapter(private var players: MutableList<Player>?, pri
             setOnItemClickListener(listener, position, player, fragment)
         }
 
-        fun setOnItemClickListener(listener: OnItemClickListener, position: Int, player: Player, fragment: Fragment) {
+        fun setOnItemClickListener(listener: GenericOnItemClickListener.withActive,
+                                   position: Int,
+                                   player: Player,
+                                   fragment: Fragment) {
             itemView.setOnClickListener {
                 showPopupMenu(itemView.conteiner, fragment.activity, position, player, listener);
             }
         }
 
-        private fun showPopupMenu(view: View, context: Context, position: Int, player: Player, listener: OnItemClickListener) {
+        private fun showPopupMenu(view: View, context: Context,
+                                  position: Int,
+                                  player: Player,
+                                  listener: GenericOnItemClickListener.withActive) {
             val popup = PopupMenu(context, view, Gravity.END )
             if (player.IS_ACTIVE == 0)
                 popup.getMenu().add(Menu.NONE, 1, 1, "Activar Jugador")
@@ -64,26 +75,28 @@ class PlayerUpdateFragmentAdapter(private var players: MutableList<Player>?, pri
             popup.show()
         }
 
-        private class MenuItemClickListener(internal var position: Int, internal var player: Player, internal var listener: OnItemClickListener) : PopupMenu.OnMenuItemClickListener {
+        private class MenuItemClickListener(internal var position: Int,
+                                            internal var player: Player,
+                                            internal var listener: GenericOnItemClickListener.withActive) : PopupMenu.OnMenuItemClickListener {
 
             override fun onMenuItemClick(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
                     1 -> {
                         player.IS_ACTIVE = 1
-                        listener.onClickActivePlayer(position, player)
+                        listener.onClickActive(position, player)
                         return true
                     }
                     2 -> {
                         player.IS_ACTIVE = 0
-                        listener.onClickUnActivePlayer(position, player)
+                        listener.onClickUnActive(position, player)
                         return true
                     }
                     3 -> {
-                        listener.onClickUpdatePlayer(position, player)
+                        listener.onClickUpdate(position, player)
                         return true
                     }
                     4 -> {
-                        listener.onClickDeletePlayer(position, player)
+                        listener.onClickDelete(position, player)
                         return true
                     }
                 }

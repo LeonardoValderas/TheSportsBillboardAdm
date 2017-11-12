@@ -17,6 +17,9 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.Sanction
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener_2
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.frame_recycler_refresh.*
+import org.jetbrains.anko.noButton
+import org.jetbrains.anko.support.v4.alert
+import org.jetbrains.anko.yesButton
 
 class SanctionUpdateFragment : Fragment(), SanctionUpdateFragmentView, GenericOnItemClickListener_2{
 
@@ -62,24 +65,17 @@ class SanctionUpdateFragment : Fragment(), SanctionUpdateFragmentView, GenericOn
         }
     }
 
-    fun showAlertDialog(title: String, msg: String, sanction: Sanction) {
-        val alertDilog = AlertDialog.Builder(activity).create()
-        alertDilog.setTitle(title)
-        alertDilog.setMessage(msg)
-
-        alertDilog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", { dialogInterface, i ->
-            showSwipeRefreshLayout()
-            presenter.deleteSanction(activity, sanction)
-        })
-
-        alertDilog.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCELAR", { dialogInterface, j ->
-            alertDilog.dismiss()
-        })
-        alertDilog.show()
+    private fun showAlertDialog(titleText: String, msg: String, sanction: Sanction) {
+        alert(msg) {
+            title = titleText
+            yesButton {
+                presenter.deleteSanction(activity, sanction)
+            }
+            noButton{}
+        }.show()
     }
 
     open fun getPresenterInj(): SanctionUpdateFragmentPresenter = component.getPresenter()
-
 
     open fun getAdapter(): SanctionUpdateFragmentAdapter = component.getAdapter()
 

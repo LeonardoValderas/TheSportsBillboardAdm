@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/conteiner"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.ui.TeamCreateFragment">
+    tools:context="com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.create.ui.NewsCreateFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -34,13 +33,12 @@
 
                 <ImageView
                     android:id="@+id/imageViewNews"
-                    android:layout_width="180dp"
-                    android:layout_height="180dp"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:clickable="true"
-                    android:src="@android:drawable/ic_menu_camera" />
-
+                    android:src="@drawable/news_icon_big" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -81,7 +79,7 @@
                     android:id="@+id/textInputLayoutBodyNews"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp">
+                    android:layout_marginTop="5dp">
 
                     <EditText
                         android:id="@+id/editTextBodyNews"

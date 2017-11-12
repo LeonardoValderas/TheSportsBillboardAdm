@@ -20,6 +20,7 @@ class TournamentActivityPresenterImpl(val view: TournamentActivityView, val even
     }
 
     override fun getSubMenuTournaments(context: Context) {
+        showProgressSetVisivility()
         interactor.getSubMenuTournaments(context)
     }
 
@@ -28,23 +29,38 @@ class TournamentActivityPresenterImpl(val view: TournamentActivityView, val even
     }
 
     override fun saveTournament(context: Context, Tournament: Tournament) {
+        showProgressSetVisivility()
         interactor.saveTournament(context, Tournament)
     }
 
     override fun updateTournament(context: Context, Tournament: Tournament) {
+        showProgressSetVisivility()
         interactor.updateTournament(context, Tournament)
     }
 
     override fun activeOrUnActiveTournament(context: Context, tournament: Tournament) {
+        showProgressSetVisivility()
         interactor.activeOrUnActiveTournament(context, tournament)
     }
 
     override fun deleteTournament(context: Context, Tournament: Tournament) {
+        showProgressSetVisivility()
         interactor.deleteTournament(context, Tournament)
     }
 
     override fun assignationUnassignation(context: Context, subMenu: SubMenuDrawer, tounament: Int, isActual: Boolean) {
+        showProgressSetVisivility()
         interactor.assignationUnassignation(context, subMenu, tounament, isActual)
+    }
+
+    private fun showProgressSetVisivility() {
+        view.showProgressBar()
+        view.setVisibilityViews(View.INVISIBLE)
+    }
+
+    private fun hideProgressSetVisivility() {
+        view.hideProgressBar()
+        view.setVisibilityViews(View.VISIBLE)
     }
 
     @Subscribe
@@ -52,14 +68,12 @@ class TournamentActivityPresenterImpl(val view: TournamentActivityView, val even
         when (event.type) {
             TournamentActivityEvent.GETSUBMENUSTORNAMENTS -> {
                 view.setSubMenusTournaments(event.tournaments!!)
-                view.hideProgressBar()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressSetVisivility()
             }
 
             TournamentActivityEvent.GETSUBMENUSFORIDTOURNAMENTS-> {
                 view.setSubMenusForTournament(event.subMenuDrawers!!)
-                view.hideProgressBar()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressSetVisivility()
             }
 
             TournamentActivityEvent.EVENTTORNAMENTSUCCESS -> {
@@ -69,14 +83,12 @@ class TournamentActivityPresenterImpl(val view: TournamentActivityView, val even
             }
 
             TournamentActivityEvent.EVENTASSIGNATIONSUCCESS -> {
-                view.hideProgressBar()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressSetVisivility()
                 view.assignationSuccess(event.subMenuDrawer!!, event.isActual)
             }
 
             TournamentActivityEvent.ERROR -> {
-                view.hideProgressBar()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressSetVisivility()
                 view.setError(event.msg!!)
             }
         }

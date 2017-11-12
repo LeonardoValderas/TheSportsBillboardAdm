@@ -22,10 +22,15 @@ import com.valdroide.thesportsbillboardinstitution.R
 import android.content.Intent
 import android.content.DialogInterface
 import android.net.Uri
+import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AlertDialog
+import com.ToxicBakery.viewpager.transforms.RotateUpTransformer
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import kotlinx.android.synthetic.main.activity_tab.*
+import kotlinx.android.synthetic.main.content_tab.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.yesButton
@@ -36,16 +41,37 @@ import java.util.*
 
 object Utils {
 
+        const val PERMISSION_GALERY: Int = 101
+        const val URL_PLAYER: String = "http://10.0.3.2:8080/the_sports_billboard_institution/adm/player/image_player/"
+
+        fun setupViewpagerTabs(viewPager: ViewPager, tabs: TabLayout, adapter: SectionsPagerAdapter?): ViewPager {
+        viewPager.setAdapter(adapter)
+        viewPager.setPageTransformer(true, RotateUpTransformer())
+        tabs.setupWithViewPager(viewPager)
+        tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                //              hideKeyBoard()
+            }
+
+            override fun onPageSelected(position: Int) {
+                //            hideKeyBoard()
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+        })
+        return viewPager
+    }
+
     fun showSnackBar(conteiner: View, msg: String) {
         Snackbar.make(conteiner, msg, Snackbar.LENGTH_LONG).show()
     }
 
-    fun oldPhones(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            false // IS NEW PHONE
-        else
-            true // IS OLD PHONE
-    }
+    fun oldPhones(): Boolean = Build.VERSION.SDK_INT < Build.VERSION_CODES.M
+
 
     fun checkForPermission(activity: Activity, permissionCheck: Int, PERMISSION: Int, manifestPermission: String) {
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {

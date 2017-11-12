@@ -24,60 +24,69 @@ class SanctionCreateFragmentPresenterImpl(var view: SanctionCreateFragmentView, 
         event.unregister(this)
     }
 
-    override fun getPlayerForIdSubMenu(context: Context, id_submenu: Int){
+    override fun getPlayerForIdSubMenu(context: Context, id_submenu: Int) {
+        showProgressSetVisivility()
         interactor.getPlayerForIdSubMenu(context, id_submenu)
     }
 
     override fun getSanction(context: Context, id_Sanction: Int) {
+        showProgressSetVisivility()
         interactor.getSanction(context, id_Sanction)
     }
 
     override fun saveSanction(context: Context, sanction: Sanction) {
+        showProgressSetVisivility()
         interactor.saveSanction(context, sanction)
     }
 
     override fun updateSanction(context: Context, Sanction: Sanction) {
+        showProgressSetVisivility()
         interactor.updateSanction(context, Sanction)
     }
 
     override fun getSubMenusAndPlayers(context: Context) {
+        showProgressSetVisivility()
         interactor.getSubMenusAndPlayers(context)
+    }
+
+    private fun showProgressSetVisivility() {
+        view.showProgressDialog()
+        view.setVisibilityViews(View.INVISIBLE)
+    }
+
+    private fun hideProgressSetVisivility() {
+        view.hideProgressDialog()
+        view.setVisibilityViews(View.VISIBLE)
     }
 
     @Subscribe
     override fun onEventMainThread(event: SanctionCreateFragmentEvent) {
         when (event.type) {
-            SanctionCreateFragmentEvent.GETSANCTION-> {
+            SanctionCreateFragmentEvent.GETSANCTION -> {
                 view.setSanctionUpdate(event.sanction!!)
                 view.fillViewUpdate()
-                view.hideProgressDialog()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressSetVisivility()
             }
             SanctionCreateFragmentEvent.SAVESANCTION -> {
-                view.hideProgressDialog()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressSetVisivility()
                 view.saveSuccess()
                 view.cleanViews()
             }
             SanctionCreateFragmentEvent.UPDATESANCTION -> {
-                view.hideProgressDialog()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressSetVisivility()
                 view.editSuccess()
                 view.cleanViews()
             }
             SanctionCreateFragmentEvent.GETSUBMENUPLAYER -> {
-                view.setVisibilityViews(View.VISIBLE)
                 view.setSubMenusAndPlayers(event.subMenuDrawers!!, event.players!!)
-                view.hideProgressDialog()
+     //           hideProgressSetVisivility()
             }
-            SanctionCreateFragmentEvent.GETPLAYERFORID-> {
-                view.setVisibilityViews(View.VISIBLE)
+            SanctionCreateFragmentEvent.GETPLAYERFORID -> {
                 view.setPlayersForId(event.players!!)
-                view.hideProgressDialog()
+                hideProgressSetVisivility()
             }
             SanctionCreateFragmentEvent.ERROR -> {
-                view.hideProgressDialog()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressSetVisivility()
                 view.setError(event.error!!)
             }
         }

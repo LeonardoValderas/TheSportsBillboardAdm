@@ -29,14 +29,17 @@ class TeamUpdateFragmentPresenterImpl(var view: TeamUpdateFragmentView, val even
     }
 
     override fun getTeams(context: Context) {
+        view.showSwipeRefreshLayout()
         interactor.getTeams(context)
     }
 
     override fun activeUnActiveTeam(context: Context, team: Team) {
+        view.showSwipeRefreshLayout()
         interactor.activeUnActiveTeam(context, team)
     }
 
     override fun deleteTeam(context: Context, team: Team) {
+        view.showSwipeRefreshLayout()
         interactor.deleteTeam(context, team)
     }
 

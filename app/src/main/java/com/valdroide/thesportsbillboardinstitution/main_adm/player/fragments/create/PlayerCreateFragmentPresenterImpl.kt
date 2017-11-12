@@ -8,7 +8,9 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.cre
 import com.valdroide.thesportsbillboardinstitution.model.entities.Player
 import org.greenrobot.eventbus.Subscribe
 
-class PlayerCreateFragmentPresenterImpl(var view: PlayerCreateFragmentView, val event: EventBus, val interactor: PlayerCreateFragmentInteractor) : PlayerCreateFragmentPresenter {
+class PlayerCreateFragmentPresenterImpl(var view: PlayerCreateFragmentView,
+                                        val event: EventBus,
+                                        val interactor: PlayerCreateFragmentInteractor) : PlayerCreateFragmentPresenter {
 
     override fun getViewPresenter(): PlayerCreateFragmentView = view
 
@@ -29,15 +31,28 @@ class PlayerCreateFragmentPresenterImpl(var view: PlayerCreateFragmentView, val 
     }
 
     override fun savePlayer(context: Context, player: Player) {
+        showProgressAndSetVisivility()
         interactor.savePlayer(context, player)
     }
 
     override fun updatePlayer(context: Context, player: Player) {
+        showProgressAndSetVisivility()
         interactor.updatePlayer(context, player)
     }
 
     override fun getPositionsSubMenus(context: Context) {
+        showProgressAndSetVisivility()
         interactor.getPositionsSubMenus(context)
+    }
+
+    private fun showProgressAndSetVisivility(){
+        view.showProgressDialog()
+        view.setVisibilityViews(View.INVISIBLE)
+    }
+
+    private fun hideProgressAndSetVisivility(){
+        view.hideProgressDialog()
+        view.setVisibilityViews(View.VISIBLE)
     }
 
     @Subscribe
@@ -46,29 +61,24 @@ class PlayerCreateFragmentPresenterImpl(var view: PlayerCreateFragmentView, val 
             PlayerCreateFragmentEvent.GETPLAYER -> {
                 view.setPlayerUpdate(event.player!!)
                 view.fillViewUpdate()
-                view.hideProgressDialog()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressAndSetVisivility()
             }
             PlayerCreateFragmentEvent.SAVEPLAYER -> {
-                view.hideProgressDialog()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressAndSetVisivility()
                 view.saveSuccess()
                 view.cleanViews()
             }
             PlayerCreateFragmentEvent.UPDATEPLAYER -> {
-                view.hideProgressDialog()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressAndSetVisivility()
                 view.editSuccess()
                 view.cleanViews()
             }
             PlayerCreateFragmentEvent.POSITIONSSUBMENUS -> {
-                view.setVisibilityViews(View.VISIBLE)
                 view.setPositionsAndSubMenus(event.positions!!, event.submenus!!)
-                view.hideProgressDialog()
+                hideProgressAndSetVisivility()
             }
             PlayerCreateFragmentEvent.ERROR -> {
-                view.hideProgressDialog()
-                view.setVisibilityViews(View.VISIBLE)
+                hideProgressAndSetVisivility()
                 view.setError(event.error!!)
             }
         }

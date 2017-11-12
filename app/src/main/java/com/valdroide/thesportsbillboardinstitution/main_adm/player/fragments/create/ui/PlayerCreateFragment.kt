@@ -26,6 +26,8 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 import com.valdroide.thesportsbillboardinstitution.utils.Communicator
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.fragment_create_team.*
+import org.jetbrains.anko.support.v4.alert
+import org.jetbrains.anko.yesButton
 import java.io.IOException
 
 class PlayerCreateFragment : Fragment(), PlayerCreateFragmentView, View.OnClickListener {
@@ -49,10 +51,6 @@ class PlayerCreateFragment : Fragment(), PlayerCreateFragmentView, View.OnClickL
     private var url_image: String = ""
     private var imageByte: ByteArray? = null
 
-    companion object {
-        const val PERMISSION_GALERY: Int = 101
-        const val URL: String = "http://10.0.3.2:8080/the_sports_billboard_institution/adm/player/image_player/"
-    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
@@ -63,16 +61,17 @@ class PlayerCreateFragment : Fragment(), PlayerCreateFragmentView, View.OnClickL
         setupInjection()
         communication = activity as Communicator
         register()
+        textViewButton.text = getString(R.string.save_button, "Jugador")
         isPlayerUpdate()
         initSpinnerAdapter()
         getPositionsAndSubMenus()
         if (is_update) {
-            setVisibilityViews(View.INVISIBLE)
             presenter.getPlayer(activity, id_player)
-        } else
+        } else {
+            hideProgressDialog()
             setVisibilityViews(View.VISIBLE)
+        }
         setOnclik()
-
     }
 
     private fun setupInjection() {
@@ -102,8 +101,6 @@ class PlayerCreateFragment : Fragment(), PlayerCreateFragmentView, View.OnClickL
     }
 
     private fun getPositionsAndSubMenus() {
-        showProgressDialog()
-        setVisibilityViews(View.INVISIBLE)
         presenter.getPositionsSubMenus(activity)
     }
 
@@ -115,6 +112,7 @@ class PlayerCreateFragment : Fragment(), PlayerCreateFragmentView, View.OnClickL
     private fun setOnclik() {
         imageViewPlayer.setOnClickListener(this)
         buttonSave.setOnClickListener(this)
+        imageViewInformationPlayer.setOnClickListener(this)
     }
 
     override fun setPositionsAndSubMenus(positions: MutableList<Position>, submenus: MutableList<SubMenuDrawer>) {
@@ -125,10 +123,11 @@ class PlayerCreateFragment : Fragment(), PlayerCreateFragmentView, View.OnClickL
     }
 
     override fun onClick(onclick: View?) {
-        if (onclick == imageViewPlayer)
-            onClickPhoto()
-        else if (onclick == buttonSave)
-            onClickButtonSave()
+        when(onclick){
+            imageViewPlayer -> onClickPhoto()
+            buttonSave -> onClickButtonSave()
+            imageViewInformationPlayer -> showAlertInformation()
+        }
     }
 
     override fun onClickButtonSave() {
@@ -142,26 +141,33 @@ class PlayerCreateFragment : Fragment(), PlayerCreateFragmentView, View.OnClickL
             fillPlayerEntity()
     }
 
+    private fun showAlertInformation() {
+        alert(getString(R.string.alert_info_player)) {
+            title = "JUGADORES"
+            yesButton {
+            }
+        }.show()
+    }
     override fun onClickPhoto() {
         if (!Utils.oldPhones()) {
             val permissionCheck = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            Utils.checkForPermission(activity, permissionCheck, PERMISSION_GALERY, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            Utils.checkForPermission(activity, permissionCheck, Utils.PERMISSION_GALERY, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
         if (Utils.hasPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            Utils.ImageDialogLogo(null, this, PERMISSION_GALERY);
+            Utils.ImageDialogLogo(null, this, Utils.PERMISSION_GALERY);
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_GALERY)
+        if (requestCode == Utils.PERMISSION_GALERY)
             if (grantResults.count() > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                Utils.ImageDialogLogo(null, this, PERMISSION_GALERY);
+                Utils.ImageDialogLogo(null, this, Utils.PERMISSION_GALERY);
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
-            if (requestCode == PERMISSION_GALERY) {
+            if (requestCode == Utils.PERMISSION_GALERY) {
                 val imageUri = CropImage.getPickImageResultUri(activity, data)
                 Utils.startCropImageActivity(null, this, imageUri)
             }
@@ -192,8 +198,6 @@ class PlayerCreateFragment : Fragment(), PlayerCreateFragmentView, View.OnClickL
     }
 
     private fun fillPlayerEntity() {
-        showProgressDialog()
-        setVisibilityViews(View.INVISIBLE)
         player.NAME = editTextName.text.toString()
         position = spinnerPosition.selectedItem as Position
         submenu = spinnerSubMenu.selectedItem as SubMenuDrawer
@@ -206,7 +210,7 @@ class PlayerCreateFragment : Fragment(), PlayerCreateFragmentView, View.OnClickL
                 encode = ""
             }
             name_image = Utils.getFechaOficial() + ".PNG"
-            url_image = URL + name_image
+            url_image = Utils.URL_PLAYER + name_image
         }
 
         player.ENCODE = encode
@@ -273,14 +277,13 @@ class PlayerCreateFragment : Fragment(), PlayerCreateFragmentView, View.OnClickL
     override fun fillViewUpdate() {
         with(player) {
             id_player = ID_PLAYER_KEY
-            Utils.setPicasso(activity, URL_IMAGE, android.R.drawable.ic_menu_camera, imageViewPlayer)
+            Utils.setPicasso(activity, URL_IMAGE, R.drawable.players_icon, imageViewPlayer)
             editTextName.text = Editable.Factory.getInstance().newEditable(NAME)
             spinnerPosition.setSelection(getPositionSpinners(player.ID_POSITION, true))
             spinnerSubMenu.setSelection(getPositionSpinners(player.ID_SUB_MENU, false))
             url_image = URL_IMAGE
             name_image = NAME_IMAGE
             name_before = name_image
-
         }
     }
 
@@ -317,7 +320,7 @@ class PlayerCreateFragment : Fragment(), PlayerCreateFragmentView, View.OnClickL
         name_before = ""
         encode = ""
         imageByte = null
-        imageViewPlayer.setImageResource(android.R.drawable.ic_menu_camera)
+        imageViewPlayer.setImageResource(R.drawable.players_icon)
     }
 
     override fun setVisibilityViews(isVisible: Int) {
