@@ -18,26 +18,27 @@
     <string name="data_empty_account">Dato vacio.</string>
     <string name="web_address_invalid">Dirección Web invalida.</string>
     <string name="player.error.empty">Ingrese el nombre del jugador.</string>
-    <string name="player.save.success">Jugador creado correctamente.</string>
-    <string name="player.update.success">Jugador actualizado correctamente.</string>
-    <string name="player.delete.success">Jugador eliminado correctamente.</string>
-    <string name="login.save.success">Login creado correctamente.</string>
-    <string name="login.edit.success">Login actualizado correctamente.</string>
+    <!--<string name="player.save.success">Jugador creado correctamente.</string>-->
+    <!--<string name="player.update.success">Jugador actualizado correctamente.</string>-->
+    <!--<string name="player.delete.success">Jugador eliminado correctamente.</string>-->
+    <!--<string name="login.save.success">Login creado correctamente.</string>-->
+    <!--<string name="login.edit.success">Login actualizado correctamente.</string>-->
     <string name="login.error.user">El usuario debe contener más de 4 letras.</string>
     <string name="login.error.pass">La contraseña debe contener más de 4 letras.</string>
     <string name="login.delete.success">Login eliminado correctamente.</string>
     <string name="account.success">Datos guardados.</string>
     <string name="team.error.empty">Ingrese el nombre del equipo.</string>
-    <string name="team.save.success">Equipo creado correctamente.</string>
-    <string name="team.update.success">Equipo actualizado correctamente.</string>
-    <string name="team.delete.success">Equipo eliminado correctamente.</string>
+    <string name="position.hint">Ingrese la posición.</string>
+    <!--<string name="team.save.success">Equipo creado correctamente.</string>-->
+    <!--<string name="team.update.success">Equipo actualizado correctamente.</string>-->
+    <!--<string name="team.delete.success">Equipo eliminado correctamente.</string>-->
     <string name="news_title_error_empty">Ingrese el titulo de la noticia.</string>
     <string name="news_body_error_empty">Ingrese la descripción de la noticia.</string>
     <string name="position.empty.player">Debe cargar una posición desde el botón (+).</string>
     <string name="submenu.empty.player">Debe cargar un submenu desde el botón (+).</string>
     <string name="add.menu.error.empty">Debe ingresar un %1$s.</string>
-    <string name="save.menu.success">%1$s guardado correctamente.</string>
-    <string name="update.menu.success">%1$s actualizado correctamente.</string>
+    <!--<string name="save.menu.success">%1$s guardado correctamente.</string>-->
+    <!--<string name="update.menu.success">%1$s actualizado correctamente.</string>-->
     <string name="same.team.error">El equipo local no puede ser igual al equipo visitante.</string>
     <string name="isactual.error">El Submenu ya tiene un torneo asignado.</string>
 
@@ -96,27 +97,50 @@
     <string name="alert.info.player">En esta opción usted podrá realizar acciones sobre los jugadores que componen los equipos de la institución.
         Para crear un jugador debe ingresar su nombre, seleccionar su posición de juego y su correspondiente submenu.
         Usted puede crear o editar la posición de juego presionando la opción "mas" o la opción "lapiz".
-    En la sopala Editar usted podrá actualizar los datos de los equipo como también eliminarlos.
-    Existe la opción de activar o desactivar un equipo en el caso de no querer eliminar al mismo. Un equipo inactivo no será visible para el usuario.</string>
+        En la sopala Editar usted podrá actualizar los datos de los equipo como también eliminarlos.
+        Existe la opción de activar o desactivar un equipo en el caso de no querer eliminar al mismo.
+        Un equipo inactivo no será visible para el usuario.</string>
 
+    <string name="alert.info.team">En esta opción usted podrá realizar acciones sobre los equipos que componen la institución.
+        Para crear un equipo debe ingresar su nombre y si posee su escudo puede agregarlo presionado la imagen superior.
+        En la sopala Editar usted podrá actualizar los datos de los equipo como también eliminarlos.
+        Existe la opción de activar o desactivar un equipo en el caso de no querer eliminar al mismo.
+        Un equipo inactivo no será visible para el usuario.</string>
 
+    <string name="alert.info.fixture">En esta opción usted podrá realizar acciones sobre los fixtures.
+        Para crear un fixture debe seleccionar el submenu, el torneo(ver información sobre torneo actual en la opción "Torneos"),
+        dia y hora del partido, lugar donde se disputara el encuentro, el equipo local y el visitante(no pueden ser iguales).
+        Ingresar el resultado(esta opción puede quedar vacia en el caso que el encuentro todavia no se haya jugado),
+        seleccionar estado de partido e ingresar una observación(optional).
+        En la sopala Editar usted podrá actualizar los datos de los fixture,
+        modificar los resultados como también eliminarlos.</string>
+
+    <string name="alert.info.tournament">En esta opción usted podrá realizar acciones sobre los torneos deportivos.
+        Para crear un torneo debe ingresar el nombre del mismo y presionar el botón "mas".
+        Usted podrá actualizar un torneos presionando el botón "lapiz" y una vez realizada la modificación presionar
+        el botón "mas". Presionando el botón "flecha circular" usted activará o desactivará un torneo en el caso de
+        no querer eliminarlo. Un torneo inactivo no será visible para el usuario. La eliminación se realiza con el botón
+        "cesto". Por otro lado, es importante asignar un torneo a un submenu ya que el sistema mostrará la
+        información del torneo actual del submenu por default. Si el usuario quiere consultar torneos anteriores debe realizar una acción de busqueda.
+        Un submenu puede tener solo un torneo actual, si desea cambiar de torneo debe destildar el actual y tildar el nuevo torneo.</string>
 
 
     <!--GENERAL-->
     <string name="save.button">Guardar %1$s</string>
     <string name="update.button">Editar %1$s</string>
-    <string name="save.success">%1$s guardado correctamente.</string>
-    <string name="update.success">%1$s actualizado correctamente.</string>
-    <string name="delete.success">%1$s eliminado correctamente.</string>
+    <string name="save.success">%1$s guardad%2$s correctamente.</string>
+    <string name="update.success">%1$s actualizad%2$s correctamente.</string>
+    <string name="delete.success">%1$s eliminad%2$s correctamente.</string>
     <string name="delete.alerte.msg">Desea eliminar %1$s? se borraran todos los dato relacionado a el.</string>
     <string name="delete.simple.alerte.msg">Desea eliminar %1$s?</string>
     <string name="spinner.empty">Debe generar al menos %1$s.</string>
     <string name="editText.empty">Debe ingresar un %1$s.</string>
     <string name="day.empty">Seleccione el día.</string>
     <string name="hour.empty">Seleccione la hora.</string>
-
+    <string name="fixture.concatenate">%1$s - %2$s Hs.</string>
     <string name="title_activity_navigation_adm">ADEFUL</string>
     <string name="error.id.user.zero">Problemas para obtener su código de usuario. Reinicie la aplicación.</string>
+    <string name="error.crop.image">Error al asignar imagen:  </string>
 
     <!--ARRAY-->
     <array name="menu_title_3">
@@ -124,6 +148,13 @@
         <item>Activar/Desactivar Item</item>
         <item>Eliminar Item</item>
     </array>
+
+    <array name="menu_title_3_fixture">
+        <item>Editar Resultado</item>
+        <item>Editar Item</item>
+        <item>Eliminar Item</item>
+    </array>
+
     <array name="menu_title_4">
         <item>Editar Item</item>
         <item>Activar/Desactivar Item</item>

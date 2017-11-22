@@ -1,8 +1,6 @@
 package com.valdroide.thesportsbillboardinstitution.main_adm.tournament.di
 
 import android.app.Activity
-import android.content.Context
-import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.api.ApiClient
 import com.valdroide.thesportsbillboardinstitution.api.ApiService
 import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
@@ -10,18 +8,17 @@ import com.valdroide.thesportsbillboardinstitution.lib.base.SchedulersInterface
 import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.*
 import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.ui.TournamentActivityView
 import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.ui.adapter.TournamentActivityAdapter
+import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.ui.adapter.TournamentActivitySpinnerAdapter
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 import com.valdroide.thesportsbillboardinstitution.model.entities.Tournament
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
-import com.valdroide.thesportsbillboardinstitution.utils.GenericSpinnerAdapter
 import dagger.Module
 import dagger.Provides
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
 class TournamentActivityModule(val view: TournamentActivityView, val
-                               listener: GenericOnItemClickListener.actualUnActual) {
+listener: GenericOnItemClickListener.actualUnActual) {
 
     @Provides
     @Singleton
@@ -52,8 +49,8 @@ class TournamentActivityModule(val view: TournamentActivityView, val
 
     @Provides
     @Singleton
-    fun provideTournamentAdapter(context: Activity, tournaments: MutableList<Tournament>):  GenericSpinnerAdapter =
-            GenericSpinnerAdapter(context, null, tournaments, 6)
+    fun provideTournamentActivitySpinnerAdapter(tournaments: MutableList<Tournament>, context: Activity): TournamentActivitySpinnerAdapter =
+            TournamentActivitySpinnerAdapter(tournaments, context)
 
     @Provides
     @Singleton
@@ -64,10 +61,10 @@ class TournamentActivityModule(val view: TournamentActivityView, val
     fun provideTournamentActivityAdapter(subMenus: MutableList<SubMenuDrawer>?, tournament: Tournament, listener: GenericOnItemClickListener.actualUnActual,
                                          activity: Activity): TournamentActivityAdapter =
             TournamentActivityAdapter(subMenus, tournament, listener, activity, false)
+
     @Provides
     @Singleton
     fun provideListSubMenus(): MutableList<SubMenuDrawer> = arrayListOf()
-
 
     @Provides
     @Singleton

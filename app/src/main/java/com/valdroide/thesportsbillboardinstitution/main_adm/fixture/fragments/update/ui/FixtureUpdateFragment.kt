@@ -16,13 +16,12 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.up
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.ui.dialog.CustomDialog
 import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
 import com.valdroide.thesportsbillboardinstitution.model.entities.TimeMatch
-import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.*
 import kotlinx.android.synthetic.main.frame_recycler_refresh.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.alert
 
-class FixtureUpdateFragment : Fragment(), FixtureUpdateFragmentView, GenericOnItemClickListener.fixture {
+class FixtureUpdateFragment : Fragment(), FixtureUpdateFragmentView, GenericOnItemClick<Fixture>, OnMenuItemClickListener, OnItemClickListenerFixture {
 
     private lateinit var component: FixtureUpdateFragmentComponent
     lateinit var presenter: FixtureUpdateFragmentPresenter
@@ -31,7 +30,7 @@ class FixtureUpdateFragment : Fragment(), FixtureUpdateFragmentView, GenericOnIt
     var times: MutableList<TimeMatch> = arrayListOf()
     private var isRegister: Boolean = false
     private var position: Int = 0
-    private var alert: CustomDialog? = null
+    private var fixture = Fixture()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
@@ -49,9 +48,10 @@ class FixtureUpdateFragment : Fragment(), FixtureUpdateFragmentView, GenericOnIt
     private fun setupInjection() {
         val app = activity.application as TheSportsBillboardInstitutionApp
         app.firebaseAnalyticsInstance().setCurrentScreen(activity, javaClass.simpleName, null)
-        component = app.getFixtureUpdateFragmentComponent(this, this, this)
+        component = app.getFixtureUpdateFragmentComponent(this, this)
         presenter = getPresenterInj()
         adapterFixture = getAdapter()
+        adapterFixture.setClickListener(this)
     }
 
     fun register() {
@@ -80,38 +80,39 @@ class FixtureUpdateFragment : Fragment(), FixtureUpdateFragmentView, GenericOnIt
 
     open fun getPresenterInj(): FixtureUpdateFragmentPresenter = component.getPresenter()
 
-
     open fun getAdapter(): FixtureUpdateFragmentAdapter = component.getAdapter()
 
-
-    override fun onClickResult(position: Int, any: Any) {
+    override fun onClick(view: View, position: Int, t: Fixture) {
         this.position = position
-        showAlertResult(any as Fixture, activity)
+        fixture = t
+        CustomDialogMenu.Builder(activity).setOnClick(this).withTitles(resources.getStringArray(R.array.menu_title_3_fixture)).show()
     }
 
-    private fun showAlertResult(fixture: Fixture, activity: Activity) {
-        alert = CustomDialog.Builder(activity).setOnClick(this).withFixture(fixture).withTimes(times).getDialog()
-        alert!!.show()
+    override fun onClick(type: Int) {
+        when (type) {
+            1 -> showAlertResult(fixture, activity)
+            2 -> onClickUpdate(fixture)
+            3 -> showAlertDialog(getString(R.string.alert_title), getString(R.string.delete_simple_alerte_msg, "el fixture"), fixture)
+        }
     }
 
-    override fun onSaveResult(any: Any) {
+    override fun onClickSaveResult(any: Any) {
         presenter.setResultFixture(activity, any as Fixture)
     }
 
-    override fun onClickUpdate(position: Int, any: Any) {
+    private fun showAlertResult(fixture: Fixture, activity: Activity) {
+        CustomDialog.Builder(activity).setOnClick(this).withFixture(fixture).withTimes(times).show()
+    }
+
+    private fun onClickUpdate(fixture: Fixture) {
         val i = Intent(activity, TabFixtureActivity::class.java)
         i.putExtra("is_update", true)
-        i.putExtra("id_fixture", (any as Fixture).ID_FIXTURE_KEY)
+        i.putExtra("id_fixture", fixture.ID_FIXTURE_KEY)
         startActivity(i)
     }
 
-    override fun onClickDelete(position: Int, any: Any) {
-        this.position = position
-        showAlertDialog(getString(R.string.alert_title), getString(R.string.delete_simple_alerte_msg, "el fixture"), any as Fixture)
-    }
-
     override fun updateFixtureSuccess(fixture: Fixture) {
-        adapterFixture.updateFixture(position, fixture)
+        adapterFixture.update(position, fixture)
         Utils.showSnackBar(conteiner, getString(R.string.update_success, "Fixture"))
     }
 
@@ -126,11 +127,11 @@ class FixtureUpdateFragment : Fragment(), FixtureUpdateFragmentView, GenericOnIt
     override fun setAllFixture(fixtures: MutableList<Fixture>, times: MutableList<TimeMatch>) {
         this.fixtures = fixtures
         this.times = times
-        adapterFixture.setFixture(fixtures)
+        adapterFixture.addAll(fixtures)
     }
 
     override fun deleteFixtureSuccess() {
-        adapterFixture.deleteFixture(position)
+        adapterFixture.delete(position)
         Utils.showSnackBar(conteiner, activity.getString(R.string.delete_success, "Sanción"))
     }
 

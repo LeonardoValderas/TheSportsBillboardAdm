@@ -1,7 +1,6 @@
 package com.valdroide.thesportsbillboardinstitution.main_adm.tournament.ui
 
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.view.View
@@ -9,22 +8,19 @@ import android.widget.Adapter
 import android.widget.AdapterView
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
-import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui.dialog.CustomDialog
 import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.TournamentActivityPresenter
 import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.di.TournamentActivityComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.ui.adapter.TournamentActivityAdapter
-import com.valdroide.thesportsbillboardinstitution.model.entities.MenuDrawer
+import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.ui.adapter.TournamentActivitySpinnerAdapter
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 import com.valdroide.thesportsbillboardinstitution.model.entities.Tournament
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
-import com.valdroide.thesportsbillboardinstitution.utils.GenericSpinnerAdapter
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.activity_tournament.*
 import kotlinx.android.synthetic.main.activity_tournament_content.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
-import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.yesButton
 
 open class TournamentActivity : AppCompatActivity(), TournamentActivityView, View.OnClickListener, GenericOnItemClickListener.actualUnActual {
@@ -36,7 +32,7 @@ open class TournamentActivity : AppCompatActivity(), TournamentActivityView, Vie
     private var tournament = Tournament()
     private lateinit var tournaments: MutableList<Tournament>
     private lateinit var subMenusForTournament: MutableList<SubMenuDrawer>
-    private lateinit var adapterSpinnerTournaments: GenericSpinnerAdapter
+    private lateinit var tournamentActivitySpinnerAdapter: TournamentActivitySpinnerAdapter
     private lateinit var adapterSubMenuForTournament: TournamentActivityAdapter
     private var position: Int = 0
     var isActual = false
@@ -67,23 +63,18 @@ open class TournamentActivity : AppCompatActivity(), TournamentActivityView, Vie
         app.firebaseAnalyticsInstance().setCurrentScreen(this, javaClass.simpleName, null)
         component = app.getTournamentActivityComponent(this, this, this)
         presenter = getPresenter()
-        adapterSpinnerTournaments = getAdapterTournaments()
+        tournamentActivitySpinnerAdapter = getAdapterTournaments()
         adapterSubMenuForTournament = getAdapterTournament()
     }
 
     private fun getAdapterTournament(): TournamentActivityAdapter =
             component.getAdapterSubMenusTournament()
 
-    private fun getAdapterTournaments(): GenericSpinnerAdapter =
+    private fun getAdapterTournaments(): TournamentActivitySpinnerAdapter =
             component.getAdapterTournaments()
 
     private fun getPresenter(): TournamentActivityPresenter =
             component.getPresenter()
-
-//    private fun showProgressBarHideLayout() {
-//        showProgressBar()
-//        setVisibilityViews(View.INVISIBLE)
-//    }
 
     override fun setVisibilityViews(isVisible: Int) {
         conteinerContent.visibility = isVisible
@@ -114,18 +105,9 @@ open class TournamentActivity : AppCompatActivity(), TournamentActivityView, Vie
     }
 
     private fun showAlertInformation() {
-        alert("En esta opción usted podrá realizar acciones sobre los torneos deportivos.\n" +
-                "Para crear un torneo debe ingresar el nombre del mismo y presionar el botón 'mas'.\n" +
-                "Usted podrá actualizar un torneos presionando el botón 'lapiz' y una vez realizada la modificación presionar el botón 'mas'.\n" +
-                "Presionando el botón 'flecha circular' usted activará o desactivará un torneo en el caso de no querer eliminarlo. Un torneo inactivo no será visible para el usuario.\n" +
-                "La eliminación se realiza con el botón 'cesto'.\n" +
-                "Por otro lado, es importante asignar un torneo a un submenu ya que el sistema mostrará la información del torneo actual del submenu por default. Si el usuario quiere consultar torneos anteriores debe realizar una acción de busqueda.\n" +
-                "Un submenu puede tener solo un torneo actual, si desea cambiar de torneo debe destildar el actual y tildar el nuevo torneo.") {
-            title = "TORNEOS"
-            yesButton {
-            }
-        }.show()
+        Utils.showAlertInformation(this, "TORNEOS", getString(R.string.alert_info_tournament))
     }
+
     override fun snackBarIsActual() {
         Utils.showSnackBar(conteiner, getString(R.string.isactual_error))
     }
@@ -189,7 +171,7 @@ open class TournamentActivity : AppCompatActivity(), TournamentActivityView, Vie
 
     override fun setSubMenusTournaments(tournaments: MutableList<Tournament>) {
         this.tournaments = tournaments
-        adapterSpinnerTournaments.refresh(tournaments, 6)
+        tournamentActivitySpinnerAdapter.refresh(tournaments)
     }
 
     override fun refreshRecyclerAndSpinner() {
@@ -203,7 +185,7 @@ open class TournamentActivity : AppCompatActivity(), TournamentActivityView, Vie
     }
 
     private fun initSpinnerAdapter() {
-        spinnerTournament.adapter = adapterSpinnerTournaments
+        spinnerTournament.adapter = tournamentActivitySpinnerAdapter
         spinnerTournament.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {

@@ -152,12 +152,12 @@ class LoginCreateFragment : Fragment(), LoginCreateFragmentView {
 
     override fun saveSuccess() {
         communication.refreshAdapter()
-        Utils.showSnackBar(conteiner, getString(R.string.login_save_success))
+        Utils.showSnackBar(conteiner, getString(R.string.save_success, "Login", "o"))
     }
 
     override fun editSuccess() {
         communication.refreshAdapter()
-        Utils.showSnackBar(conteiner, getString(R.string.login_edit_success))
+        Utils.showSnackBar(conteiner, getString(R.string.update_success, "Login", "o"))
     }
 
     override fun setError(error: String) {

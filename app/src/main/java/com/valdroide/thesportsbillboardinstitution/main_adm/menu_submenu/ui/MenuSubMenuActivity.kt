@@ -202,7 +202,7 @@ open class MenuSubMenuActivity : AppCompatActivity(), MenuSubMenuActivityView, V
     }
 
     override fun menuSaveSuccess() {
-        Utils.showSnackBar(conteiner, getString(R.string.save_menu_success))
+        Utils.showSnackBar(conteiner, getString(R.string.save_success, "Menu", "o"))
     }
 
     override fun eventSuccess(msg: String) {

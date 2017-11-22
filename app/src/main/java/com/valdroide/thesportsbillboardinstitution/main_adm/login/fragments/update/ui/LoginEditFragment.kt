@@ -104,7 +104,7 @@ class LoginEditFragment : Fragment(), LoginEditFragmentView, OnItemClickListener
 
     override fun updateLoginSuccess() {
         adapterLogin.notifyDataSetChanged()
-        Utils.showSnackBar(conteiner, activity.getString(R.string.login_edit_success))
+        Utils.showSnackBar(conteiner, activity.getString(R.string.update_success, "Login", "o"))
     }
 
     override fun deleteLoginSuccess() {

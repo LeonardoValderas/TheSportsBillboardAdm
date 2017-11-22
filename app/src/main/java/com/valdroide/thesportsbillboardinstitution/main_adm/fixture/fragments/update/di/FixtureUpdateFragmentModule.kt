@@ -8,15 +8,12 @@ import com.valdroide.thesportsbillboardinstitution.lib.base.SchedulersInterface
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.*
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.ui.FixtureUpdateFragmentView
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.ui.adapter.FixtureUpdateFragmentAdapter
-import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
-import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
-import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener_2
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class FixtureUpdateFragmentModule(val view: FixtureUpdateFragmentView, val listener: GenericOnItemClickListener.fixture) {
+class FixtureUpdateFragmentModule(val view: FixtureUpdateFragmentView) {
 
     @Provides
     @Singleton
@@ -44,16 +41,21 @@ class FixtureUpdateFragmentModule(val view: FixtureUpdateFragmentView, val liste
         return client.getApiService()
     }
 
-    @Provides
-    @Singleton
-    fun provideFixtureUpdateFragmentAdapter(fixture: MutableList<Fixture>, listener: GenericOnItemClickListener.fixture, fragment: Fragment): FixtureUpdateFragmentAdapter
-            = FixtureUpdateFragmentAdapter(fixture, listener, fragment)
+//    @Provides
+//    @Singleton
+//    fun provideFixtureUpdateFragmentAdapter(fixture: MutableList<Fixture>, listener: GenericOnItemClickListener.fixture, fragment: Fragment): FixtureUpdateFragmentAdapter
+//            = FixtureUpdateFragmentAdapter(fixture, listener, fragment)
 
     @Provides
     @Singleton
-    fun provideListFixture(): MutableList<Fixture> = arrayListOf()
+    fun provideFixtureUpdateFragmentAdapter(fragment: Fragment): FixtureUpdateFragmentAdapter =
+            FixtureUpdateFragmentAdapter(fragment.context)
 
-    @Provides
-    @Singleton
-    fun provideOnItemClickListener(): GenericOnItemClickListener.fixture = listener
+//    @Provides
+//    @Singleton
+//    fun provideListFixture(): MutableList<Fixture> = arrayListOf()
+//
+//    @Provides
+//    @Singleton
+//    fun provideOnItemClickListener(): GenericOnItemClickListener.fixture = listener
 }

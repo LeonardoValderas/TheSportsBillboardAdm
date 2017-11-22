@@ -41,11 +41,6 @@ open class AccountAdmActivity : AppCompatActivity(), AccountAdmActivityView {
     private var name_before: String = ""
     private var url_image: String = ""
 
-    companion object {
-        const val PERMISSION_GALERY: Int = 101
-        const val URL: String = "http://10.0.3.2:8080/the_sports_billboard_institution/adm/account/image_account/"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_adm_account)
@@ -100,23 +95,23 @@ open class AccountAdmActivity : AppCompatActivity(), AccountAdmActivityView {
     override fun getPhoto() {
         if (!Utils.oldPhones()) {
             val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            Utils.checkForPermission(this, permissionCheck, PERMISSION_GALERY, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            Utils.checkForPermission(this, permissionCheck, Utils.PERMISSION_GALERY, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
         if (Utils.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            Utils.ImageDialogLogo(this, null, PERMISSION_GALERY);
+            Utils.ImageDialogLogo(this, null, Utils.PERMISSION_GALERY);
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_GALERY)
+        if (requestCode == Utils.PERMISSION_GALERY)
             if (grantResults.count() > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                Utils.ImageDialogLogo(this, null, PERMISSION_GALERY);
+                Utils.ImageDialogLogo(this, null, Utils.PERMISSION_GALERY);
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
-            if (requestCode == PERMISSION_GALERY) {
+            if (requestCode == Utils.PERMISSION_GALERY) {
                 val imageUri = CropImage.getPickImageResultUri(this, data)
                 Utils.startCropImageActivity(this, null, imageUri)
             }
@@ -128,7 +123,7 @@ open class AccountAdmActivity : AppCompatActivity(), AccountAdmActivityView {
                     assignImage(uriExtra)
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     if (!result.error.toString().contains("ENOENT"))
-                        Utils.showSnackBar(conteiner, "Error al asignar imagen: " + result.error)
+                        Utils.showSnackBar(conteiner, getString(R.string.error_crop_image) + result.error)
                 }
             }
         } catch (e: Exception) {
@@ -194,8 +189,8 @@ open class AccountAdmActivity : AppCompatActivity(), AccountAdmActivityView {
                 encode = ""
             }
             name_before = account.NAME_IMAGE
-            name_image = Utils.getFechaOficial() + ".PNG"
-            url_image = URL + name_image
+            name_image = Utils.getFechaOficial() + Utils.PNG
+            url_image = Utils.URL_ACCOUNT + name_image
         } else {
             name_before = account.NAME_IMAGE
             name_image = name_before
@@ -286,7 +281,6 @@ open class AccountAdmActivity : AppCompatActivity(), AccountAdmActivityView {
         super.onStop()
         unregister()
     }
-
 
     override fun onDestroy() {
         unregister()

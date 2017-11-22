@@ -42,11 +42,6 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
     private var url_image: String = ""
     private var imageByte: ByteArray? = null
 
-    companion object {
-        const val PERMISSION_GALERY: Int = 101
-        const val URL: String = "http://10.0.3.2:8080/the_sports_billboard_institution/adm/team/image_team/"
-    }
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
             inflater!!.inflate(R.layout.fragment_create_team, container, false)
@@ -81,14 +76,7 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
     }
 
     private fun showAlertInformation() {
-        alert("En esta opción usted podrá realizar acciones sobre los equipos que componen la institución.\n" +
-                "Para crear un equipo debe ingresar su nombre y si posee su escudo puede agregarlo presionado la imagen superior.\n" +
-                "En la sopala Editar usted podrá actualizar los datos de los equipo como también eliminarlos.\n" +
-                "Existe la opción de activar o desactivar un equipo en el caso de no querer eliminar al mismo. Un equipo inactivo no será visible para el usuario.") {
-            title = "EQUIPOS"
-            yesButton {
-            }
-        }.show()
+        Utils.showAlertInformation(activity, "EQUIPOS", getString(R.string.alert_info_team))
     }
 
     override fun onClickButtonSave() {
@@ -101,23 +89,23 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
     override fun onClickPhoto() {
         if (!Utils.oldPhones()) {
             val permissionCheck = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            Utils.checkForPermission(activity, permissionCheck, PERMISSION_GALERY, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            Utils.checkForPermission(activity, permissionCheck, Utils.PERMISSION_GALERY, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
         if (Utils.hasPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            Utils.ImageDialogLogo(null, this, PERMISSION_GALERY);
+            Utils.ImageDialogLogo(null, this, Utils.PERMISSION_GALERY);
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_GALERY)
+        if (requestCode == Utils.PERMISSION_GALERY)
             if (grantResults.count() > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                Utils.ImageDialogLogo(null, this, PERMISSION_GALERY);
+                Utils.ImageDialogLogo(null, this, Utils.PERMISSION_GALERY);
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
-            if (requestCode == PERMISSION_GALERY) {
+            if (requestCode == Utils.PERMISSION_GALERY) {
                 val imageUri = CropImage.getPickImageResultUri(activity, data)
                 Utils.startCropImageActivity(null, this, imageUri)
             }
@@ -128,7 +116,7 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
                     assignImage(result.uri)
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     if (!result.error.toString().contains("ENOENT"))
-                        Utils.showSnackBar(conteiner, "Error al asignar imagen: " + result.error)
+                        Utils.showSnackBar(conteiner, getString(R.string.error_crop_image) + result.error)
                 }
             }
         } catch (e: Exception) {
@@ -148,32 +136,31 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
     }
 
     private fun fillTeamEntity() {
-        showProgressDialog()
-        setVisibilityViews(View.INVISIBLE)
-        team.NAME = editTextNameTeam.text.toString()
-        if (imageByte != null) {
-            try {
-                encode = Base64.encodeToString(imageByte,
-                        Base64.DEFAULT)
-            } catch (e: Exception) {
-                FirebaseCrash.report(e)
-                encode = ""
+        with(team) {
+            NAME = editTextNameTeam.text.toString()
+            if (imageByte != null) {
+                try {
+                    encode = Utils.encodeToString(imageByte)
+                } catch (e: Exception) {
+                    FirebaseCrash.report(e)
+                    encode = ""
+                }
+                name_image = Utils.getFechaOficial() + Utils.PNG
+                url_image = Utils.URL_TEAM + name_image
             }
-            name_image = Utils.getFechaOficial() + ".PNG"
-            url_image = URL + name_image
-        }
 
-        team.ENCODE = encode
-        team.NAME_IMAGE = name_image
-        team.URL_IMAGE = url_image
+            ENCODE = encode
+            NAME_IMAGE = name_image
+            URL_IMAGE = url_image
 
-        if (is_update) {
-            team.ID_TEAM_KEY = id_team
-            team.BEFORE = name_before
-            editTeam(team)
-        } else {
-            team.BEFORE = team.NAME_IMAGE
-            saveTeam(team)
+            if (is_update) {
+                ID_TEAM_KEY = id_team
+                BEFORE = name_before
+                editTeam(team)
+            } else {
+                BEFORE = team.NAME_IMAGE
+                saveTeam(team)
+            }
         }
     }
 
@@ -199,7 +186,7 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
         is_update = activity.intent.getBooleanExtra("is_update", false)
         if (is_update) {
             id_team = activity.intent.getIntExtra("id_team", 0)
-            textViewButton.text = "Editar Equipo"
+            textViewButton.text = getString(R.string.update_button, "Equipo")
         }
     }
 
@@ -234,12 +221,12 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
 
     override fun saveSuccess() {
         communication.refreshAdapter()
-        Utils.showSnackBar(conteiner, getString(R.string.team_save_success))
+        Utils.showSnackBar(conteiner, getString(R.string.save_success, "Equipo", "o"))
     }
 
     override fun editSuccess() {
         communication.refreshAdapter()
-        Utils.showSnackBar(conteiner, getString(R.string.team_update_success))
+        Utils.showSnackBar(conteiner, getString(R.string.update_success, "Equipo", "o"))
     }
 
     override fun setError(error: String) {

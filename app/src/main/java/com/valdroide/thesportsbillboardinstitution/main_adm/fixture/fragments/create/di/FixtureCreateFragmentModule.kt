@@ -8,6 +8,7 @@ import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
 import com.valdroide.thesportsbillboardinstitution.lib.base.SchedulersInterface
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.*
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.ui.FixtureCreateFragmentView
+import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.ui.adapters.*
 import com.valdroide.thesportsbillboardinstitution.model.entities.*
 import com.valdroide.thesportsbillboardinstitution.utils.GenericSpinnerAdapter
 import dagger.Module
@@ -46,8 +47,8 @@ class FixtureCreateFragmentModule(val view: FixtureCreateFragmentView, val conte
 
     @Provides
     @Named("spinner_menu")
-    fun provideSubMenuSpinnerAdapter(context: Fragment, submenus: MutableList<SubMenuDrawer>): GenericSpinnerAdapter =
-            GenericSpinnerAdapter(null, context, submenus, 1)
+    fun provideSubMenuSpinnerAdapter(context: Fragment, submenus: MutableList<SubMenuDrawer>): FixtureCreateFragmentSubMenuSpinnerAdapter =
+            FixtureCreateFragmentSubMenuSpinnerAdapter(submenus, context.activity)
 
     @Provides
     @Singleton
@@ -55,8 +56,8 @@ class FixtureCreateFragmentModule(val view: FixtureCreateFragmentView, val conte
 
     @Provides
     @Named("spinner_field")
-    fun provideFieldSpinnerAdapter(context: Fragment, fields: MutableList<FieldMatch>): GenericSpinnerAdapter =
-            GenericSpinnerAdapter(null, context, fields, 4)
+    fun provideFieldSpinnerAdapter(context: Fragment, fields: MutableList<FieldMatch>): FixtureCreateFragmentFieldSpinnerAdapter =
+            FixtureCreateFragmentFieldSpinnerAdapter(fields, context.activity)
 
     @Provides
     @Singleton
@@ -64,8 +65,8 @@ class FixtureCreateFragmentModule(val view: FixtureCreateFragmentView, val conte
 
     @Provides
     @Named("spinner_time")
-    fun provideTimeSpinnerAdapter(context: Fragment, times: MutableList<TimeMatch>): GenericSpinnerAdapter =
-            GenericSpinnerAdapter(null, context, times, 5)
+    fun provideTimeSpinnerAdapter(context: Fragment, times: MutableList<TimeMatch>): FixtureCreateFragmentTimesSpinnerAdapter =
+            FixtureCreateFragmentTimesSpinnerAdapter(times, context.activity)
 
     @Provides
     @Singleton
@@ -73,8 +74,8 @@ class FixtureCreateFragmentModule(val view: FixtureCreateFragmentView, val conte
 
     @Provides
     @Named("spinner_tournament")
-    fun provideTournamentSpinnerAdapter(context: Fragment, tournaments: MutableList<Tournament>): GenericSpinnerAdapter =
-            GenericSpinnerAdapter(null, context, tournaments, 6)
+    fun provideTournamentSpinnerAdapter(context: Fragment, tournaments: MutableList<Tournament>): FixtureCreateFragmentTournamentSpinnerAdapter =
+            FixtureCreateFragmentTournamentSpinnerAdapter(tournaments, context.activity)
 
     @Provides
     @Singleton
@@ -82,13 +83,13 @@ class FixtureCreateFragmentModule(val view: FixtureCreateFragmentView, val conte
 
     @Provides
     @Named("spinner_team_local")
-    fun provideTeamLocalSpinnerAdapter(context: Fragment, @Named("teams_local")teams_local: MutableList<Team>): GenericSpinnerAdapter =
-            GenericSpinnerAdapter(null, context, teams_local, 7)
+    fun provideTeamLocalSpinnerAdapter(context: Fragment, @Named("teams_local") teams_local: MutableList<Team>): FixtureCreateFragmentTeamSpinnerAdapter =
+            FixtureCreateFragmentTeamSpinnerAdapter(teams_local, context.activity)
 
     @Provides
     @Named("spinner_team_visite")
-    fun provideTeamVisiteSpinnerAdapter(context: Fragment, @Named("teams_visite")teams_visite: MutableList<Team>): GenericSpinnerAdapter =
-            GenericSpinnerAdapter(null, context, teams_visite, 7)
+    fun provideTeamVisiteSpinnerAdapter(context: Fragment, @Named("teams_visite") teams_visite: MutableList<Team>): FixtureCreateFragmentTeamSpinnerAdapter =
+            FixtureCreateFragmentTeamSpinnerAdapter(teams_visite, context.activity)
 
     @Provides
     @Named("teams_local")

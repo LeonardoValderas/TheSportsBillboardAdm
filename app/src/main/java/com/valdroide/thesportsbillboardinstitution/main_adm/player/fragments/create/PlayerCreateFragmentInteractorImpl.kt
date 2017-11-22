@@ -2,6 +2,7 @@ package com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.cr
 
 import android.content.Context
 import com.valdroide.thesportsbillboardinstitution.model.entities.Player
+import com.valdroide.thesportsbillboardinstitution.model.entities.Position
 
 class PlayerCreateFragmentInteractorImpl(val repository: PlayerCreateFragmentRepository) : PlayerCreateFragmentInteractor {
 
@@ -16,6 +17,15 @@ class PlayerCreateFragmentInteractorImpl(val repository: PlayerCreateFragmentRep
     override fun updatePlayer(context: Context, player: Player) {
         repository.updatePlayer(context, player)
     }
+
+    override fun savePosition(context: Context, postion: Position) {
+        repository.savePosition(context, postion)
+    }
+
+    override fun updatePosition(context: Context, postion: Position) {
+        repository.updatePosition(context, postion)
+    }
+
     override fun getPositionsSubMenus(context: Context) {
         repository.getPositionsSubMenus(context)
     }

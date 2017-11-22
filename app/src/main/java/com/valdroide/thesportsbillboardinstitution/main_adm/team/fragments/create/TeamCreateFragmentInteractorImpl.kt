@@ -5,7 +5,6 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.Team
 
 class TeamCreateFragmentInteractorImpl(val repository: TeamCreateFragmentRepository) : TeamCreateFragmentInteractor {
 
-
     override fun getTeam(context: Context, id_team: Int) {
         repository.getTeam(context, id_team)
     }

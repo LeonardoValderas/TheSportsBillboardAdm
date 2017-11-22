@@ -8,6 +8,8 @@ import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
 import com.valdroide.thesportsbillboardinstitution.lib.base.SchedulersInterface
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.create.*
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.create.ui.PlayerCreateFragmentView
+import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.create.ui.adapters.PlayerCreateFragmentPositionSpinnerAdapter
+import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.create.ui.adapters.PlayerCreateFragmentSubMenuSpinnerAdapter
 import com.valdroide.thesportsbillboardinstitution.model.entities.Position
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 import dagger.Module
@@ -43,12 +45,10 @@ class PlayerCreateFragmentModule(val view: PlayerCreateFragmentView, val context
         return client.getApiService()
     }
 
-
     @Provides
     @Singleton
-    fun provideArrayAdapterPosition(context: Context, layoutResourceId: Int, positions: MutableList<Position>): ArrayAdapter<Position> =
-            ArrayAdapter(context, layoutResourceId, positions)
-
+    fun providePlayerCreateFragmentPositionSpinnerAdapter(context: Context, positions: MutableList<Position>): PlayerCreateFragmentPositionSpinnerAdapter =
+            PlayerCreateFragmentPositionSpinnerAdapter(positions, context)
 
     @Provides
     @Singleton
@@ -56,9 +56,8 @@ class PlayerCreateFragmentModule(val view: PlayerCreateFragmentView, val context
 
     @Provides
     @Singleton
-    fun provideArrayAdapterSubMenus(context: Context, layoutResourceId: Int, submenus: MutableList<SubMenuDrawer>): ArrayAdapter<SubMenuDrawer> =
-            ArrayAdapter(context, layoutResourceId, submenus)
-
+    fun providePlayerCreateFragmentSubMenuSpinnerAdapter(context: Context, submenus: MutableList<SubMenuDrawer>): PlayerCreateFragmentSubMenuSpinnerAdapter =
+            PlayerCreateFragmentSubMenuSpinnerAdapter(submenus, context)
 
     @Provides
     @Singleton

@@ -1,6 +1,7 @@
 package com.valdroide.thesportsbillboardinstitution.utils
 
 import android.view.View
+import javax.inject.Inject
 
 interface GenericOnItemClick<in T> {
     fun onClick(view: View, position: Int, t: T)

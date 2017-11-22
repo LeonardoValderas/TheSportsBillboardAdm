@@ -60,7 +60,7 @@ class MenuSubMenuActivityRepositoryImpl(val eventBus: EventBus, val apiService: 
                         response = result
                         if (response != null) {
                             if (response?.SUCCESS.equals("0")) {
-                                post(MenuSubMenuActivityEvent.EVENTSUCCESS, context.getString(R.string.save_menu_success, "Menu"))
+                                post(MenuSubMenuActivityEvent.EVENTSUCCESS, context.getString(R.string.save_success, "Menu", "o"))
                             } else {
                                 post(MenuSubMenuActivityEvent.ERROR, response?.MESSAGE!!)
                             }
@@ -86,7 +86,7 @@ class MenuSubMenuActivityRepositoryImpl(val eventBus: EventBus, val apiService: 
                         response = result
                         if (response != null) {
                             if (response?.SUCCESS.equals("0")) {
-                                post(MenuSubMenuActivityEvent.EVENTSUCCESS, context.getString(R.string.update_menu_success, "Menu"))
+                                post(MenuSubMenuActivityEvent.EVENTSUCCESS, context.getString(R.string.update_success, "Menu", "o"))
                             } else {
                                 post(MenuSubMenuActivityEvent.ERROR, response?.MESSAGE!!)
                             }
@@ -113,7 +113,7 @@ class MenuSubMenuActivityRepositoryImpl(val eventBus: EventBus, val apiService: 
                             response = result
                             if (response != null) {
                                 if (response?.SUCCESS.equals("0")) {
-                                    post(MenuSubMenuActivityEvent.EVENTSUCCESS, context.getString(R.string.update_menu_success, "Menu"))
+                                    post(MenuSubMenuActivityEvent.EVENTSUCCESS, context.getString(R.string.update_success, "Menu", "o"))
                                 } else {
                                     post(MenuSubMenuActivityEvent.ERROR, response?.MESSAGE)
                                 }
@@ -172,7 +172,7 @@ class MenuSubMenuActivityRepositoryImpl(val eventBus: EventBus, val apiService: 
                         response = result
                         if (response != null) {
                             if (response?.SUCCESS.equals("0")) {
-                                post(MenuSubMenuActivityEvent.EVENTSUCCESS, context.getString(R.string.save_menu_success, "SubMenu"))
+                                post(MenuSubMenuActivityEvent.EVENTSUCCESS, context.getString(R.string.save_success, "SubMenu", "o"))
                             } else {
                                 post(MenuSubMenuActivityEvent.ERROR, response?.MESSAGE!!)
                             }
@@ -199,7 +199,7 @@ class MenuSubMenuActivityRepositoryImpl(val eventBus: EventBus, val apiService: 
                         response = result
                         if (response != null) {
                             if (response?.SUCCESS.equals("0")) {
-                                post(MenuSubMenuActivityEvent.EVENTSUCCESS, context.getString(R.string.update_menu_success, "SubMenu"))
+                                post(MenuSubMenuActivityEvent.EVENTSUCCESS, context.getString(R.string.update_success, "SubMenu", "o"))
                             } else {
                                 post(MenuSubMenuActivityEvent.ERROR, response?.MESSAGE!!)
                             }
@@ -226,7 +226,7 @@ class MenuSubMenuActivityRepositoryImpl(val eventBus: EventBus, val apiService: 
                             response = result
                             if (response != null) {
                                 if (response?.SUCCESS.equals("0")) {
-                                    post(MenuSubMenuActivityEvent.EVENTSUCCESS, context.getString(R.string.update_menu_success, "SubMenu"))
+                                    post(MenuSubMenuActivityEvent.EVENTSUCCESS, context.getString(R.string.update_success, "SubMenu", "o"))
                                 } else {
                                     post(MenuSubMenuActivityEvent.ERROR, response?.MESSAGE)
                                 }

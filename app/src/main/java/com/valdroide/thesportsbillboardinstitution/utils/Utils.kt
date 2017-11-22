@@ -26,6 +26,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AlertDialog
+import android.util.Base64
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -41,10 +42,15 @@ import java.util.*
 
 object Utils {
 
-        const val PERMISSION_GALERY: Int = 101
-        const val URL_PLAYER: String = "http://10.0.3.2:8080/the_sports_billboard_institution/adm/player/image_player/"
+    const val PERMISSION_GALERY: Int = 101
+    const val URL_PLAYER: String = "http://10.0.3.2:8080/the_sports_billboard_institution/adm/player/image_player/"
+    const val URL_TEAM: String = "http://10.0.3.2:8080/the_sports_billboard_institution/adm/team/image_team/"
+    const val URL_ACCOUNT: String = "http://10.0.3.2:8080/the_sports_billboard_institution/adm/account/image_account/"
+    const val PNG: String = ".PNG"
 
-        fun setupViewpagerTabs(viewPager: ViewPager, tabs: TabLayout, adapter: SectionsPagerAdapter?): ViewPager {
+
+
+    fun setupViewpagerTabs(viewPager: ViewPager, tabs: TabLayout, adapter: SectionsPagerAdapter?): ViewPager {
         viewPager.setAdapter(adapter)
         viewPager.setPageTransformer(true, RotateUpTransformer())
         tabs.setupWithViewPager(viewPager)
@@ -68,6 +74,10 @@ object Utils {
 
     fun showSnackBar(conteiner: View, msg: String) {
         Snackbar.make(conteiner, msg, Snackbar.LENGTH_LONG).show()
+    }
+    fun encodeToString(imageByte: ByteArray?): String {
+        return Base64.encodeToString(imageByte,
+                Base64.DEFAULT)
     }
 
     fun oldPhones(): Boolean = Build.VERSION.SDK_INT < Build.VERSION_CODES.M
@@ -181,9 +191,21 @@ object Utils {
         myAlertDialog.show()
     }
 
+    private fun <T> getPositionSpinners(list: MutableList<T>, t: T): Int {
+        var index = 0
+        for (i in 0 until list.size) {
+            if (list[i] == t) {
+                index = i
+                break
+            }
+        }
+        return index
+    }
+
+
     fun showAlertInformation(activity: Activity, titleText: String, messageText: String) {
-        activity.alert(titleText) {
-            title = messageText
+        activity.alert(messageText) {
+            title = titleText
             yesButton {
             }
         }.show()

@@ -74,6 +74,13 @@ abstract class GenericRecyclerAdapter<T>(val context: Context?,
         notifyDataSetChanged()
     }
 
+    fun addAllMoreEntity(list: List<T>, t: T) {
+        reset()
+        items!!.addAll(list)
+
+        notifyDataSetChanged()
+    }
+
     fun reset() {
         items!!.clear()
     }
@@ -82,7 +89,14 @@ abstract class GenericRecyclerAdapter<T>(val context: Context?,
         items!!.removeAt(position)
         notifyDataSetChanged()
     }
+
     fun setClickListener(listener: GenericOnItemClick<T>) {
         this.listener = listener
+    }
+
+    fun update(position: Int, t: T) {
+        items!!.removeAt(position)
+        items!!.add(position, t)
+        notifyDataSetChanged()
     }
 }

@@ -23,6 +23,7 @@ import com.github.clans.fab.FloatingActionButton
 import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment
 import com.codetroopers.betterpickers.timepicker.TimePickerDialogFragment
 import com.codetroopers.betterpickers.timepicker.TimePickerBuilder
+import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.ui.adapters.*
 import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui.MenuSubMenuActivity
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.activity.TabTeamActivity
 import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.ui.TournamentActivity
@@ -54,12 +55,12 @@ class FixtureCreateFragment : Fragment(),
     private lateinit var communication: Communicator
     private var isRegister: Boolean = false
     private var fixture = Fixture()
-    private lateinit var adapterSpinnerSubMenus: GenericSpinnerAdapter
-    private lateinit var adapterSpinnerTimeMatch: GenericSpinnerAdapter
-    private lateinit var adapterSpinnerFieldMatch: GenericSpinnerAdapter
-    private lateinit var adapterSpinnerTournament: GenericSpinnerAdapter
-    private lateinit var adapterSpinnerTeamLocal: GenericSpinnerAdapter
-    private lateinit var adapterSpinnerTeamVisite: GenericSpinnerAdapter
+    private lateinit var adapterSpinnerSubMenus: FixtureCreateFragmentSubMenuSpinnerAdapter
+    private lateinit var adapterSpinnerTimeMatch: FixtureCreateFragmentTimesSpinnerAdapter
+    private lateinit var adapterSpinnerFieldMatch: FixtureCreateFragmentFieldSpinnerAdapter
+    private lateinit var adapterSpinnerTournament: FixtureCreateFragmentTournamentSpinnerAdapter
+    private lateinit var adapterSpinnerTeamLocal: FixtureCreateFragmentTeamSpinnerAdapter
+    private lateinit var adapterSpinnerTeamVisite: FixtureCreateFragmentTeamSpinnerAdapter
     private var is_update: Boolean = false
     private var id_fixture: Int = 0
     private var day: String = ""
@@ -162,9 +163,7 @@ class FixtureCreateFragment : Fragment(),
 //    }
 
     private fun showAlertInformation() {
-        alert("En esta opción usted podrá realizar acciones sobre los fixtures.\n" +
-                "Para crear un fixture debe seleccionar el submenu, el torneo(ver información sobre torneo actual en la opción 'Torneos'), dia y hora del partido, lugar donde se disputara el encuentro, el equipo local y el visitante(no pueden ser iguales). Ingresar el resultado(esta opción puede quedar vacia en el caso que el encuentro todavia no se haya jugado), seleccionar estado de partido e ingresar una observación(optional).\n" +
-                "En la sopala Editar usted podrá actualizar los datos de los fixture, modificar los resultados como también eliminarlos.") {
+        alert(getString(R.string.alert_info_fixture)) {
             title = "FIXTURE"
             yesButton {
             }
@@ -185,12 +184,12 @@ class FixtureCreateFragment : Fragment(),
         this.tournaments = tournaments
         this.teamsLocal = teams
         this.teamsVisite = teams
-        adapterSpinnerSubMenus.refresh(submenus, 1)
-        adapterSpinnerFieldMatch.refresh(fieldMatchs, 4)
-        adapterSpinnerTimeMatch.refresh(timeMatchs, 5)
-        adapterSpinnerTournament.refresh(tournaments, 6)
-        adapterSpinnerTeamLocal.refresh(teams, 7)
-        adapterSpinnerTeamVisite.refresh(teams, 7)
+        adapterSpinnerSubMenus.refresh(submenus)
+        adapterSpinnerFieldMatch.refresh(fieldMatchs)
+        adapterSpinnerTimeMatch.refresh(timeMatchs)
+        adapterSpinnerTournament.refresh(tournaments)
+        adapterSpinnerTeamLocal.refresh(teams)
+        adapterSpinnerTeamVisite.refresh(teams)
         if (is_update) {
             presenter.getFixture(activity, id_fixture)
         } else {
@@ -202,22 +201,22 @@ class FixtureCreateFragment : Fragment(),
     private fun getPresenterInj(): FixtureCreateFragmentPresenter =
             component.getPresenter()
 
-    private fun getAdapterSubMenus(): GenericSpinnerAdapter =
+    private fun getAdapterSubMenus(): FixtureCreateFragmentSubMenuSpinnerAdapter =
             component.getAdapterSubMenus()
 
-    private fun getAdapterFieldMatch(): GenericSpinnerAdapter =
+    private fun getAdapterFieldMatch(): FixtureCreateFragmentFieldSpinnerAdapter =
             component.getAdapterFieldMatch()
 
-    private fun getAdapterTimeMatch(): GenericSpinnerAdapter =
+    private fun getAdapterTimeMatch(): FixtureCreateFragmentTimesSpinnerAdapter =
             component.getAdapterTimeMatch()
 
-    private fun getAdapterTournament(): GenericSpinnerAdapter =
+    private fun getAdapterTournament(): FixtureCreateFragmentTournamentSpinnerAdapter =
             component.getAdapterTournament()
 
-    private fun getAdapterTeamLocal(): GenericSpinnerAdapter =
+    private fun getAdapterTeamLocal(): FixtureCreateFragmentTeamSpinnerAdapter =
             component.getAdapterTeamLocal()
 
-    private fun getAdapterTeamVisite(): GenericSpinnerAdapter =
+    private fun getAdapterTeamVisite(): FixtureCreateFragmentTeamSpinnerAdapter =
             component.getAdapterTeamVisite()
 
     private fun isFixtureUpdate() {

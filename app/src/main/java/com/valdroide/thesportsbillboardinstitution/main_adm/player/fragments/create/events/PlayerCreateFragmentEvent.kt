@@ -8,6 +8,7 @@ class PlayerCreateFragmentEvent {
     var type: Int = 0
     var error: String? = null
     var player: Player? = null
+    var position: Position? = null
     var positions: MutableList<Position>? = null
     var submenus: MutableList<SubMenuDrawer>? = null
 
@@ -16,6 +17,8 @@ class PlayerCreateFragmentEvent {
         const val UPDATEPLAYER: Int = 1
         const val GETPLAYER: Int = 2
         const val POSITIONSSUBMENUS: Int = 3
-        const val ERROR: Int =  4
+        const val SAVEPOSITION: Int = 4
+        const val UPDATEPOSITION: Int = 5
+        const val ERROR: Int =  6
     }
 }

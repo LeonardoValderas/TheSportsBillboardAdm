@@ -102,7 +102,7 @@ class PlayerUpdateFragment : Fragment(), PlayerUpdateFragmentView, GenericOnItem
 
     override fun updatePlayerSuccess() {
         adapterLogin.notifyDataSetChanged()
-        Utils.showSnackBar(conteiner, getString(R.string.player_update_success))
+        Utils.showSnackBar(conteiner, getString(R.string.update_success, "Jugador", "o"))
     }
 
     private fun initRecyclerView() {
@@ -120,7 +120,7 @@ class PlayerUpdateFragment : Fragment(), PlayerUpdateFragmentView, GenericOnItem
 
     override fun deletePlayerSuccess() {
         adapterLogin.deletePlayer(position)
-        Utils.showSnackBar(conteiner, activity.getString(R.string.player_delete_success))
+        Utils.showSnackBar(conteiner, activity.getString(R.string.delete_success, "Jugador", "o"))
     }
 
     override fun onClickSave(position: Int, any: Any) {}

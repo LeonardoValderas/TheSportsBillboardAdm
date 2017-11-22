@@ -2,10 +2,12 @@ package com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.cr
 
 import android.content.Context
 import android.view.View
+import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.create.events.PlayerCreateFragmentEvent
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.create.ui.PlayerCreateFragmentView
 import com.valdroide.thesportsbillboardinstitution.model.entities.Player
+import com.valdroide.thesportsbillboardinstitution.model.entities.Position
 import org.greenrobot.eventbus.Subscribe
 
 class PlayerCreateFragmentPresenterImpl(var view: PlayerCreateFragmentView,
@@ -40,6 +42,16 @@ class PlayerCreateFragmentPresenterImpl(var view: PlayerCreateFragmentView,
         interactor.updatePlayer(context, player)
     }
 
+    override fun savePosition(context: Context, position: Position) {
+        showProgressAndSetVisivility()
+        interactor.savePosition(context, position)
+    }
+
+    override fun updatePosition(context: Context, position: Position) {
+        showProgressAndSetVisivility()
+        interactor.updatePosition(context, position)
+    }
+
     override fun getPositionsSubMenus(context: Context) {
         showProgressAndSetVisivility()
         interactor.getPositionsSubMenus(context)
@@ -65,13 +77,24 @@ class PlayerCreateFragmentPresenterImpl(var view: PlayerCreateFragmentView,
             }
             PlayerCreateFragmentEvent.SAVEPLAYER -> {
                 hideProgressAndSetVisivility()
-                view.saveSuccess()
+                view.refreshAdapter()
+                view.savePlayerSuccess()
                 view.cleanViews()
             }
             PlayerCreateFragmentEvent.UPDATEPLAYER -> {
                 hideProgressAndSetVisivility()
-                view.editSuccess()
+                view.refreshAdapter()
+                view.editPlayerSuccess()
                 view.cleanViews()
+            }
+            PlayerCreateFragmentEvent.SAVEPOSITION -> {
+                hideProgressAndSetVisivility()
+                view.savePositionSuccess(event.position!!)
+            }
+            PlayerCreateFragmentEvent.UPDATEPOSITION -> {
+                hideProgressAndSetVisivility()
+                view.refreshAdapter()
+                view.editPositionSuccess(event.position!!)
             }
             PlayerCreateFragmentEvent.POSITIONSSUBMENUS -> {
                 view.setPositionsAndSubMenus(event.positions!!, event.submenus!!)

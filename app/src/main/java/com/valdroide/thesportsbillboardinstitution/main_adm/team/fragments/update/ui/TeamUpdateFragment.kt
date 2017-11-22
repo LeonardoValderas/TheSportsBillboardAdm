@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.*
-import android.widget.Toast
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.TeamUpdateFragmentPresenter
@@ -17,17 +16,9 @@ import kotlinx.android.synthetic.main.fragment_fixture.*
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.yesButton
-import butterknife.internal.ListenerClass.NONE
-import android.view.ContextMenu.ContextMenuInfo
-import android.view.View.OnCreateContextMenuListener
-import android.widget.AdapterView
-import com.raizlabs.android.dbflow.kotlinextensions.delete
-import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.ui.dialog.CustomDialog
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.activity.TabTeamActivity
 import com.valdroide.thesportsbillboardinstitution.utils.CustomDialogMenu
 import com.valdroide.thesportsbillboardinstitution.utils.OnMenuItemClickListener
-import kotlinx.android.synthetic.main.gridview_item_leaderboard.*
-
 
 class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, GenericOnItemClick<Team>, OnMenuItemClickListener {
 
@@ -35,11 +26,9 @@ class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, GenericOnItemClic
     lateinit var presenter: TeamUpdateFragmentPresenter
     lateinit var adapterTeam: TeamUpdateFragmentAdapter
     var teams: MutableList<Team> = arrayListOf()
-    var team: Team = Team()
+    var team = Team()
     private var isRegister: Boolean = false
     private var position: Int = 0
-    lateinit var onClickItem: GenericOnItemClick<Team>
-    private var alert: CustomDialogMenu? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
@@ -57,10 +46,10 @@ class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, GenericOnItemClic
     private fun setupInjection() {
         val app = activity.application as TheSportsBillboardInstitutionApp
         app.firebaseAnalyticsInstance().setCurrentScreen(activity, javaClass.simpleName, null)
-        component = app.getTeamUpdateFragmentComponent(this, this)
+        component = app.getTeamUpdateFragmentComponent(this, this, this)
         presenter = getPresenterInj()
         adapterTeam = getAdapter()
-        adapterTeam.setClickListener(this)
+  //      adapterTeam.setClickListener(this)
     }
 
     fun register() {
@@ -89,43 +78,29 @@ class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, GenericOnItemClic
 
     open fun getPresenterInj(): TeamUpdateFragmentPresenter = component.getPresenter()
 
+    //I dont realice inject because a have error
+    open fun getAdapter(): TeamUpdateFragmentAdapter = TeamUpdateFragmentAdapter(activity, this)
+    // = component.getAdapter()
 
-    //open fun getAdapter(): TeamUpdateFragmentAdapter = component.getAdapter()
-    open fun getAdapter(): TeamUpdateFragmentAdapter = component.getAdapter()
-
-
-    private fun onClickUpdate(position: Int, any: Any) {
+   private fun onClickUpdate(team: Team) {
         val i = Intent(activity, TabTeamActivity::class.java)
         i.putExtra("is_update", true)
-        i.putExtra("id_team", (any as Team).ID_TEAM_KEY)
+        i.putExtra("id_team", team.ID_TEAM_KEY)
         startActivity(i)
     }
-
-//    override fun onClickDelete(position: Int, any: Any) {
-//        this.position = position
-//        showAlertDialog(getString(R.string.alert_title), getString(R.string.alert_msg_team), any as Team)
-//    }
-//
-//    override fun onClickSave(position: Int, any: Any) {}
-//
-//    override fun onClickActive(position: Int, any: Any) {
-//        presenter.activeUnActiveTeam(activity, any as Team)
-//    }
-//
-//    override fun onClickUnActive(position: Int, any: Any) {
-//        presenter.activeUnActiveTeam(activity, any as Team)
-//    }
 
     override fun onClick(view: View, position: Int, t: Team) {
         this.position = position
         team = t
-        alert = CustomDialogMenu.Builder(activity).setOnClick(this).withTitles(resources.getStringArray(R.array.menu_title_3)).getDialog()
-        alert!!.show()
+        CustomDialogMenu.Builder(activity)
+                .setOnClick(this)
+                .withTitles(resources.getStringArray(R.array.menu_title_3))
+                .show()
     }
 
     override fun onClick(type: Int) {
         when (type) {
-            1 -> onClickUpdate(position, team)
+            1 -> onClickUpdate(team)
             2 -> {
                 team.IS_ACTIVE = if(team.IS_ACTIVE == 0) 1 else 0
                 presenter.activeUnActiveTeam(activity, team)
@@ -136,7 +111,7 @@ class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, GenericOnItemClic
 
     override fun updateTeamSuccess() {
         adapterTeam.notifyDataSetChanged()
-        Utils.showSnackBar(conteiner, getString(R.string.team_update_success))
+        Utils.showSnackBar(conteiner, getString(R.string.update_success, "Equipo", "o"))
     }
 
     private fun initRecyclerView() {
@@ -154,7 +129,7 @@ class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, GenericOnItemClic
 
     override fun deleteTeamSuccess() {
         adapterTeam.delete(position)
-        Utils.showSnackBar(conteiner, activity.getString(R.string.team_delete_success))
+        Utils.showSnackBar(conteiner, activity.getString(R.string.delete_success, "Equipo", "o"))
     }
 
     override fun setError(error: String) {

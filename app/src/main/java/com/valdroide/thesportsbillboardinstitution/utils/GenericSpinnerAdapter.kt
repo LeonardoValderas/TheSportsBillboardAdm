@@ -13,26 +13,29 @@ import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.model.entities.*
 import java.util.*
 
-class GenericSpinnerAdapter(var contextActivity: Activity?, var contextFragment: Fragment?,
-                            var list :MutableList<*>, var type: Int)
-    : BaseAdapter() {
+//abstract class GenericSpinnerAdapter<T>(var list :MutableList<T>)
+//    : BaseAdapter() {
+    class GenericSpinnerAdapter(var contextActivity: Activity?, var contextFragment: Fragment?,
+                                var list :MutableList<*>, var type: Int)
+        : BaseAdapter() {
 
     var any: Any? = null
     lateinit var textViewMenu: TextView
     lateinit var imageViewMenu: ImageView
 
-    override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
-        var row = p1
+    override fun getView(int: Int, view: View?, viewGroup: ViewGroup?): View {
+
+        var row = view
         if (row == null) {
             var inflater: LayoutInflater? = null
             if (contextActivity != null)
                 inflater = contextActivity!!.layoutInflater
             else
                 inflater = contextFragment!!.activity.layoutInflater
-            row = inflater.inflate(R.layout.spinner_menu_item, p2, false);
+            row = inflater.inflate(R.layout.spinner_menu_item, viewGroup, false);
         }
 
-        any = list[p0]
+        any = list[int]
 
         textViewMenu = row!!.findViewById<TextView>(R.id.textViewMain)
         imageViewMenu = row.findViewById<ImageView>(R.id.imageViewMain)
@@ -41,12 +44,12 @@ class GenericSpinnerAdapter(var contextActivity: Activity?, var contextFragment:
         return row
     }
 
+
     override fun getItem(p0: Int): Any? = null
 
     override fun getItemId(p0: Int): Long = 0
 
     override fun getCount(): Int = list.size
-
     private fun setEntity(type: Int) {
         when (type) {
             1 -> { //MENU
@@ -102,7 +105,6 @@ class GenericSpinnerAdapter(var contextActivity: Activity?, var contextFragment:
                 imageViewMenu.setColorFilter(ContextCompat.getColor(contextFragment!!.activity, R.color.greenColor))
         }
     }
-
 
     fun refresh(list: MutableList<*>, type: Int) {
         this.list = list

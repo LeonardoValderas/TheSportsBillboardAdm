@@ -6,16 +6,16 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import com.valdroide.thesportsbillboardinstitution.R
+import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.ui.adapter.OnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.model.entities.Team
+import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClick
 import com.valdroide.thesportsbillboardinstitution.utils.GenericRecyclerAdapter
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 
-class TeamUpdateFragmentAdapter(context: Context) : GenericRecyclerAdapter<Team>(context, null) {
-
-    override fun createView(context: Context, viewGroup: ViewGroup, viewType: Int): View {
-        val view: View? = LayoutInflater.from(context).inflate(R.layout.player_item, viewGroup, false)
-        return view!!
-    }
+class TeamUpdateFragmentAdapter(context: Context, listener: GenericOnItemClick<Team>) : GenericRecyclerAdapter<Team>(context, listener) {
+//class TeamUpdateFragmentAdapter(context: Context) : GenericRecyclerAdapter<Team>(context, null) {
+    override fun createView(context: Context, viewGroup: ViewGroup, viewType: Int): View  =
+        LayoutInflater.from(context).inflate(R.layout.player_item, viewGroup, false)
 
     override fun bindView(item: Team, viewHolder: ViewHolder) {
         val tvName = viewHolder.getView(R.id.textViewName) as TextView

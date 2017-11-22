@@ -81,6 +81,7 @@
         <activity
             android:name=".main_adm.team.activity.TabTeamActivity"
             android:label="@string/team_title_tab"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -7,7 +7,6 @@ import com.valdroide.thesportsbillboardinstitution.main_user.splash.di.SplashAct
 import com.valdroide.thesportsbillboardinstitution.main_user.splash.di.DaggerSplashActivityComponent
 import android.app.Activity
 import android.os.Build
-import android.support.multidex.MultiDex
 import com.valdroide.thesportsbillboardinstitution.lib.di.LibsModule
 import com.valdroide.thesportsbillboardinstitution.main_user.splash.ui.SplashActivityView
 import com.valdroide.thesportsbillboardinstitution.main_user.splash.di.SplashActivityComponent
@@ -125,7 +124,7 @@ class TheSportsBillboardInstitutionApp : Application() {
         if (!isRoboUnitTest()) {
             Stetho.initializeWithDefaults(this)
         }
-        MultiDex.install(this)
+       // MultiDex.install(this)
     }
 
     private fun initModules() {
@@ -260,11 +259,11 @@ class TheSportsBillboardInstitutionApp : Application() {
                 .build()
     }
 
-    fun getTeamUpdateFragmentComponent(view: TeamUpdateFragmentView, fragment: Fragment): TeamUpdateFragmentComponent {
+    fun getTeamUpdateFragmentComponent(view: TeamUpdateFragmentView, fragment: Fragment, listener: GenericOnItemClick<Team>): TeamUpdateFragmentComponent {
         return DaggerTeamUpdateFragmentComponent
                 .builder()
                 .libsModule(LibsModule(fragment))
-                .teamUpdateFragmentModule(TeamUpdateFragmentModule(view, fragment.activity))
+                .teamUpdateFragmentModule(TeamUpdateFragmentModule(view, fragment.activity, listener))
                 .build()
     }
 
@@ -325,11 +324,11 @@ class TheSportsBillboardInstitutionApp : Application() {
                 .build()
     }
 
-    fun getFixtureUpdateFragmentComponent(view: FixtureUpdateFragmentView, listener: GenericOnItemClickListener.fixture, fragment: Fragment): FixtureUpdateFragmentComponent {
+    fun getFixtureUpdateFragmentComponent(view: FixtureUpdateFragmentView, fragment: Fragment): FixtureUpdateFragmentComponent {
         return DaggerFixtureUpdateFragmentComponent
                 .builder()
                 .libsModule(LibsModule(fragment))
-                .fixtureUpdateFragmentModule(FixtureUpdateFragmentModule(view, listener))
+                .fixtureUpdateFragmentModule(FixtureUpdateFragmentModule(view))
                 .build()
     }
 

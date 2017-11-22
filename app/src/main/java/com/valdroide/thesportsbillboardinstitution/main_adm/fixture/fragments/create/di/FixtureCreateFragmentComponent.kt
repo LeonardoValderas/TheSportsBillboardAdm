@@ -2,6 +2,7 @@ package com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.c
 
 import com.valdroide.thesportsbillboardinstitution.lib.di.LibsModule
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.FixtureCreateFragmentPresenter
+import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.ui.adapters.*
 import com.valdroide.thesportsbillboardinstitution.utils.GenericSpinnerAdapter
 import dagger.Component
 import javax.inject.Named
@@ -12,15 +13,15 @@ import javax.inject.Singleton
 interface FixtureCreateFragmentComponent {
     fun getPresenter(): FixtureCreateFragmentPresenter
     @Named("spinner_menu")
-    fun getAdapterSubMenus(): GenericSpinnerAdapter
+    fun getAdapterSubMenus(): FixtureCreateFragmentSubMenuSpinnerAdapter
     @Named("spinner_time")
-    fun getAdapterTimeMatch(): GenericSpinnerAdapter
+    fun getAdapterTimeMatch(): FixtureCreateFragmentTimesSpinnerAdapter
     @Named("spinner_field")
-    fun getAdapterFieldMatch(): GenericSpinnerAdapter
+    fun getAdapterFieldMatch(): FixtureCreateFragmentFieldSpinnerAdapter
     @Named("spinner_tournament")
-    fun getAdapterTournament(): GenericSpinnerAdapter
+    fun getAdapterTournament(): FixtureCreateFragmentTournamentSpinnerAdapter
     @Named("spinner_team_local")
-    fun getAdapterTeamLocal(): GenericSpinnerAdapter
+    fun getAdapterTeamLocal(): FixtureCreateFragmentTeamSpinnerAdapter
     @Named("spinner_team_visite")
-    fun getAdapterTeamVisite(): GenericSpinnerAdapter
+    fun getAdapterTeamVisite(): FixtureCreateFragmentTeamSpinnerAdapter
 }

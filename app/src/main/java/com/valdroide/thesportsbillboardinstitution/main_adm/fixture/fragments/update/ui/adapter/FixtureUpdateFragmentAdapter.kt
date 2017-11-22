@@ -1,115 +1,57 @@
 package com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.ui.adapter
 
 import android.content.Context
-import android.support.v4.app.Fragment
-import android.support.v7.widget.PopupMenu
-import android.support.v7.widget.RecyclerView
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import com.valdroide.thesportsbillboardinstitution.R
-import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.update.ui.FixtureUpdateFragment
 import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
-import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
-import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener_2
+import com.valdroide.thesportsbillboardinstitution.model.entities.Team
+import com.valdroide.thesportsbillboardinstitution.utils.GenericRecyclerAdapter
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.fixture_item.view.*
 
-class FixtureUpdateFragmentAdapter(private var fixtures: MutableList<Fixture>?, private var listener: GenericOnItemClickListener.fixture,
-                                   fragment: Fragment) : RecyclerView.Adapter<FixtureUpdateFragmentAdapter.ViewHolder>() {
+class FixtureUpdateFragmentAdapter(context: Context) : GenericRecyclerAdapter<Fixture>(context, null) {
 
-    private val fragment: Fragment
-
-    init {
-        this.fragment = fragment as FixtureUpdateFragment
+    override fun createView(context: Context, viewGroup: ViewGroup, viewType: Int): View {
+        val view: View? = LayoutInflater.from(context).inflate(R.layout.fixture_item, viewGroup, false)
+        return view!!
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View? = LayoutInflater.from(parent.context).inflate(R.layout.fixture_item, parent, false)
-        return ViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindData(fixtures!![position], position, listener, fragment)
-    }
-
-    class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
-
-        fun bindData(fixture: Fixture, position: Int, listener: GenericOnItemClickListener.fixture, fragment: Fragment) {
-            //   YoYo.with(Techniques.FlipInX).playOn(holder.card_view);
-            with(fixture) {
-                val date_hour = DATE_MATCH + " - " + HOUR_MATCH + " hs."
-                itemView.textViewDateHour.text = date_hour
-                Utils.setPicasso(fragment.activity, URL_LOCAL_TEAM, R.drawable.shield_icon, itemView.imageViewLocalTeam)
-                Utils.setPicasso(fragment.activity, URL_VISIT_TEAM, R.drawable.shield_icon, itemView.imageViewVisitTeam)
-                itemView.textViewLocalResult.text = RESULT_LOCAL
-                itemView.textViewVisitResult.text = RESULT_VISITE
-                itemView.textViewTimes.text = TIMES_MATCH
-                itemView.textViewLocalName.text = NAME_LOCAL_TEAM
-                itemView.textViewVisitName.text = NAME_VISITA_TEAM
-                itemView.textViewFieldMatch.text = NAME_FIELD
-                itemView.textViewAddress.text = ADDRESS
-                if (OBSERVATION != null && !OBSERVATION.isEmpty()) {
-                    itemView.textViewObservation.visibility = View.VISIBLE
-                    itemView.textViewObservation.text = OBSERVATION
-                } else {
-                    itemView.textViewObservation.visibility = View.GONE
-                }
-            }
-            setOnItemClickListener(listener, position, fixture, fragment)
-        }
-
-        fun setOnItemClickListener(listener: GenericOnItemClickListener.fixture, position: Int, Fixture: Fixture, fragment: Fragment) {
-            itemView.setOnClickListener {
-                showPopupMenu(itemView.conteiner, fragment.activity, position, Fixture, listener)
+    override fun bindView(fixture: Fixture, itemView: ViewHolder) {
+        val tvDateHour = itemView.getView(R.id.textViewDateHour) as TextView
+        val tvLocalResult = itemView.getView(R.id.textViewLocalResult) as TextView
+        val tvVisitResult = itemView.getView(R.id.textViewVisitResult) as TextView
+        val tvTimes = itemView.getView(R.id.textViewTimes) as TextView
+        val tvLocalName = itemView.getView(R.id.textViewLocalName) as TextView
+        val tvVisitName = itemView.getView(R.id.textViewVisitName) as TextView
+        val tvFieldMatch = itemView.getView(R.id.textViewFieldMatch) as TextView
+        val tvAddress = itemView.getView(R.id.textViewAddress) as TextView
+        val tvObservation = itemView.getView(R.id.textViewObservation) as TextView
+        val ivLocalTeam = itemView.getView(R.id.imageViewLocalTeam) as ImageView
+        val ivVisitTeam = itemView.getView(R.id.imageViewVisitTeam) as ImageView
+        with(fixture) {
+//            DATE_MATCH + " - " + HOUR_MATCH + " hs."
+            val date_hour = context!!.getString(R.string.fixture_concatenate, DATE_MATCH ,HOUR_MATCH)
+            tvDateHour.text = date_hour
+            com.valdroide.thesportsbillboardinstitution.utils.Utils.setPicasso(context, URL_LOCAL_TEAM, R.drawable.shield_icon, ivLocalTeam)
+            com.valdroide.thesportsbillboardinstitution.utils.Utils.setPicasso(context, URL_VISIT_TEAM, R.drawable.shield_icon, ivVisitTeam)
+            tvLocalResult.text = RESULT_LOCAL
+            tvVisitResult.text = RESULT_VISITE
+            tvTimes.text = TIMES_MATCH
+            tvLocalName.text = NAME_LOCAL_TEAM
+            tvVisitName.text = NAME_VISITA_TEAM
+            tvFieldMatch.text = NAME_FIELD
+            tvAddress.text = ADDRESS
+            if (OBSERVATION != null && !OBSERVATION.isEmpty()) {
+                tvObservation.visibility = android.view.View.VISIBLE
+                tvObservation.text = OBSERVATION
+            } else {
+                tvObservation.visibility = android.view.View.GONE
             }
         }
 
-        private fun showPopupMenu(view: View, context: Context, position: Int, Fixture: Fixture, listener: GenericOnItemClickListener.fixture) {
-            val popup = PopupMenu(context, view, Gravity.END)
-            popup.getMenu().add(Menu.NONE, 1, 1, "Editar Resultado")
-            popup.getMenu().add(Menu.NONE, 2, 2, "Editar Fixture")
-            popup.getMenu().add(Menu.NONE, 3, 3, "Eliminar Fixture")
-            popup.setOnMenuItemClickListener(MenuItemClickListener(position, Fixture, listener))
-            popup.show()
-        }
-
-        private class MenuItemClickListener(internal var position: Int, internal var Fixture: Fixture, internal var listener: GenericOnItemClickListener.fixture) : PopupMenu.OnMenuItemClickListener {
-
-            override fun onMenuItemClick(menuItem: MenuItem): Boolean {
-                when (menuItem.itemId) {
-                    1 -> {
-                        listener.onClickResult(position, Fixture)
-                        return true
-                    }
-                    2 -> {
-                        listener.onClickUpdate(position, Fixture)
-                        return true
-                    }
-                    3 -> {
-                        listener.onClickDelete(position, Fixture)
-                        return true
-                    }
-                }
-                return false
-            }
-        }
-    }
-
-    override fun getItemCount(): Int =
-            fixtures!!.size
-
-    fun setFixture(fixtures: MutableList<Fixture>) {
-        this.fixtures = fixtures
-        notifyDataSetChanged()
-    }
-
-    fun updateFixture(position: Int, fixture: Fixture) {
-        fixtures!!.removeAt(position)
-        fixtures!!.add(position, fixture)
-        notifyDataSetChanged()
-    }
-
-    fun deleteFixture(position: Int) {
-        fixtures!!.removeAt(position)
-        notifyDataSetChanged()
     }
 }

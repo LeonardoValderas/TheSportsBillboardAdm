@@ -12,13 +12,14 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
 import com.valdroide.thesportsbillboardinstitution.model.entities.TimeMatch
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.utils.GenericSpinnerAdapter
+import com.valdroide.thesportsbillboardinstitution.utils.OnItemClickListenerFixture
 import kotlinx.android.synthetic.main.custom_dialog_fixture.*
 
 
 class CustomDialog(private var context: Activity,
                    private var fixture: Fixture?,
                    private var timesMatch: MutableList<TimeMatch>?,
-                   private var listener: GenericOnItemClickListener.fixture) : Dialog(context), View.OnClickListener {
+                   private var listener: OnItemClickListenerFixture) : Dialog(context), View.OnClickListener {
     var time: TimeMatch? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +67,7 @@ class CustomDialog(private var context: Activity,
                 fixture!!.TIMES_MATCH = time!!.TIME_MATCH
                 fixture!!.RESULT_LOCAL = editTextRLocal.text.toString()
                 fixture!!.RESULT_VISITE = editTextRVisit.text.toString()
-                listener.onSaveResult(fixture!!)
+                listener.onClickSaveResult(fixture!!)
                 dismiss()
             }
             buttonCancel -> dismiss()
@@ -76,7 +77,7 @@ class CustomDialog(private var context: Activity,
     class Builder(private var context: Activity) {
 
         private var fixture: Fixture? = null
-        private var listener: GenericOnItemClickListener.fixture? = null
+        private var listener: OnItemClickListenerFixture? = null
         private var times: MutableList<TimeMatch>? = null
 
 
@@ -90,13 +91,11 @@ class CustomDialog(private var context: Activity,
             return this
         }
 
-        fun setOnClick(listener: GenericOnItemClickListener.fixture): Builder {
+        fun setOnClick(listener: OnItemClickListenerFixture): Builder {
             this.listener = listener
             return this
         }
         //original
-        //fun show() = CustomDialog(context, isMenu, isUpdate, menu, menus, submenu, listener!!).show()
-
-        fun getDialog(): CustomDialog = CustomDialog(context, fixture, times, listener!!)
+        fun show() = CustomDialog(context, fixture, times, listener!!).show()
     }
 }

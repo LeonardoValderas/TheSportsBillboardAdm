@@ -20,12 +20,7 @@ class CustomDialogMenu(private var context: Activity,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.custom_dialog_menu)
-//        linearDialog.minimumWidth = 500
-//        linearDialog.minimumHeight = 300
-
-
         val count = titles!!.size
-
         for (i in 1..count) {
             setVisibility(i)
         }
@@ -81,7 +76,6 @@ class CustomDialogMenu(private var context: Activity,
                 listener.onClick(4)
                 dismiss()
             }
-        //  buttonCancel -> dismiss()
         }
     }
 
@@ -101,8 +95,8 @@ class CustomDialogMenu(private var context: Activity,
             return this
         }
         //original
-        //fun show() = CustomDialog(context, isMenu, isUpdate, menu, menus, submenu, listener!!).show()
+        fun show() = CustomDialogMenu(context, titles, listener!!).show()
 
-        fun getDialog(): CustomDialogMenu = CustomDialogMenu(context, titles, listener!!)
+        //fun getDialog(): CustomDialogMenu = CustomDialogMenu(context, titles, listener!!)
     }
 }
