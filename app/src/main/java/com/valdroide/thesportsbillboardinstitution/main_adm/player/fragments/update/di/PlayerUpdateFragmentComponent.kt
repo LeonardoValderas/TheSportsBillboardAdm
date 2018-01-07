@@ -11,5 +11,5 @@ import javax.inject.Singleton
 interface PlayerUpdateFragmentComponent {
 
     fun getPresenter(): PlayerUpdateFragmentPresenter
-    fun getAdapter(): PlayerUpdateFragmentAdapter
+   // fun getAdapter(): PlayerUpdateFragmentAdapter
 }

@@ -1,9 +1,11 @@
-package com.valdroide.thesportsbillboardinstitution.utils
+package com.valdroide.thesportsbillboardinstitution.utils.base
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.valdroide.thesportsbillboardinstitution.R
+import com.valdroide.thesportsbillboardinstitution.utils.SectionsPagerAdapter
+import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.activity_tab.*
 import kotlinx.android.synthetic.main.content_tab.*
 

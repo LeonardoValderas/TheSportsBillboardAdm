@@ -4,9 +4,32 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimary</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:buttonStyle">@style/Button</item>
         <!--<item name="drawerArrowStyle">@style/DrawerArrowStyle</item>-->
         <!--<item name="android:windowBackground">@color/myWindowBackground</item>-->
     </style>
+
+
+    <style name="Button" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/custom_select_button</item>
+        <item name="android:textColor">@color/colorWhiteGrey</item>
+        <item name="android:padding">@dimen/padding_button</item>
+        <item name="android:textSize">@dimen/button_size</item>
+    </style>
+
+    <style name="ButtonInformation">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">right</item>
+        <item name="android:layout_marginRight">@dimen/dim_10dp</item>
+        <item name="android:layout_marginTop">@dimen/dim_10dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:src">@android:drawable/ic_dialog_info</item>
+        <item name="android:tint">@color/colorYellow</item>
+    </style>
+
 
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
@@ -14,10 +37,10 @@
         <item name="color">@android:color/white</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
+    <!--<style name="AppTheme.NoActionBar">-->
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="windowNoTitle">true</item>-->
+    <!--</style>-->
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
@@ -77,5 +100,10 @@
 
     </style>
 
+    <style name="DialogAnimations" />
+    <style name="DialogAnimations.SmileWindow">
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_top</item>
+    </style>
 
 </resources>

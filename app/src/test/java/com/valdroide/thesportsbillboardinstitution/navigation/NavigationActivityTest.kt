@@ -50,9 +50,9 @@ class NavigationActivityTest : BaseTest() {
         super.setUp()
 
         val navigationActivity = object : NavigationActivity() {
-            override fun setTheme(resid: Int) {
-                super.setTheme(R.style.AppTheme_NoActionBar)
-            }
+//            override fun setTheme(resid: Int) {
+//                super.setTheme(R.style.AppTheme_NoActionBar)
+//            }
         }
         controller = ActivityController.of(Robolectric.getShadowsAdapter(), navigationActivity as NavigationActivity).create().visible()
         activity = controller.get()

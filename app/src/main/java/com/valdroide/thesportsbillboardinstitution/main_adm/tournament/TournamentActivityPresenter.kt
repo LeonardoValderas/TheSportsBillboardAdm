@@ -9,11 +9,11 @@ interface TournamentActivityPresenter {
     fun onCreate()
     fun onDestroy()
     fun getSubMenuTournaments(context: Context)
-    fun getSubMenuForId(context: Context, id_tournament: Tournament)
     fun saveTournament(context: Context, tournament: Tournament)
     fun activeOrUnActiveTournament(context: Context, tournament: Tournament)
     fun updateTournament(context: Context, tournament: Tournament)
     fun deleteTournament(context: Context, tournament: Tournament)
-    fun assignationUnassignation(context: Context, subMenu: SubMenuDrawer, tounament: Int, isActual: Boolean)
+    fun assignationTournament(context: Context, subMenu: SubMenuDrawer, tounament: Int)
     fun onEventMainThread(event: TournamentActivityEvent)
+    fun getTournamentForSubMenu(context: Context, id_submenu: Int)
 }

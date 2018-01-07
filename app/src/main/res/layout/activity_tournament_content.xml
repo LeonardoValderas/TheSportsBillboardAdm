@@ -21,16 +21,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
-        android:layout_marginTop="20dp"
         android:orientation="vertical"
         android:padding="5dp">
 
         <LinearLayout
-            android:background="@drawable/border_style_linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:orientation="vertical">
+            android:layout_marginTop="5dp"
+            android:background="@drawable/border_style_linear"
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,6 +41,8 @@
                     android:id="@+id/textInputLayoutTournament"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
                     android:layout_marginTop="2dp"
                     android:layout_weight="80">
 
@@ -75,100 +77,161 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <Spinner
-                    android:id="@+id/spinnerTournament"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="80"
-                    android:background="@drawable/border_style_spinner" />
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
-                <com.github.clans.fab.FloatingActionButton
-                    android:id="@+id/fabUpdateTournament"
-                    android:layout_width="wrap_content"
+                    <Button
+                        android:id="@+id/buttonTournament"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sin Torneos"
+                        android:textColor="@color/colorWhiteGrey" />
+
+                    <View
+                        android:id="@+id/diviverLine"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="2dp"
+                        android:background="@color/redColor" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_edit"
-                    android:tint="@color/colorWhite"
-                    fab:fab_colorNormal="@color/colorPrimary"
-                    fab:fab_colorPressed="@color/colorPrimaryDark"
-                    fab:fab_colorRipple="@color/colorAccent"
-                    fab:fab_size="mini" />
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                <com.github.clans.fab.FloatingActionButton
-                    android:id="@+id/fabActiveTournament"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_rotate"
-                    android:tint="@color/colorWhite"
-                    fab:fab_colorNormal="@color/colorPrimary"
-                    fab:fab_colorPressed="@color/colorPrimaryDark"
-                    fab:fab_colorRipple="@color/colorAccent"
-                    fab:fab_size="mini" />
+                    <com.github.clans.fab.FloatingActionButton
+                        android:id="@+id/fabUpdateTournament"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@android:drawable/ic_menu_edit"
+                        android:tint="@color/colorWhite"
+                        fab:fab_colorNormal="@color/colorPrimary"
+                        fab:fab_colorPressed="@color/colorPrimaryDark"
+                        fab:fab_colorRipple="@color/colorAccent"
+                        fab:fab_size="mini" />
+
+                    <com.github.clans.fab.FloatingActionButton
+                        android:id="@+id/fabActiveTournament"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@android:drawable/ic_menu_rotate"
+                        android:tint="@color/colorWhite"
+                        fab:fab_colorNormal="@color/colorPrimary"
+                        fab:fab_colorPressed="@color/colorPrimaryDark"
+                        fab:fab_colorRipple="@color/colorAccent"
+                        fab:fab_size="mini" />
 
 
-                <com.github.clans.fab.FloatingActionButton
-                    android:id="@+id/fabDeleteTournament"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_delete"
-                    android:tint="@color/colorWhite"
-                    fab:fab_colorNormal="@color/colorPrimary"
-                    fab:fab_colorPressed="@color/colorPrimaryDark"
-                    fab:fab_colorRipple="@color/colorAccent"
-                    fab:fab_size="mini" />
+                    <com.github.clans.fab.FloatingActionButton
+                        android:id="@+id/fabDeleteTournament"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@android:drawable/ic_menu_delete"
+                        android:tint="@color/colorWhite"
+                        fab:fab_colorNormal="@color/colorPrimary"
+                        fab:fab_colorPressed="@color/colorPrimaryDark"
+                        fab:fab_colorRipple="@color/colorAccent"
+                        fab:fab_size="mini" />
+
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
 
         <ImageView
             android:id="@+id/imageViewInformationTournament"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:clickable="true"
-            android:src="@android:drawable/ic_dialog_info"
-            android:tint="@color/colorYellow" />
+            style="@style/ButtonInformation" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dim_10dp"
             android:background="@drawable/border_style_linear"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="5dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Asignar Torneo Actual"
-                android:textColor="@color/colorPrimary"
-                android:textSize="15sp"
-                android:layout_marginTop="5dp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <!--<Spinner-->
-                <!--android:id="@+id/spinnerSubMenu"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginBottom="5dp"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:layout_marginRight="10dp"-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:background="@drawable/border_style_spinner" />-->
+                <TextView
+                    android:id="@+id/tvSubMenuTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="@string/submenu.title"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                <Button
+                    android:id="@+id/btnSubMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/custom_select_button"
+                    android:text="@string/submenu.title"
+                    android:textColor="@color/colorWhiteGrey" />
+
+                <TextView
+                    android:id="@+id/tvSubMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorSecondary_text"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:padding="5dp"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/tvTournamentTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="@string/tournament.assigned.title"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnTournamentSubmenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/custom_select_button_green"
+                    android:text="Torneo"
+                    android:textColor="@color/colorWhiteGrey" />
+
+                <TextView
+                    android:id="@+id/tvTournament"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorSecondary_text"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

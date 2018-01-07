@@ -68,9 +68,9 @@ class AccountActivityTest : BaseTest() {
         super.setUp()
 
         val accountActivity = object : AccountActivity() {
-            override fun setTheme(resid: Int) {
-                super.setTheme(R.style.AppTheme_NoActionBar)
-            }
+//            override fun setTheme(resid: Int) {
+//                super.setTheme(R.style.AppTheme_NoActionBar)
+//            }
 
             override fun getPresenter(): AccountActivityPresenter =
                     presenter

@@ -30,10 +30,9 @@ import android.util.Base64
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
-import kotlinx.android.synthetic.main.activity_tab.*
-import kotlinx.android.synthetic.main.content_tab.*
+import com.valdroide.thesportsbillboardinstitution.utils.generics.OnSpinerItemClick
+import com.valdroide.thesportsbillboardinstitution.utils.generics.SpinnerDialog
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.yesButton
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -47,8 +46,6 @@ object Utils {
     const val URL_TEAM: String = "http://10.0.3.2:8080/the_sports_billboard_institution/adm/team/image_team/"
     const val URL_ACCOUNT: String = "http://10.0.3.2:8080/the_sports_billboard_institution/adm/account/image_account/"
     const val PNG: String = ".PNG"
-
-
 
     fun setupViewpagerTabs(viewPager: ViewPager, tabs: TabLayout, adapter: SectionsPagerAdapter?): ViewPager {
         viewPager.setAdapter(adapter)
@@ -75,13 +72,13 @@ object Utils {
     fun showSnackBar(conteiner: View, msg: String) {
         Snackbar.make(conteiner, msg, Snackbar.LENGTH_LONG).show()
     }
+
     fun encodeToString(imageByte: ByteArray?): String {
         return Base64.encodeToString(imageByte,
                 Base64.DEFAULT)
     }
 
     fun oldPhones(): Boolean = Build.VERSION.SDK_INT < Build.VERSION_CODES.M
-
 
     fun checkForPermission(activity: Activity, permissionCheck: Int, PERMISSION: Int, manifestPermission: String) {
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
@@ -190,18 +187,6 @@ object Utils {
                 })
         myAlertDialog.show()
     }
-
-    private fun <T> getPositionSpinners(list: MutableList<T>, t: T): Int {
-        var index = 0
-        for (i in 0 until list.size) {
-            if (list[i] == t) {
-                index = i
-                break
-            }
-        }
-        return index
-    }
-
 
     fun showAlertInformation(activity: Activity, titleText: String, messageText: String) {
         activity.alert(messageText) {

@@ -8,11 +8,8 @@ import dagger.Component
 import javax.inject.Singleton
 import javax.inject.Inject
 
-
-
 @Singleton
 @Component(modules = arrayOf(TeamUpdateFragmentModule::class, LibsModule::class))
 interface TeamUpdateFragmentComponent {
     fun getPresenter(): TeamUpdateFragmentPresenter
-   // fun getAdapter(): TeamUpdateFragmentAdapter
 }

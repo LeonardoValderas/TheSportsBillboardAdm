@@ -6,10 +6,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.text.Editable
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,15 +20,13 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.creat
 import com.valdroide.thesportsbillboardinstitution.model.entities.Team
 import com.valdroide.thesportsbillboardinstitution.utils.Communicator
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_create_team.*
-import org.jetbrains.anko.support.v4.alert
-import org.jetbrains.anko.yesButton
 import java.io.IOException
 
-class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListener {
+class TeamCreateFragment : BaseFragment(), TeamCreateFragmentView, View.OnClickListener {
 
     private lateinit var component: TeamCreateFragmentComponent
-    private var isRegister: Boolean = false
     lateinit var presenter: TeamCreateFragmentPresenter
     lateinit private var communication: Communicator
     private var team: Team = Team()
@@ -42,16 +38,9 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
     private var url_image: String = ""
     private var imageByte: ByteArray? = null
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? =
-            inflater!!.inflate(R.layout.fragment_create_team, container, false)
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setupInjection()
-        communication = activity as Communicator
-        textViewButton.text = getString(R.string.save_button, "Equipo")
-        register()
+        buttonSave.text = getString(R.string.save_button, "Equipo")
         linearConteinerPlayer.visibility = View.GONE
         isTeamUpdate()
         if (is_update) {
@@ -59,6 +48,26 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
         } else
             setVisibilityViews(View.VISIBLE)
         setOnclik()
+    }
+
+    override fun setupInjection() {
+        val app = activity.application as TheSportsBillboardInstitutionApp
+        app.firebaseAnalyticsInstance().setCurrentScreen(activity, javaClass.simpleName, null)
+        component = app.getTeamCreateFragmentComponent(this, this)
+        presenter = getPresenterInj()
+    }
+
+    override fun getLayoutResourceId(): Int = R.layout.fragment_create_team
+
+    override fun validateEvenBusRegisterForLifeCycle(isRegister: Boolean) {
+        if (isRegister)
+            presenter.onCreate()
+        else
+            presenter.onDestroy()
+    }
+
+    override fun setCommunicator(communicator: Communicator) {
+        communication = communicator
     }
 
     private fun setOnclik() {
@@ -116,7 +125,7 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
                     assignImage(result.uri)
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     if (!result.error.toString().contains("ENOENT"))
-                        Utils.showSnackBar(conteiner, getString(R.string.error_crop_image) + result.error)
+                        showSnackBar(getString(R.string.error_crop_image) + result.error)
                 }
             }
         } catch (e: Exception) {
@@ -172,13 +181,6 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
         presenter.updateTeam(activity, team)
     }
 
-    private fun setupInjection() {
-        val app = activity.application as TheSportsBillboardInstitutionApp
-        app.firebaseAnalyticsInstance().setCurrentScreen(activity, javaClass.simpleName, null)
-        component = app.getTeamCreateFragmentComponent(this, this)
-        presenter = getPresenterInj()
-    }
-
     private fun getPresenterInj(): TeamCreateFragmentPresenter =
             component.getPresenter()
 
@@ -186,21 +188,7 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
         is_update = activity.intent.getBooleanExtra("is_update", false)
         if (is_update) {
             id_team = activity.intent.getIntExtra("id_team", 0)
-            textViewButton.text = getString(R.string.update_button, "Equipo")
-        }
-    }
-
-    fun register() {
-        if (!isRegister) {
-            presenter.onCreate()
-            isRegister = true
-        }
-    }
-
-    fun unregister() {
-        if (isRegister) {
-            presenter.onDestroy()
-            isRegister = false
+            buttonSave.text = getString(R.string.update_button, "Equipo")
         }
     }
 
@@ -211,7 +199,7 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
     override fun fillViewUpdate() {
         with(team) {
             id_team = ID_TEAM_KEY
-            Utils.setPicasso(activity, URL_IMAGE, android.R.drawable.ic_menu_camera, imageViewTeam)
+            Utils.setPicasso(activity, URL_IMAGE, R.drawable.shield_icon, imageViewTeam)
             editTextNameTeam.text = Editable.Factory.getInstance().newEditable(NAME)
             url_image = URL_IMAGE
             name_image = NAME_IMAGE
@@ -221,16 +209,16 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
 
     override fun saveSuccess() {
         communication.refreshAdapter()
-        Utils.showSnackBar(conteiner, getString(R.string.save_success, "Equipo", "o"))
+        showSnackBar( getString(R.string.save_success, "Equipo", "o"))
     }
 
     override fun editSuccess() {
         communication.refreshAdapter()
-        Utils.showSnackBar(conteiner, getString(R.string.update_success, "Equipo", "o"))
+        showSnackBar(getString(R.string.update_success, "Equipo", "o"))
     }
 
     override fun setError(error: String) {
-        Utils.showSnackBar(conteiner, error)
+        showSnackBar(error)
     }
 
     override fun hideProgressDialog() {
@@ -241,6 +229,9 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
         progressBar.visibility = View.VISIBLE
     }
 
+    private fun showSnackBar(msg: String){
+        Utils.showSnackBar(conteiner, msg)
+    }
     override fun cleanViews() {
         team = Team()
         editTextNameTeam.text.clear()
@@ -256,34 +247,5 @@ class TeamCreateFragment : Fragment(), TeamCreateFragmentView, View.OnClickListe
     override fun setVisibilityViews(isVisible: Int) {
         linearConteinerTeam.visibility = isVisible
         buttonSave.visibility = isVisible
-    }
-
-    override fun onPause() {
-        unregister()
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        register()
-//        mAd.resume(this)
-//        if (mAdView != null) {
-//            mAdView.resume()
-//        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        register()
-    }
-
-    override fun onStop() {
-        unregister()
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        unregister()
-        super.onDestroy()
     }
 }

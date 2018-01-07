@@ -6,10 +6,10 @@ buildscript {
         mavenLocal()
         mavenCentral()
         maven {
-            url "https://repo1.maven.org/maven2"
+            url 'http://oss.sonatype.org/content/repositories/snapshots'
         }
         maven {
-            url 'http://oss.sonatype.org/content/repositories/snapshots'
+            url 'https://repo1.maven.org/maven2'
         }
     }
     dependencies {
@@ -23,7 +23,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven { url "https://jitpack.io" }
+        maven { url 'https://jitpack.io' }
     }
 }
 

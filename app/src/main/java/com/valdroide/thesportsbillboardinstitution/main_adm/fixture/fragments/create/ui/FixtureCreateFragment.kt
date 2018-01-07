@@ -3,11 +3,8 @@ package com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.c
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.text.Editable
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Adapter
 import android.widget.AdapterView
 import com.valdroide.thesportsbillboardinstitution.R
@@ -16,10 +13,8 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.cr
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.di.FixtureCreateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.model.entities.*
 import com.valdroide.thesportsbillboardinstitution.utils.Communicator
-import com.valdroide.thesportsbillboardinstitution.utils.GenericSpinnerAdapter
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.fragment_create_fixture.*
-import com.github.clans.fab.FloatingActionButton
 import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment
 import com.codetroopers.betterpickers.timepicker.TimePickerDialogFragment
 import com.codetroopers.betterpickers.timepicker.TimePickerBuilder
@@ -27,14 +22,17 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.cr
 import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui.MenuSubMenuActivity
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.activity.TabTeamActivity
 import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.ui.TournamentActivity
+import com.valdroide.thesportsbillboardinstitution.utils.base.BaseFragment
+import com.valdroide.thesportsbillboardinstitution.utils.generics.OnSpinerItemClick
+import com.valdroide.thesportsbillboardinstitution.utils.generics.SpinnerDialog
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.yesButton
 
-class FixtureCreateFragment : Fragment(),
-                              FixtureCreateFragmentView,
-                              View.OnClickListener,
-                              CalendarDatePickerDialogFragment.OnDateSetListener,
-                              TimePickerDialogFragment.TimePickerDialogHandler {
+class FixtureCreateFragment : BaseFragment(),
+        FixtureCreateFragmentView,
+        View.OnClickListener,
+        CalendarDatePickerDialogFragment.OnDateSetListener,
+        TimePickerDialogFragment.TimePickerDialogHandler {
 
     private lateinit var component: FixtureCreateFragmentComponent
     private lateinit var presenter: FixtureCreateFragmentPresenter
@@ -67,15 +65,8 @@ class FixtureCreateFragment : Fragment(),
     private var hour: String = ""
     private val FRAG_TAG_DATE_PICKER = "fragment_date_picker_name"
 
-
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? =
-            inflater!!.inflate(R.layout.fragment_create_fixture, container, false)
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setupInjection()
-        communication = activity as Communicator
         register()
         textViewButton.text = getString(R.string.save_button, "Fixture")
         isFixtureUpdate()
@@ -84,7 +75,20 @@ class FixtureCreateFragment : Fragment(),
         setOnClick()
     }
 
-    private fun setupInjection() {
+    override fun getLayoutResourceId(): Int = R.layout.fragment_create_fixture
+
+    override fun validateEvenBusRegisterForLifeCycle(isRegister: Boolean) {
+        if (isRegister)
+            presenter.onCreate()
+        else
+            presenter.onDestroy()
+    }
+
+    override fun setCommunicator(communicator: Communicator) {
+        communication = communicator
+    }
+
+    override fun setupInjection() {
         val app = activity.application as TheSportsBillboardInstitutionApp
         app.firebaseAnalyticsInstance().setCurrentScreen(activity, javaClass.simpleName, null)
         component = app.getFixtureCreateFragmentComponent(this, this)
@@ -99,6 +103,7 @@ class FixtureCreateFragment : Fragment(),
 
     override fun onClick(onclick: View?) {
         when (onclick) {
+            btnSubMenu -> dialogSpinnerSubMenu()
             buttonSave -> onClickButtonSave()
             buttonDay -> openCalendar()
             buttonHour -> openTimer()
@@ -106,12 +111,13 @@ class FixtureCreateFragment : Fragment(),
             fabMenuSubMenu -> goToActivity(MenuSubMenuActivity())
             fabTournament -> goToActivity(TournamentActivity())
             fabTeam -> goToActivity(TabTeamActivity())
-         //   fabField -> goToActivity(Fie)
-          //  fabTimes ->
+        //   fabField -> goToActivity(Fie)
+        //  fabTimes ->
         }
-   }
+    }
 
     private fun setOnClick() {
+        btnSubMenu.setOnClickListener(this)
         buttonSave.setOnClickListener(this)
         buttonDay.setOnClickListener(this)
         buttonHour.setOnClickListener(this)
@@ -122,6 +128,37 @@ class FixtureCreateFragment : Fragment(),
         fabField.setOnClickListener(this)
         fabTimes.setOnClickListener(this)
     }
+
+    private fun dialogSpinnerSubMenu() {
+        val spinnerDialog = SpinnerDialog(activity, subMenuDrawers, "Seleccione un submenu", R.style.DialogAnimations_SmileWindow)
+        spinnerDialog.bindOnSpinerListener(object : OnSpinerItemClick {
+            override fun onClick(item: String, position: Int) {
+                subMenuDrawer = subMenuDrawers[position]
+//                presenter.getSubMenuForId(applicationContext, tournament)
+//                buttonTournament.text = item
+//                tvTournament.text = item
+//                setDividerLine(tournament.IS_ACTIVE)
+            }
+        })
+
+        spinnerDialog.showSpinerDialog()
+    }
+
+    private fun dialogSpinnerTournament() {
+        val spinnerDialog = SpinnerDialog(activity, tournaments, "Seleccione un torneo", R.style.DialogAnimations_SmileWindow)
+        spinnerDialog.bindOnSpinerListener(object : OnSpinerItemClick {
+            override fun onClick(item: String, position: Int) {
+                tournament = tournaments[position]
+//                presenter.getSubMenuForId(applicationContext, tournament)
+//                buttonTournament.text = item
+//                tvTournament.text = item
+//                setDividerLine(tournament.IS_ACTIVE)
+            }
+        })
+
+        spinnerDialog.showSpinerDialog()
+    }
+
 
     private fun goToActivity(activity: Activity) {
         startActivity(Intent(getActivity(), activity::class.java))
@@ -228,16 +265,16 @@ class FixtureCreateFragment : Fragment(),
     }
 
     private fun initSpinnerAdapter() {
-        spinnerSubMenu.adapter = adapterSpinnerSubMenus
-        spinnerSubMenu.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-                subMenuDrawer = subMenuDrawers[pos]
-            }
-
-            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
-            }
-        }
+//        spinnerSubMenu.adapter = adapterSpinnerSubMenus
+//        spinnerSubMenu.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//
+//            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
+//                subMenuDrawer = subMenuDrawers[pos]
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
+//            }
+//        }
         spinnerFieldMatch.adapter = adapterSpinnerFieldMatch
         spinnerFieldMatch.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
@@ -341,20 +378,6 @@ class FixtureCreateFragment : Fragment(),
         presenter.updateFixture(activity, fixture)
     }
 
-    fun register() {
-        if (!isRegister) {
-            presenter.onCreate()
-            isRegister = true
-        }
-    }
-
-    fun unregister() {
-        if (isRegister) {
-            presenter.onDestroy()
-            isRegister = false
-        }
-    }
-
     override fun setFixtureUpdate(fixture: Fixture) {
         this.fixture = fixture
     }
@@ -362,7 +385,7 @@ class FixtureCreateFragment : Fragment(),
     override fun fillViewUpdate() {
         with(fixture) {
             id_fixture = ID_FIXTURE_KEY
-            spinnerSubMenu.setSelection(getPositionSpinners(ID_SUBMENU_KEY, 1))
+           // spinnerSubMenu.setSelection(getPositionSpinners(ID_SUBMENU_KEY, 1))
             spinnerFieldMatch.setSelection(getPositionSpinners(ID_FIELD_MATCH, 2))
             spinnerTimeMatch.setSelection(getPositionSpinners(ID_TIMES_MATCH, 3))
             spinnerTournament.setSelection(getPositionSpinners(ID_TOURNAMENT, 4))
@@ -472,40 +495,9 @@ class FixtureCreateFragment : Fragment(),
         buttonSave.visibility = isVisible
     }
 
-    private fun calendarOnResume(){
+    private fun calendarOnResume() {
         val calendarDatePickerDialogFragment = fragmentManager
                 .findFragmentByTag(FRAG_TAG_DATE_PICKER) as CalendarDatePickerDialogFragment?
         calendarDatePickerDialogFragment?.setOnDateSetListener(this)
-    }
-
-    override fun onPause() {
-        unregister()
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        register()
-        calendarOnResume()
-//        mAd.resume(this)
-//        if (mAdView != null) {
-//            mAdView.resume()
-//        }
-    }
-
-
-    override fun onStart() {
-        super.onStart()
-        register()
-    }
-
-    override fun onStop() {
-        unregister()
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        unregister()
-        super.onDestroy()
     }
 }

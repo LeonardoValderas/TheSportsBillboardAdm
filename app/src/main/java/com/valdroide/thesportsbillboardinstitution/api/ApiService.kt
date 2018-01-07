@@ -422,7 +422,7 @@ interface ApiService {
 
     //TOURNAMENT
     @GET("adm/tournament/getSubMenusTournaments.php")
-    fun getSubMenus(): Observable<TournamentResponse>
+    fun getTournamentsAndSubMenus(): Observable<TournamentResponse>
 
     @FormUrlEncoded
     @POST("adm/tournament/getSubMenusTournament.php")
@@ -460,8 +460,15 @@ interface ApiService {
     @POST("adm/tournament/assignationUnassignation.php")
     fun assignationUnassignation(@Field("id_submenu") id_submenu: Int,
                                  @Field("id_tournament") tournament: Int,
-                                 @Field("id_tournament_submenu") id_tournament_submenu: Int,
-                                 @Field("is_actual") isActual: Boolean,
                                  @Field("user_work") user_work: Int,
                                  @Field("date_create") date_create: String): Single<WSResponse>
+
+    @FormUrlEncoded
+    @POST("adm/tournament/getTournamentForSubMenu.php")
+    fun getTournamentForSubMenu(@Field("id_submenu") id_submenu: Int): Observable<TournamentResponse>
+
+    @FormUrlEncoded
+    @POST("adm/tournament/getTournamentToSubMenu.php")
+    fun getTournamentToSubMenu(@Field("id_submenu") id_submenu: Int): Single<WSResponse>
+
 }

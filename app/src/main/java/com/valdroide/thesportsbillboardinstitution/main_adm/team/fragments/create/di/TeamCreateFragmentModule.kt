@@ -22,18 +22,15 @@ class TeamCreateFragmentModule(val view: TeamCreateFragmentView) {
     fun provideTeamCreateFragmentPresenter(view: TeamCreateFragmentView, event: EventBus, interactor: TeamCreateFragmentInteractor): TeamCreateFragmentPresenter
             = TeamCreateFragmentPresenterImpl(view, event, interactor)
 
-
     @Provides
     @Singleton
     fun provideTeamCreateFragmentInteractor(repository: TeamCreateFragmentRepository): TeamCreateFragmentInteractor
             = TeamCreateFragmentInteractorImpl(repository)
 
-
     @Provides
     @Singleton
     fun provideTeamCreateFragmentRepository(event: EventBus?, apiService: ApiService, scheduler: SchedulersInterface): TeamCreateFragmentRepository
             = TeamCreateFragmentRepositoryImpl(event!!, apiService, scheduler)
-
 
     @Provides
     @Singleton

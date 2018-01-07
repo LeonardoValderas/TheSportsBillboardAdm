@@ -138,10 +138,15 @@
     <string name="day.empty">Seleccione el día.</string>
     <string name="hour.empty">Seleccione la hora.</string>
     <string name="fixture.concatenate">%1$s - %2$s Hs.</string>
+    <string name="menu.concatenate">%1$s - %2$s</string>
     <string name="title_activity_navigation_adm">ADEFUL</string>
     <string name="error.id.user.zero">Problemas para obtener su código de usuario. Reinicie la aplicación.</string>
     <string name="error.crop.image">Error al asignar imagen:  </string>
-
+    <string name="submenu.title">Menu - Sub Menu</string>
+    <string name="tournament.assigned.title">Torneo Asignado</string>
+    <string name="tournament.submenu.assigned">%1$s es el torneo actual de %2$s.</string>
+    <string name="tournament.submenu.without.assigned">%1$s sin submenu asignado.</string>
+    <string name="assignament.success">Torneo asignado corretamente al submeu.</string>
     <!--ARRAY-->
     <array name="menu_title_3">
         <item>Editar Item</item>

@@ -24,10 +24,6 @@ class TournamentActivityPresenterImpl(val view: TournamentActivityView, val even
         interactor.getSubMenuTournaments(context)
     }
 
-    override fun getSubMenuForId(context: Context, id_tournament: Tournament) {
-        interactor.getSubMenuForId(context, id_tournament)
-    }
-
     override fun saveTournament(context: Context, Tournament: Tournament) {
         showProgressSetVisivility()
         interactor.saveTournament(context, Tournament)
@@ -48,9 +44,14 @@ class TournamentActivityPresenterImpl(val view: TournamentActivityView, val even
         interactor.deleteTournament(context, Tournament)
     }
 
-    override fun assignationUnassignation(context: Context, subMenu: SubMenuDrawer, tounament: Int, isActual: Boolean) {
+    override fun assignationTournament(context: Context, subMenu: SubMenuDrawer, tounament: Int) {
         showProgressSetVisivility()
-        interactor.assignationUnassignation(context, subMenu, tounament, isActual)
+        interactor.assignationTournament(context, subMenu, tounament)
+    }
+
+    override fun getTournamentForSubMenu(context: Context, id_submenu: Int) {
+        showProgressSetVisivility()
+        interactor.getTournamentForSubMenu(context, id_submenu)
     }
 
     private fun showProgressSetVisivility() {
@@ -67,24 +68,24 @@ class TournamentActivityPresenterImpl(val view: TournamentActivityView, val even
     override fun onEventMainThread(event: TournamentActivityEvent) {
         when (event.type) {
             TournamentActivityEvent.GETSUBMENUSTORNAMENTS -> {
-                view.setSubMenusTournaments(event.tournaments!!)
-                hideProgressSetVisivility()
-            }
-
-            TournamentActivityEvent.GETSUBMENUSFORIDTOURNAMENTS-> {
-                view.setSubMenusForTournament(event.subMenuDrawers!!)
+                view.setSubMenusTournaments(event.tournaments!!, event.subMenuDrawers!!)
                 hideProgressSetVisivility()
             }
 
             TournamentActivityEvent.EVENTTORNAMENTSUCCESS -> {
-                view.refreshRecyclerAndSpinner()
+                view.refreshData()
                 view.cleanViews()
                 view.eventSuccess(event.msg!!)
             }
 
             TournamentActivityEvent.EVENTASSIGNATIONSUCCESS -> {
                 hideProgressSetVisivility()
-                view.assignationSuccess(event.subMenuDrawer!!, event.isActual)
+                view.assignationSuccess()
+            }
+
+            TournamentActivityEvent.GETTORNAMENTFORSUBMENU-> {
+                view.setTournamentForSubMenu(event.id)
+                hideProgressSetVisivility()
             }
 
             TournamentActivityEvent.ERROR -> {

@@ -70,7 +70,7 @@ class PlayerCreateFragment : Fragment(),
         setupInjection()
         communication = activity as Communicator
         register()
-        textViewButton.text = getString(R.string.save_button, "Jugador")
+        buttonSave.text = getString(R.string.save_button, "Jugador")
         isPlayerUpdate()
         initSpinnerAdapter()
         getPositionsAndSubMenus()
@@ -135,7 +135,7 @@ class PlayerCreateFragment : Fragment(),
         is_update = activity.intent.getBooleanExtra("is_update", false)
         if (is_update) {
             id_player = activity.intent.getIntExtra("id_player", 0)
-            textViewButton.text = getString(R.string.update_button, "Jugador")
+            buttonSave.text = getString(R.string.update_button, "Jugador")
         }
     }
     //endregion
@@ -359,7 +359,7 @@ class PlayerCreateFragment : Fragment(),
     override fun cleanViews() {
         player = Player()
         editTextName.text.clear()
-        textViewButton.text = getString(R.string.save_button, "Jugador")
+        buttonSave.text = getString(R.string.save_button, "Jugador")
         is_update = false
         url_image = ""
         name_image = ""

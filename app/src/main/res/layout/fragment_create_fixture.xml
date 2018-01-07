@@ -55,11 +55,17 @@
                                 android:layout_gravity="center"
                                 android:src="@drawable/fixture_icon" />
 
-                            <Spinner
-                                android:id="@+id/spinnerSubMenu"
+                            <Button
+                                android:id="@+id/btnSubMenu"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/border_style_spinner" />
+                                />
+
+                            <!--<Spinner-->
+                                <!--android:id="@+id/spinnerSubMenu"-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:background="@drawable/border_style_spinner" />-->
                         </LinearLayout>
 
                         <ImageView

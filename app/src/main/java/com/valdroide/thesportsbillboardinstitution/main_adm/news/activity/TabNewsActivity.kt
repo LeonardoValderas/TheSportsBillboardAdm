@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.create.ui.NewsCreateFragment
 import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.update.ui.NewsUpdateFragment
-import com.valdroide.thesportsbillboardinstitution.utils.BaseActivityTabs
+import com.valdroide.thesportsbillboardinstitution.utils.base.BaseActivityTabs
 import com.valdroide.thesportsbillboardinstitution.utils.Communicator
 import kotlinx.android.synthetic.main.content_tab.*
 

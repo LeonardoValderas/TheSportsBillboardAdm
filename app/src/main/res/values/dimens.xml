@@ -8,4 +8,9 @@
     <dimen name="divider_height">0.5dp</dimen>
     <dimen name="layout_padding_default">10dp</dimen>
 
+
+    <dimen name="dim_10dp">10dp</dimen>
+    <!--BUTTON-->
+    <dimen name="button_size">16sp</dimen>
+    <dimen name="padding_button">12dp</dimen>
 </resources>

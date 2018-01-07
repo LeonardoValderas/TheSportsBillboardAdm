@@ -1,77 +1,70 @@
 package com.valdroide.thesportsbillboardinstitution.main_adm.tournament.ui
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.support.v4.content.ContextCompat
 import android.text.Editable
 import android.view.View
-import android.widget.Adapter
-import android.widget.AdapterView
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.TournamentActivityPresenter
 import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.di.TournamentActivityComponent
-import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.ui.adapter.TournamentActivityAdapter
-import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.ui.adapter.TournamentActivitySpinnerAdapter
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 import com.valdroide.thesportsbillboardinstitution.model.entities.Tournament
-import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
+import com.valdroide.thesportsbillboardinstitution.utils.base.BaseActivity
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.activity_tournament.*
 import kotlinx.android.synthetic.main.activity_tournament_content.*
-import kotlinx.android.synthetic.main.toolbar_layout.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.yesButton
+import com.valdroide.thesportsbillboardinstitution.utils.generics.OnSpinerItemClick
+import com.valdroide.thesportsbillboardinstitution.utils.generics.SpinnerDialog
+import org.jetbrains.anko.backgroundColor
 
-open class TournamentActivity : AppCompatActivity(), TournamentActivityView, View.OnClickListener, GenericOnItemClickListener.actualUnActual {
+open class TournamentActivity : BaseActivity(),
+        TournamentActivityView,
+        View.OnClickListener {
 
+    //region VARIABLES
     private lateinit var presenter: TournamentActivityPresenter
     private lateinit var component: TournamentActivityComponent
-    private var isRegister: Boolean = false
     private var isUpdate: Boolean = false
     private var tournament = Tournament()
+    private var tournament_actual: Tournament? = null
     private lateinit var tournaments: MutableList<Tournament>
-    private lateinit var subMenusForTournament: MutableList<SubMenuDrawer>
-    private lateinit var tournamentActivitySpinnerAdapter: TournamentActivitySpinnerAdapter
-    private lateinit var adapterSubMenuForTournament: TournamentActivityAdapter
-    private var position: Int = 0
-    var isActual = false
+    private lateinit var subMenus: MutableList<SubMenuDrawer>
+    var submenu = SubMenuDrawer()
+    //endregion
 
+    //region LIFECYCLE
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tournament)
-        setupInjection()
-        initToobar()
-        register()
-        initSpinnerAdapter()
-        initRecyclerView()
         getSubMenusTournaments()
         setOnclickButtons()
     }
 
+    override fun getLayoutResourceId(): Int = R.layout.activity_tournament
+
+    override fun validateEvenBusRegisterForLifeCycle(isRegister: Boolean) {
+        if (isRegister)
+            presenter.onCreate()
+        else
+            presenter.onDestroy()
+    }
+    //endregion
+
+    //region PRESENTER
     private fun getSubMenusTournaments() {
         presenter.getSubMenuTournaments(this)
     }
+    //endregion
 
-    private fun initToobar() {
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-    }
-
-    fun setupInjection() {
+    override fun setupInjection() {
         val app = application as TheSportsBillboardInstitutionApp
         app.firebaseAnalyticsInstance().setCurrentScreen(this, javaClass.simpleName, null)
-        component = app.getTournamentActivityComponent(this, this, this)
+        component = app.getTournamentActivityComponent(this, this)
         presenter = getPresenter()
-        tournamentActivitySpinnerAdapter = getAdapterTournaments()
-        adapterSubMenuForTournament = getAdapterTournament()
     }
-
-    private fun getAdapterTournament(): TournamentActivityAdapter =
-            component.getAdapterSubMenusTournament()
-
-    private fun getAdapterTournaments(): TournamentActivitySpinnerAdapter =
-            component.getAdapterTournaments()
 
     private fun getPresenter(): TournamentActivityPresenter =
             component.getPresenter()
@@ -80,18 +73,15 @@ open class TournamentActivity : AppCompatActivity(), TournamentActivityView, Vie
         conteinerContent.visibility = isVisible
     }
 
-    override fun setSubMenusForTournament(subMenusForTournament: MutableList<SubMenuDrawer>) {
-        this.isActual = false
-        this.subMenusForTournament = subMenusForTournament
-        adapterSubMenuForTournament.setSubMenusForTournament(subMenusForTournament, tournament)
-    }
-
     private fun setOnclickButtons() {
         fabCreateTournament.setOnClickListener(this)
         fabUpdateTournament.setOnClickListener(this)
         fabActiveTournament.setOnClickListener(this)
         fabDeleteTournament.setOnClickListener(this)
         imageViewInformationTournament.setOnClickListener(this)
+        buttonTournament.setOnClickListener(this)
+        btnSubMenu.setOnClickListener(this)
+        btnTournamentSubmenu.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -101,15 +91,14 @@ open class TournamentActivity : AppCompatActivity(), TournamentActivityView, Vie
             fabActiveTournament -> activeTournament()
             fabDeleteTournament -> deleteTournament()
             imageViewInformationTournament -> showAlertInformation()
+            buttonTournament -> dialogSpinnerTournament()
+            btnSubMenu -> dialogSpinnerSubMenu()
+            btnTournamentSubmenu -> dialogSpinnerTournamentSubMenu()
         }
     }
 
     private fun showAlertInformation() {
         Utils.showAlertInformation(this, "TORNEOS", getString(R.string.alert_info_tournament))
-    }
-
-    override fun snackBarIsActual() {
-        Utils.showSnackBar(conteiner, getString(R.string.isactual_error))
     }
 
     private fun updateTournament() {
@@ -147,11 +136,6 @@ open class TournamentActivity : AppCompatActivity(), TournamentActivityView, Vie
         }
     }
 
-    override fun boxEvent(position: Int, submenu: SubMenuDrawer, id_tournament: Int, isActual: Boolean) {
-        this.position = position
-        presenter.assignationUnassignation(this, submenu, id_tournament, isActual)
-    }
-
     override fun cleanViews() {
         editTextTournament.text.clear()
         isUpdate = false
@@ -169,41 +153,113 @@ open class TournamentActivity : AppCompatActivity(), TournamentActivityView, Vie
         }
     }
 
-    override fun setSubMenusTournaments(tournaments: MutableList<Tournament>) {
+    override fun setSubMenusTournaments(tournaments: MutableList<Tournament>, submenus: MutableList<SubMenuDrawer>) {
         this.tournaments = tournaments
-        tournamentActivitySpinnerAdapter.refresh(tournaments)
+        this.subMenus = submenus
+
+        validateTournament()
+        validateSubMenus()
     }
 
-    override fun refreshRecyclerAndSpinner() {
+    private fun validateTournament() {
+        if (tournaments.any()) {
+            tournament = tournaments.first()
+            buttonTournament.text = tournament.TOURNAMENT
+            setDividerLine(tournament.IS_ACTIVE)
+        } else {
+            btnSubMenu.isEnabled = false
+            btnTournamentSubmenu.isEnabled = false
+            btnTournamentSubmenu.text = "Submenu vacio"
+            btnSubMenu.text = "Torneo"
+            tvSubMenu.text = "Debe crear un submenu desde la opción Menus y Submenus"
+        }
+    }
+
+    private fun validateSubMenus() {
+        if (subMenus.any()) {
+            submenu = subMenus.first()
+            btnSubMenu.text = submenu.toString()
+            getTournamentForSubMenu(submenu)
+        } else {
+            btnSubMenu.isEnabled = false
+            btnTournamentSubmenu.isEnabled = false
+            btnTournamentSubmenu.text = "Submenu vacio"
+            btnSubMenu.text = "Torneo"
+            tvSubMenu.text = "Debe crear un submenu desde la opción Menus y Submenus"
+        }
+    }
+
+    override fun refreshData() {
         presenter.getSubMenuTournaments(this)
-        presenter.getSubMenuForId(this, tournament)
     }
 
-    override fun assignationSuccess(menuDrawer: SubMenuDrawer, isActual: Boolean) {
-        this.isActual = isActual
-        adapterSubMenuForTournament.updateTournament(position, menuDrawer)
+    override fun assignationSuccess() {
+        Utils.showSnackBar(conteiner, getString(R.string.assignament_success))
     }
 
-    private fun initSpinnerAdapter() {
-        spinnerTournament.adapter = tournamentActivitySpinnerAdapter
-        spinnerTournament.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-                tournament = tournaments[pos]
-                presenter.getSubMenuForId(applicationContext, tournament)
+    private fun dialogSpinnerTournament() {
+        val spinnerDialog = SpinnerDialog(this@TournamentActivity, tournaments, "Seleccione un torneo", R.style.DialogAnimations_SmileWindow)
+        spinnerDialog.bindOnSpinerListener(object : OnSpinerItemClick {
+            override fun onClick(item: String, position: Int) {
+                tournament = tournaments[position]
+                buttonTournament.text = item
+                setDividerLine(tournament.IS_ACTIVE)
             }
+        })
 
-            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
-            }
-        }
+        spinnerDialog.showSpinerDialog()
     }
 
-    private fun initRecyclerView() {
-        with(recyclerView) {
-            layoutManager = android.support.v7.widget.LinearLayoutManager(context)
-            setHasFixedSize(true)
-            adapter = adapterSubMenuForTournament
-        }
+    private fun dialogSpinnerSubMenu() {
+        val spinnerDialog = SpinnerDialog(this@TournamentActivity, subMenus, "Seleccione un menu - sub menu", R.style.DialogAnimations_SmileWindow)
+        spinnerDialog.bindOnSpinerListener(object : OnSpinerItemClick {
+            override fun onClick(item: String, position: Int) {
+                submenu = subMenus[position]
+                btnSubMenu.text = submenu.toString()
+                getTournamentForSubMenu(submenu)
+            }
+        })
+
+        spinnerDialog.showSpinerDialog()
+    }
+
+    private fun getTournamentForSubMenu(submenu: SubMenuDrawer) {
+        presenter.getTournamentForSubMenu(this@TournamentActivity, submenu.ID_SUBMENU_KEY)
+    }
+
+    override fun setTournamentForSubMenu(id: Int) {
+        if (id != 0) {
+            tournament_actual = tournaments.singleOrNull { it.ID_TOURNAMENT_KEY == id }
+            validateTournamentAssigned(tournament_actual)
+        } else
+            validateTournamentAssigned(null)
+    }
+
+    private fun validateTournamentAssigned(tournament: Tournament?) {
+        if (tournament != null)
+            btnTournamentSubmenu.text = tournament.TOURNAMENT
+        else
+            btnTournamentSubmenu.text = "Submenu sin torneo asignado"
+    }
+
+    private fun dialogSpinnerTournamentSubMenu() {
+        val spinnerDialog = SpinnerDialog(this@TournamentActivity, tournaments, "Asigne un torneo al menu - submenu", R.style.DialogAnimations_SmileWindow)
+        spinnerDialog.bindOnSpinerListener(object : OnSpinerItemClick {
+            override fun onClick(item: String, position: Int) {
+                tournament_actual = tournaments[position]
+                btnTournamentSubmenu.text = tournament_actual!!.TOURNAMENT
+                presenter.assignationTournament(this@TournamentActivity, submenu, tournament_actual!!.ID_TOURNAMENT_KEY)
+            }
+        })
+
+        spinnerDialog.showSpinerDialog()
+    }
+
+    private fun setDividerLine(is_active: Int) {
+        if (is_active == 0)
+            diviverLine.backgroundColor = ContextCompat.getColor(this@TournamentActivity, R.color.redColor)
+        else
+            diviverLine.backgroundColor = ContextCompat.getColor(this@TournamentActivity, R.color.greenColor)
     }
 
     override fun setError(error: String) {
@@ -222,53 +278,5 @@ open class TournamentActivity : AppCompatActivity(), TournamentActivityView, Vie
     override fun showProgressBar() {
         progressBar.visibility = View.VISIBLE
         conteinerContent.visibility = View.INVISIBLE
-    }
-
-    fun register() {
-        if (!isRegister) {
-            presenter.onCreate()
-            isRegister = true
-        }
-    }
-
-    fun unregister() {
-        if (isRegister) {
-            presenter.onDestroy()
-            isRegister = false
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        unregister()
-//        mAd.pause(this)
-//        if (mAdView != null) {
-//            mAdView.pause()
-//        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        register()
-//        mAd.resume(this)
-//        if (mAdView != null) {
-//            mAdView.resume()
-//        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        register()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        unregister()
-    }
-
-
-    override fun onDestroy() {
-        unregister()
-        super.onDestroy()
     }
 }

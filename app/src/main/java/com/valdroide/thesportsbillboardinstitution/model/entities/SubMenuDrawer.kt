@@ -17,12 +17,6 @@ open class SubMenuDrawer(@SerializedName("id")
                          var MENU: String = "",
                          @SerializedName("is_active")
                          @Expose
-                         var IS_ACTIVE: Int = 0,
-                         @SerializedName("is_checked")
-                         @Expose
-                         var IS_CHECKED: Int = 0,
-                         @SerializedName("id_tournament_submenu")
-                         @Expose
-                         var ID_TOURNAMENT_SUBMENU: Int = 0) {
+                         var IS_ACTIVE: Int = 0) {
     override fun toString(): String = MENU + " - " + SUBMENU
 }

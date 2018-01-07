@@ -41,9 +41,9 @@ class TabActivityTest : BaseTest() {
         super.setUp()
 
         val tabActivity = object : TabActivity() {
-            override fun setTheme(resid: Int) {
-                super.setTheme(R.style.AppTheme_NoActionBar)
-            }
+//            override fun setTheme(resid: Int) {
+//                super.setTheme(R.style.AppTheme_NoActionBar)
+//            }
         }
         controller = ActivityController.of(Robolectric.getShadowsAdapter(), tabActivity as TabActivity).create().visible()
         activity = controller.get()

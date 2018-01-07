@@ -6,7 +6,9 @@ import com.raizlabs.android.dbflow.config.FlowManager
 import com.valdroide.thesportsbillboardinstitution.main_user.splash.di.SplashActivityModule
 import com.valdroide.thesportsbillboardinstitution.main_user.splash.di.DaggerSplashActivityComponent
 import android.app.Activity
+import android.content.Context
 import android.os.Build
+import android.support.multidex.MultiDex
 import com.valdroide.thesportsbillboardinstitution.lib.di.LibsModule
 import com.valdroide.thesportsbillboardinstitution.main_user.splash.ui.SplashActivityView
 import com.valdroide.thesportsbillboardinstitution.main_user.splash.di.SplashActivityComponent
@@ -102,6 +104,7 @@ import com.valdroide.thesportsbillboardinstitution.main_user.navigation.di.Dagge
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.di.NavigationActivityComponent
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.di.NavigationActivityModule
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.ui.NavigationActivityView
+import com.valdroide.thesportsbillboardinstitution.model.entities.Player
 import com.valdroide.thesportsbillboardinstitution.model.entities.Team
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClick
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
@@ -115,6 +118,10 @@ class TheSportsBillboardInstitutionApp : Application() {
         private lateinit var firebaseAnalytics: FirebaseAnalytics
     }
 
+    override fun attachBaseContext(context: Context) {
+        super.attachBaseContext(context)
+        MultiDex.install(this)
+    }
     override fun onCreate() {
         super.onCreate()
         initModules()
@@ -124,7 +131,6 @@ class TheSportsBillboardInstitutionApp : Application() {
         if (!isRoboUnitTest()) {
             Stetho.initializeWithDefaults(this)
         }
-       // MultiDex.install(this)
     }
 
     private fun initModules() {
@@ -276,7 +282,7 @@ class TheSportsBillboardInstitutionApp : Application() {
 
     }
 
-    fun getPlayerUpdateFragmentComponent(view: PlayerUpdateFragmentView, listener: GenericOnItemClickListener.withActive, fragment: Fragment): PlayerUpdateFragmentComponent {
+    fun getPlayerUpdateFragmentComponent(view: PlayerUpdateFragmentView, fragment: Fragment, listener: GenericOnItemClick<Player>): PlayerUpdateFragmentComponent {
         return DaggerPlayerUpdateFragmentComponent
                 .builder()
                 .libsModule(LibsModule(fragment))
@@ -332,11 +338,11 @@ class TheSportsBillboardInstitutionApp : Application() {
                 .build()
     }
 
-    fun getTournamentActivityComponent(view: TournamentActivityView, activity: Activity, listener: GenericOnItemClickListener.actualUnActual): TournamentActivityComponent {
+    fun getTournamentActivityComponent(view: TournamentActivityView, activity: Activity): TournamentActivityComponent {
         return DaggerTournamentActivityComponent
                 .builder()
                 .libsModule(LibsModule(activity))
-                .tournamentActivityModule(TournamentActivityModule(view, listener))
+                .tournamentActivityModule(TournamentActivityModule(view))
                 .build()
     }
 }

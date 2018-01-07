@@ -1,21 +1,15 @@
 package com.valdroide.thesportsbillboardinstitution.main_user.tab
 
 import android.os.Bundle
-import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 
 import com.valdroide.thesportsbillboardinstitution.R
-import android.support.v4.view.ViewPager
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.ui.FixtureFragment
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.news.ui.NewsFragment
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.sanction.ui.SanctionFragment
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.leaderboard.ui.LeaderBoardFragment
-import kotlinx.android.synthetic.main.content_tab.*
 import kotlinx.android.synthetic.main.activity_tab.*
-import com.ToxicBakery.viewpager.transforms.RotateUpTransformer
-import com.valdroide.thesportsbillboardinstitution.utils.BaseActivityTabs
-import com.valdroide.thesportsbillboardinstitution.utils.SectionsPagerAdapter
+import com.valdroide.thesportsbillboardinstitution.utils.base.BaseActivityTabs
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
 
 

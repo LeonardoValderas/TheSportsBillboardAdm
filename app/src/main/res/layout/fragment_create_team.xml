@@ -8,12 +8,11 @@
     android:orientation="vertical"
     tools:context="com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.ui.TeamCreateFragment">
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -25,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
 
+
             <LinearLayout
                 android:id="@+id/linearConteinerTeam"
                 android:layout_width="match_parent"
@@ -34,20 +34,14 @@
                 android:padding="5dp"
                 android:visibility="gone">
 
+                <ImageView
+                    android:id="@+id/imageViewInformationTeam"
+                    style="@style/ButtonInformation" />
+
                 <FrameLayout
+                    android:layout_marginTop="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/imageViewInformationTeam"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:clickable="true"
-                        android:src="@android:drawable/ic_dialog_info"
-                        android:tint="@color/colorYellow" />
 
                     <ImageView
                         android:id="@+id/imageViewTeam"
@@ -71,6 +65,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Ingrese el nombre"
+                        android:layout_marginLeft="@dimen/dim_10dp"
+                        android:layout_marginRight="@dimen/dim_10dp"
                         android:textSize="18sp">
 
                         <requestFocus />
@@ -94,14 +90,7 @@
 
                     <ImageView
                         android:id="@+id/imageViewInformationPlayer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:clickable="true"
-                        android:src="@android:drawable/ic_dialog_info"
-                        android:tint="@color/colorYellow" />
+                        style="@style/ButtonInformation" />
 
                     <ImageView
                         android:id="@+id/imageViewPlayer"
@@ -232,32 +221,12 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <com.brouding.blockbutton.BlockButton
+            <Button
                 android:id="@+id/buttonSave"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginTop="6dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:buttonColor="@color/colorPrimary"
-                app:buttonDisabledColor="#999999"
-                app:buttonDisabledGapColor="@color/colorSecondary_text"
-                app:buttonGapColor="@color/colorPrimaryDark"
-                app:pushDepthDp="2">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp" />
 
-                <TextView
-                    android:id="@+id/textViewButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:paddingTop="10dp"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-
-            </com.brouding.blockbutton.BlockButton>
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

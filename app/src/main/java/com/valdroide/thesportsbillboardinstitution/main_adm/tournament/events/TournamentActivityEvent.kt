@@ -14,15 +14,13 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.Tournament
 open class TournamentActivityEvent {
     var type: Int = 0
     var msg: String? = null
-    var subMenuDrawer: SubMenuDrawer? = null
     var subMenuDrawers: MutableList<SubMenuDrawer>? = null
-    var tournament: Tournament? = null
+    var id: Int = 0
     var tournaments: MutableList<Tournament>? = null
-    var isActual: Boolean = false
 
     companion object {
         const val GETSUBMENUSTORNAMENTS: Int = 0
-        const val GETSUBMENUSFORIDTOURNAMENTS: Int = 1
+        const val GETTORNAMENTFORSUBMENU: Int = 1
         const val EVENTTORNAMENTSUCCESS: Int =  2
         const val EVENTASSIGNATIONSUCCESS: Int =  3
         const val ERROR: Int =  4

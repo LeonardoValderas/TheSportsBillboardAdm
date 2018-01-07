@@ -10,10 +10,6 @@ class TournamentActivityInteractorImpl(val repository: TournamentActivityReposit
         repository.getSubMenuTournaments(context)
     }
 
-    override fun getSubMenuForId(context: Context, id_tournament: Tournament) {
-        repository.getSubMenuForId(context, id_tournament)
-    }
-
     override fun saveTournament(context: Context, Tournament: Tournament) {
         repository.saveTournament(context, Tournament)
     }
@@ -30,7 +26,11 @@ class TournamentActivityInteractorImpl(val repository: TournamentActivityReposit
         repository.deleteTournament(context, Tournament)
     }
 
-    override fun assignationUnassignation(context: Context, subMenu: SubMenuDrawer, tounament: Int, isActual: Boolean) {
-        repository.assignationUnassignation(context, subMenu, tounament, isActual)
+    override fun assignationTournament(context: Context, subMenu: SubMenuDrawer, tounament: Int) {
+        repository.assignationTournament(context, subMenu, tounament)
+    }
+
+    override fun getTournamentForSubMenu(context: Context, id_submenu: Int) {
+        repository.getTournamentForSubMenu(context, id_submenu)
     }
 }

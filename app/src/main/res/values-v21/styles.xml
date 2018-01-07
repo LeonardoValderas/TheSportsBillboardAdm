@@ -10,5 +10,18 @@
         <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
         <item name="android:windowBackground">@color/myWindowBackground</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:buttonStyle">@style/Button</item>
     </style>
+
+    <style name="BaseButton" parent="@android:style/Widget.Material.Light.Button">
+        <item name="android:background">@drawable/custom_select_button</item>
+        <item name="android:textColor">@color/colorWhiteGrey</item>
+        <item name="android:padding">@dimen/layout_padding_default</item>
+        <item name="android:textSize">@dimen/button_size</item>
+    </style>
+
+    <!--<style name="AppTheme.NoActionBar">-->
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="windowNoTitle">true</item>-->
+    <!--</style>-->
 </resources>

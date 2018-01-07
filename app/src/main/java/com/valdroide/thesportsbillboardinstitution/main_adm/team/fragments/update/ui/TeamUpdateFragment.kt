@@ -2,7 +2,6 @@ package com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.upda
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.*
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
@@ -10,62 +9,68 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.updat
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.di.TeamUpdateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.ui.adapter.TeamUpdateFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.model.entities.Team
-import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClick
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.fragment_fixture.*
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.yesButton
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.activity.TabTeamActivity
-import com.valdroide.thesportsbillboardinstitution.utils.CustomDialogMenu
-import com.valdroide.thesportsbillboardinstitution.utils.OnMenuItemClickListener
+import com.valdroide.thesportsbillboardinstitution.utils.*
+import com.valdroide.thesportsbillboardinstitution.utils.base.BaseFragment
 
-class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, GenericOnItemClick<Team>, OnMenuItemClickListener {
+class TeamUpdateFragment : BaseFragment(), TeamUpdateFragmentView, GenericOnItemClick<Team>, OnMenuItemClickListener {
 
+    //region INIT VARIABLE
     private lateinit var component: TeamUpdateFragmentComponent
     lateinit var presenter: TeamUpdateFragmentPresenter
     lateinit var adapterTeam: TeamUpdateFragmentAdapter
     var teams: MutableList<Team> = arrayListOf()
     var team = Team()
-    private var isRegister: Boolean = false
     private var position: Int = 0
+    //endregion
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? =
-            inflater!!.inflate(R.layout.fragment_fixture, container, false)
-
+    //region LIFECYCLE
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupInjection()
-        register()
         initRecyclerView()
         initSwipeRefreshLayout()
         presenter.getTeams(activity)
     }
 
-    private fun setupInjection() {
+    override fun getLayoutResourceId(): Int = R.layout.fragment_fixture
+
+    override fun validateEvenBusRegisterForLifeCycle(isRegister: Boolean) {
+        if (isRegister)
+            presenter.onCreate()
+        else
+            presenter.onDestroy()
+    }
+
+    override fun setCommunicator(communicator: Communicator) {}
+    //endregion
+
+    //region INJECTION
+    override fun setupInjection() {
         val app = activity.application as TheSportsBillboardInstitutionApp
         app.firebaseAnalyticsInstance().setCurrentScreen(activity, javaClass.simpleName, null)
         component = app.getTeamUpdateFragmentComponent(this, this, this)
         presenter = getPresenterInj()
         adapterTeam = getAdapter()
-  //      adapterTeam.setClickListener(this)
     }
 
-    fun register() {
-        if (!isRegister) {
-            presenter.onCreate()
-            isRegister = true
-        }
-    }
+    open fun getPresenterInj(): TeamUpdateFragmentPresenter = component.getPresenter()
 
-    fun unregister() {
-        if (isRegister) {
-            presenter.onDestroy()
-            isRegister = false
-        }
-    }
+    //I dont realice inject because a have error
+    open fun getAdapter(): TeamUpdateFragmentAdapter = TeamUpdateFragmentAdapter(activity, this)
+    //endregion
 
+    //region PRESENTER
+    fun refreshAdapter() {
+        presenter.getTeams(activity)
+    }
+   //endregion
+
+    //region ALERT DIALOG
     private fun showAlertDialog(titleText: String, msg: String, team: Team) {
         alert(msg) {
             title = titleText
@@ -75,20 +80,18 @@ class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, GenericOnItemClic
             noButton {}
         }.show()
     }
+    //endregion
 
-    open fun getPresenterInj(): TeamUpdateFragmentPresenter = component.getPresenter()
-
-    //I dont realice inject because a have error
-    open fun getAdapter(): TeamUpdateFragmentAdapter = TeamUpdateFragmentAdapter(activity, this)
-    // = component.getAdapter()
-
+    //region GETEXTRA
    private fun onClickUpdate(team: Team) {
         val i = Intent(activity, TabTeamActivity::class.java)
         i.putExtra("is_update", true)
         i.putExtra("id_team", team.ID_TEAM_KEY)
         startActivity(i)
     }
+   //endregion
 
+    //region ONCLICK
     override fun onClick(view: View, position: Int, t: Team) {
         this.position = position
         team = t
@@ -111,9 +114,11 @@ class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, GenericOnItemClic
 
     override fun updateTeamSuccess() {
         adapterTeam.notifyDataSetChanged()
-        Utils.showSnackBar(conteiner, getString(R.string.update_success, "Equipo", "o"))
+        showSnackBar( getString(R.string.update_success, "Equipo", "o"))
     }
+    //endregion
 
+    //region RECYCLER
     private fun initRecyclerView() {
         with(recyclerView) {
             layoutManager = android.support.v7.widget.LinearLayoutManager(activity)
@@ -121,7 +126,9 @@ class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, GenericOnItemClic
             adapter = adapterTeam
         }
     }
+    //endregion
 
+    //region VIEW
     override fun setAllTeams(teams: MutableList<Team>) {
         this.teams = teams
         adapterTeam.addAll(teams)
@@ -129,13 +136,16 @@ class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, GenericOnItemClic
 
     override fun deleteTeamSuccess() {
         adapterTeam.delete(position)
-        Utils.showSnackBar(conteiner, activity.getString(R.string.delete_success, "Equipo", "o"))
+        showSnackBar( activity.getString(R.string.delete_success, "Equipo", "o"))
     }
 
     override fun setError(error: String) {
-        Utils.showSnackBar(conteiner, error)
+        showSnackBar(error)
     }
 
+    private fun showSnackBar(msg: String){
+        Utils.showSnackBar(conteiner, msg)
+    }
     override fun hideSwipeRefreshLayout() {
         verifySwipeRefresh(false)
     }
@@ -143,7 +153,9 @@ class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, GenericOnItemClic
     override fun showSwipeRefreshLayout() {
         verifySwipeRefresh(true)
     }
+    //endregion
 
+    //region SWIPE
     private fun verifySwipeRefresh(show: Boolean) {
         try {
             if (swipeRefreshLayout != null) {
@@ -171,37 +183,5 @@ class TeamUpdateFragment : Fragment(), TeamUpdateFragmentView, GenericOnItemClic
             setError(e.message!!)
         }
     }
-
-    fun refreshAdapter() {
-        presenter.getTeams(activity)
-    }
-
-    override fun onPause() {
-        unregister()
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        register()
-//        mAd.resume(this)
-//        if (mAdView != null) {
-//            mAdView.resume()
-//        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        register()
-    }
-
-    override fun onStop() {
-        unregister()
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        unregister()
-        super.onDestroy()
-    }
+    //endregion
 }

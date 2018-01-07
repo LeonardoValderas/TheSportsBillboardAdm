@@ -9,13 +9,15 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.upd
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.ui.PlayerUpdateFragmentView
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.ui.adapter.PlayerUpdateFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.model.entities.Player
+import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClick
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class PlayerUpdateFragmentModule(val view: PlayerUpdateFragmentView, val listener: GenericOnItemClickListener.withActive) {
+class PlayerUpdateFragmentModule(val view: PlayerUpdateFragmentView,
+                                 val listener: GenericOnItemClick<Player>) {
 
     @Provides
     @Singleton
@@ -42,17 +44,17 @@ class PlayerUpdateFragmentModule(val view: PlayerUpdateFragmentView, val listene
         val client = ApiClient()
         return client.getApiService()
     }
-
-    @Provides
-    @Singleton
-    fun providePlayerUpdateFragmentAdapter(players: MutableList<Player>, listener: GenericOnItemClickListener.withActive, fragment: Fragment): PlayerUpdateFragmentAdapter
-            = PlayerUpdateFragmentAdapter(players, listener, fragment)
-
-    @Provides
-    @Singleton
-    fun provideListPlayers(): MutableList<Player> = arrayListOf()
-
-    @Provides
-    @Singleton
-    fun provideOnItemClickListener(): GenericOnItemClickListener.withActive = listener
+//
+//    @Provides
+//    @Singleton
+//    fun providePlayerUpdateFragmentAdapter(fragment: Fragment, listener: GenericOnItemClick<Player>): PlayerUpdateFragmentAdapter
+//            = PlayerUpdateFragmentAdapter(fragment.activity, listener)
+//
+//    @Provides
+//    @Singleton
+//    fun provideListPlayers(): MutableList<Player> = arrayListOf()
+//
+//    @Provides
+//    @Singleton
+//    fun provideOnItemClickListener(): GenericOnItemClick<Player> = listener
 }
