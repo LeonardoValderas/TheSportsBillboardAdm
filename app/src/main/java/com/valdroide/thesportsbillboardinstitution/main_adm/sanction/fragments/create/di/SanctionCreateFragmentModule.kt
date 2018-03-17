@@ -7,10 +7,8 @@ import com.valdroide.thesportsbillboardinstitution.api.ApiClient
 import com.valdroide.thesportsbillboardinstitution.api.ApiService
 import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
 import com.valdroide.thesportsbillboardinstitution.lib.base.SchedulersInterface
-import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui.adapter.SubMenuActivityAdapter
 import com.valdroide.thesportsbillboardinstitution.main_adm.sanction.fragments.create.*
 import com.valdroide.thesportsbillboardinstitution.main_adm.sanction.fragments.create.ui.SanctionCreateFragmentView
-import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 import com.valdroide.thesportsbillboardinstitution.utils.GenericSpinnerAdapter
 import dagger.Module
 import dagger.Provides

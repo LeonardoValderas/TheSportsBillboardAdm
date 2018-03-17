@@ -62,7 +62,7 @@ class TournamentActivityRepositoryImpl(val eventBus: EventBus, val apiService: A
                             response = result
                             if (response != null) {
                                 if (response?.SUCCESS.equals("0")) {
-                                    post(TournamentActivityEvent.EVENTTORNAMENTSUCCESS, context.getString(R.string.save_success, "Torneo"))
+                                    post(TournamentActivityEvent.EVENTTORNAMENTSUCCESS, context.getString(R.string.save_success, "Torneo", "o"))
                                 } else {
                                     post(TournamentActivityEvent.ERROR, response?.MESSAGE!!)
                                 }

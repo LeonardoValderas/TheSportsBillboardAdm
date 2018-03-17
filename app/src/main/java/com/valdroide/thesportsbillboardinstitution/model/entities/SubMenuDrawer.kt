@@ -18,5 +18,5 @@ open class SubMenuDrawer(@SerializedName("id")
                          @SerializedName("is_active")
                          @Expose
                          var IS_ACTIVE: Int = 0) {
-    override fun toString(): String = MENU + " - " + SUBMENU
+    override fun toString(): String = MENU.plus(" - ").plus(SUBMENU).plus(if(IS_ACTIVE == 0) " (No Activo)" else " (Activo)")
 }

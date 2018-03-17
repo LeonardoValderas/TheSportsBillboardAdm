@@ -25,12 +25,14 @@ import kotlinx.android.synthetic.main.content_adm_account.*
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.activity_tab.*
 import java.io.IOException
+import javax.inject.Inject
 
 
 open class AccountAdmActivity : AppCompatActivity(), AccountAdmActivityView {
 
-    private lateinit var presenter: AccountAdmActivityPresenter
-    private lateinit var component: AccountAdmActivityComponent
+    @Inject
+    lateinit var presenter: AccountAdmActivityPresenter
+
     private var isRegister: Boolean = false
     private lateinit var account: Account
     private var imageByte: ByteArray? = null
@@ -70,12 +72,12 @@ open class AccountAdmActivity : AppCompatActivity(), AccountAdmActivityView {
     fun setupInjection() {
         val app = application as TheSportsBillboardInstitutionApp
         app.firebaseAnalyticsInstance().setCurrentScreen(this, javaClass.simpleName, null)
-        component = app.getAccountAdmActivityComponent(this, this)
-        presenter = getPresenter()
+        app.getAccountAdmActivityComponent(this, this).inject(this)
+        //presenter = getPresenter()
     }
 
-    open fun getPresenter(): AccountAdmActivityPresenter =
-            component.getPresenter()
+  //  open fun getPresenter(): AccountAdmActivityPresenter =
+    //        component.getPresenter()
 
     override fun setAccount(account: Account) {
         this.account = account

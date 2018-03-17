@@ -20,14 +20,15 @@ import org.jetbrains.anko.yesButton
 import com.valdroide.thesportsbillboardinstitution.utils.generics.OnSpinerItemClick
 import com.valdroide.thesportsbillboardinstitution.utils.generics.SpinnerDialog
 import org.jetbrains.anko.backgroundColor
+import javax.inject.Inject
 
 open class TournamentActivity : BaseActivity(),
         TournamentActivityView,
         View.OnClickListener {
 
     //region VARIABLES
-    private lateinit var presenter: TournamentActivityPresenter
-    private lateinit var component: TournamentActivityComponent
+    @Inject
+    lateinit var presenter: TournamentActivityPresenter
     private var isUpdate: Boolean = false
     private var tournament = Tournament()
     private var tournament_actual: Tournament? = null
@@ -62,12 +63,8 @@ open class TournamentActivity : BaseActivity(),
     override fun setupInjection() {
         val app = application as TheSportsBillboardInstitutionApp
         app.firebaseAnalyticsInstance().setCurrentScreen(this, javaClass.simpleName, null)
-        component = app.getTournamentActivityComponent(this, this)
-        presenter = getPresenter()
+        app.getTournamentActivityComponent(this, this).inject(this)
     }
-
-    private fun getPresenter(): TournamentActivityPresenter =
-            component.getPresenter()
 
     override fun setVisibilityViews(isVisible: Int) {
         conteinerContent.visibility = isVisible
@@ -91,9 +88,11 @@ open class TournamentActivity : BaseActivity(),
             fabActiveTournament -> activeTournament()
             fabDeleteTournament -> deleteTournament()
             imageViewInformationTournament -> showAlertInformation()
-            buttonTournament -> dialogSpinnerTournament()
-            btnSubMenu -> dialogSpinnerSubMenu()
-            btnTournamentSubmenu -> dialogSpinnerTournamentSubMenu()
+            buttonTournament ->     if (tournaments.isEmpty()) setError(getString(R.string.spinner_empty, "un torneo")) else dialogSpinnerTournament()
+            btnSubMenu -> if (subMenus.isEmpty()) setError(getString(R.string.spinner_empty, "un menu - submenu")) else dialogSpinnerSubMenu()
+            btnTournamentSubmenu -> if (tournaments.isEmpty()) setError(getString(R.string.spinner_empty, "un torneo"))
+                                    else if(subMenus.isEmpty()) setError(getString(R.string.spinner_empty, "un menu - submenu"))
+                                    else dialogSpinnerTournamentSubMenu()
         }
     }
 
@@ -166,12 +165,15 @@ open class TournamentActivity : BaseActivity(),
             tournament = tournaments.first()
             buttonTournament.text = tournament.TOURNAMENT
             setDividerLine(tournament.IS_ACTIVE)
+            tvSubMenu.visibility = View.GONE
+            diviverLine.visibility = View.VISIBLE
         } else {
-            btnSubMenu.isEnabled = false
-            btnTournamentSubmenu.isEnabled = false
-            btnTournamentSubmenu.text = "Submenu vacio"
-            btnSubMenu.text = "Torneo"
-            tvSubMenu.text = "Debe crear un submenu desde la opción Menus y Submenus"
+            buttonTournament.text = "Torneos"
+            btnTournamentSubmenu.text = "Torneos"
+            tvSubMenu.visibility = View.VISIBLE
+            tvSubMenu.text = "Debe crear un torneo"
+            diviverLine.visibility = View.INVISIBLE
+
         }
     }
 
@@ -180,12 +182,11 @@ open class TournamentActivity : BaseActivity(),
             submenu = subMenus.first()
             btnSubMenu.text = submenu.toString()
             getTournamentForSubMenu(submenu)
+            tvSubMenu.visibility = View.GONE
         } else {
-            btnSubMenu.isEnabled = false
-            btnTournamentSubmenu.isEnabled = false
-            btnTournamentSubmenu.text = "Submenu vacio"
-            btnSubMenu.text = "Torneo"
-            tvSubMenu.text = "Debe crear un submenu desde la opción Menus y Submenus"
+            btnSubMenu.text = getString(R.string.menu_submenu)
+            tvSubMenu.visibility = View.VISIBLE
+            tvSubMenu.text = getString(R.string.menu_submenu_empty)
         }
     }
 

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.utils.SectionsPagerAdapter
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.generics.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_tab.*
 import kotlinx.android.synthetic.main.content_tab.*
 
@@ -17,7 +18,6 @@ abstract class BaseActivityTabs : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_tab)
         initToolBar()
         setPagerAdapter()
@@ -25,7 +25,6 @@ abstract class BaseActivityTabs : AppCompatActivity() {
 
     protected abstract fun getUpdateFragment(): Fragment
     //protected abstract fun getLayoutResourceId(): Int dont need in this case because is always same layout
-
     private fun initToolBar() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -33,8 +32,6 @@ abstract class BaseActivityTabs : AppCompatActivity() {
 
     private fun setPagerAdapter() {
         adapter = SectionsPagerAdapter(supportFragmentManager, titles, fragments)
-        Utils.setupViewpagerTabs(viewPager, tabs, adapter)
+        ViewPagerAdapter.setupViewpagerTabs(viewPager, tabs, adapter)
     }
-
-
 }

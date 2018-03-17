@@ -2,13 +2,11 @@ package com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.crea
 
 import android.app.Activity
 import android.content.Context
-import android.support.v4.app.Fragment
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.api.ApiClient
 import com.valdroide.thesportsbillboardinstitution.api.ApiService
 import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
 import com.valdroide.thesportsbillboardinstitution.lib.base.SchedulersInterface
-import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui.adapter.SubMenuActivityAdapter
 import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.create.*
 import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.create.ui.NewsCreateFragmentView
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
@@ -45,10 +43,10 @@ class NewsCreateFragmentModule(val view: NewsCreateFragmentView, val context: Co
         return client.getApiService()
     }
 
-    @Provides
-    @Singleton
-    fun provideSubMenuActivityAdapter(context: Fragment, resourceSubMenu: Int, submenus: MutableList<SubMenuDrawer>): SubMenuActivityAdapter =
-            SubMenuActivityAdapter(null, context, resourceSubMenu, submenus)
+ //   @Provides
+   // @Singleton
+   // fun provideSubMenuActivityAdapter(context: Fragment, resourceSubMenu: Int, submenus: MutableList<SubMenuDrawer>): SubMenuActivityAdapter =
+     //       SubMenuActivityAdapter(null, context, resourceSubMenu, submenus)
 
     @Provides
     @Singleton

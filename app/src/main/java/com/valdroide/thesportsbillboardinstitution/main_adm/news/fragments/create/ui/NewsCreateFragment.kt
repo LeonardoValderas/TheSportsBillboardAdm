@@ -19,7 +19,6 @@ import com.google.firebase.crash.FirebaseCrash
 import com.theartofdev.edmodo.cropper.CropImage
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
-import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui.adapter.SubMenuActivityAdapter
 import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.create.NewsCreateFragmentPresenter
 import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.create.di.NewsCreateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.model.entities.News
@@ -38,7 +37,7 @@ class NewsCreateFragment : Fragment(), NewsCreateFragmentView, View.OnClickListe
     private lateinit var communication: Communicator
     private var isRegister: Boolean = false
     private var news: News = News()
-    private lateinit var adapterSpinnerSubMenus: SubMenuActivityAdapter
+   // private lateinit var adapterSpinnerSubMenus: SubMenuActivityAdapter
     private var is_update: Boolean = false
     private var id_news: Int = 0
     private var encode: String = ""
@@ -63,7 +62,7 @@ class NewsCreateFragment : Fragment(), NewsCreateFragmentView, View.OnClickListe
         register()
         textViewButton.text = getString(R.string.save_button, "Noticia")
         isNewsUpdate()
-        initSpinnerAdapter()
+        //initSpinnerAdapter()
         getSubMenu()
         if (is_update) {
             presenter.getNews(activity, id_news)
@@ -79,7 +78,7 @@ class NewsCreateFragment : Fragment(), NewsCreateFragmentView, View.OnClickListe
         app.firebaseAnalyticsInstance().setCurrentScreen(activity, javaClass.simpleName, null)
         component = app.getNewsCreateFragmentComponent(this, this)
         presenter = getPresenterInj()
-        adapterSpinnerSubMenus = getAdapterSubMenus()
+       // adapterSpinnerSubMenus = getAdapterSubMenus()
     }
 
     private fun getSubMenu() {
@@ -88,14 +87,14 @@ class NewsCreateFragment : Fragment(), NewsCreateFragmentView, View.OnClickListe
 
     override fun setSubMenus(subMenuDrawers: MutableList<SubMenuDrawer>) {
         this.subMenuDrawers = subMenuDrawers
-        adapterSpinnerSubMenus.refresh(subMenuDrawers)
+//        adapterSpinnerSubMenus.refresh(subMenuDrawers)
     }
 
     private fun getPresenterInj(): NewsCreateFragmentPresenter =
             component.getPresenter()
 
-    private fun getAdapterSubMenus(): SubMenuActivityAdapter =
-            component.getAdapterSubMenus()
+    ///private fun getAdapterSubMenus(): SubMenuActivityAdapter =
+        //    component.getAdapterSubMenus()
 
     private fun isNewsUpdate() {
         is_update = activity.intent.getBooleanExtra("is_update", false)
@@ -111,7 +110,7 @@ class NewsCreateFragment : Fragment(), NewsCreateFragmentView, View.OnClickListe
     }
 
     private fun initSpinnerAdapter() {
-        spinnerSubMenu.adapter = adapterSpinnerSubMenus
+  //      spinnerSubMenu.adapter = adapterSpinnerSubMenus
         spinnerSubMenu.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {

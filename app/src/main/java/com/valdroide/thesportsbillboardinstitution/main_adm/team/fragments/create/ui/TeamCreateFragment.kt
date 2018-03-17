@@ -23,10 +23,11 @@ import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import com.valdroide.thesportsbillboardinstitution.utils.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_create_team.*
 import java.io.IOException
+import javax.inject.Inject
 
 class TeamCreateFragment : BaseFragment(), TeamCreateFragmentView, View.OnClickListener {
 
-    private lateinit var component: TeamCreateFragmentComponent
+    @Inject
     lateinit var presenter: TeamCreateFragmentPresenter
     lateinit private var communication: Communicator
     private var team: Team = Team()
@@ -42,8 +43,7 @@ class TeamCreateFragment : BaseFragment(), TeamCreateFragmentView, View.OnClickL
         super.onActivityCreated(savedInstanceState)
         buttonSave.text = getString(R.string.save_button, "Equipo")
         linearConteinerPlayer.visibility = View.GONE
-        isTeamUpdate()
-        if (is_update) {
+        if (isTeamUpdate()) {
             presenter.getTeam(activity, id_team)
         } else
             setVisibilityViews(View.VISIBLE)
@@ -53,8 +53,7 @@ class TeamCreateFragment : BaseFragment(), TeamCreateFragmentView, View.OnClickL
     override fun setupInjection() {
         val app = activity.application as TheSportsBillboardInstitutionApp
         app.firebaseAnalyticsInstance().setCurrentScreen(activity, javaClass.simpleName, null)
-        component = app.getTeamCreateFragmentComponent(this, this)
-        presenter = getPresenterInj()
+        app.getTeamCreateFragmentComponent(this, this).inject(this)
     }
 
     override fun getLayoutResourceId(): Int = R.layout.fragment_create_team
@@ -181,15 +180,13 @@ class TeamCreateFragment : BaseFragment(), TeamCreateFragmentView, View.OnClickL
         presenter.updateTeam(activity, team)
     }
 
-    private fun getPresenterInj(): TeamCreateFragmentPresenter =
-            component.getPresenter()
-
-    private fun isTeamUpdate() {
+    private fun isTeamUpdate(): Boolean {
         is_update = activity.intent.getBooleanExtra("is_update", false)
         if (is_update) {
             id_team = activity.intent.getIntExtra("id_team", 0)
             buttonSave.text = getString(R.string.update_button, "Equipo")
         }
+        return is_update
     }
 
     override fun setTeamEdit(team: Team) {

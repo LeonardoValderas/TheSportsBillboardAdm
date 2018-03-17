@@ -7,6 +7,7 @@ import android.text.Editable
 import android.view.View
 import android.widget.Adapter
 import android.widget.AdapterView
+import android.widget.Button
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.FixtureCreateFragmentPresenter
@@ -68,7 +69,7 @@ class FixtureCreateFragment : BaseFragment(),
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         register()
-        textViewButton.text = getString(R.string.save_button, "Fixture")
+        btnSave.text = getString(R.string.save_button, "Fixture")
         isFixtureUpdate()
         initSpinnerAdapter()
         getSpinnerData()
@@ -93,18 +94,23 @@ class FixtureCreateFragment : BaseFragment(),
         app.firebaseAnalyticsInstance().setCurrentScreen(activity, javaClass.simpleName, null)
         component = app.getFixtureCreateFragmentComponent(this, this)
         presenter = getPresenterInj()
-        adapterSpinnerSubMenus = getAdapterSubMenus()
-        adapterSpinnerFieldMatch = getAdapterFieldMatch()
-        adapterSpinnerTimeMatch = getAdapterTimeMatch()
-        adapterSpinnerTournament = getAdapterTournament()
-        adapterSpinnerTeamLocal = getAdapterTeamLocal()
-        adapterSpinnerTeamVisite = getAdapterTeamVisite()
+//        adapterSpinnerSubMenus = getAdapterSubMenus()
+//        adapterSpinnerFieldMatch = getAdapterFieldMatch()
+//        adapterSpinnerTimeMatch = getAdapterTimeMatch()
+//        adapterSpinnerTournament = getAdapterTournament()
+//        adapterSpinnerTeamLocal = getAdapterTeamLocal()
+//        adapterSpinnerTeamVisite = getAdapterTeamVisite()
     }
 
     override fun onClick(onclick: View?) {
         when (onclick) {
             btnSubMenu -> dialogSpinnerSubMenu()
-            buttonSave -> onClickButtonSave()
+            btnTournament -> dialogSpinnerTournament()
+            btnField -> dialogSpinnerField()
+            btnTeamLocal -> dialogSpinnerTeamLocal()
+            btnTeamVisite -> dialogSpinnerTeamVisite()
+            btnTimeMatch -> dialogSpinnerTimeMatch()
+            btnSave -> onClickButtonSave()
             buttonDay -> openCalendar()
             buttonHour -> openTimer()
             imageViewInformationFixture -> showAlertInformation()
@@ -118,7 +124,12 @@ class FixtureCreateFragment : BaseFragment(),
 
     private fun setOnClick() {
         btnSubMenu.setOnClickListener(this)
-        buttonSave.setOnClickListener(this)
+        btnTournament.setOnClickListener(this)
+        btnField.setOnClickListener(this)
+        btnTeamLocal.setOnClickListener(this)
+        btnTeamVisite.setOnClickListener(this)
+        btnTimeMatch.setOnClickListener(this)
+        btnSave.setOnClickListener(this)
         buttonDay.setOnClickListener(this)
         buttonHour.setOnClickListener(this)
         imageViewInformationFixture.setOnClickListener(this)
@@ -135,9 +146,24 @@ class FixtureCreateFragment : BaseFragment(),
             override fun onClick(item: String, position: Int) {
                 subMenuDrawer = subMenuDrawers[position]
 //                presenter.getSubMenuForId(applicationContext, tournament)
-//                buttonTournament.text = item
+                btnSubMenu.text = item
+                validateActive(btnSubMenu, subMenuDrawer.IS_ACTIVE, R.drawable.fixture_icon)
 //                tvTournament.text = item
 //                setDividerLine(tournament.IS_ACTIVE)
+            }
+        })
+
+        spinnerDialog.showSpinerDialog()
+    }
+
+    private fun dialogSpinnerField() {
+        val spinnerDialog = SpinnerDialog(activity, fieldMatchs, "Seleccione un lugar de juego", R.style.DialogAnimations_SmileWindow)
+        spinnerDialog.bindOnSpinerListener(object : OnSpinerItemClick {
+            override fun onClick(item: String, position: Int) {
+                fieldMatch = fieldMatchs[position]
+//                presenter.getSubMenuForId(applicationContext, tournament)
+                btnTournament.text = item
+   //               setDividerLine(tournament.IS_ACTIVE)
             }
         })
 
@@ -150,7 +176,9 @@ class FixtureCreateFragment : BaseFragment(),
             override fun onClick(item: String, position: Int) {
                 tournament = tournaments[position]
 //                presenter.getSubMenuForId(applicationContext, tournament)
-//                buttonTournament.text = item
+                btnTournament.text = item
+                validateActive(btnField, tournament.IS_ACTIVE, R.drawable.tournament_icon)
+//
 //                tvTournament.text = item
 //                setDividerLine(tournament.IS_ACTIVE)
             }
@@ -159,6 +187,63 @@ class FixtureCreateFragment : BaseFragment(),
         spinnerDialog.showSpinerDialog()
     }
 
+    private fun dialogSpinnerTeamLocal() {
+        val spinnerDialog = SpinnerDialog(activity, teamsLocal, "Seleccione un equipo", R.style.DialogAnimations_SmileWindow)
+        spinnerDialog.bindOnSpinerListener(object : OnSpinerItemClick {
+            override fun onClick(item: String, position: Int) {
+                teamLocal = teamsLocal[position]
+//                presenter.getSubMenuForId(applicationContext, tournament)
+                btnTeamLocal.text = item
+                validateActive(btnTeamLocal, teamLocal.IS_ACTIVE, 0)
+//
+//                tvTournament.text = item
+//                setDividerLine(tournament.IS_ACTIVE)
+            }
+        })
+
+        spinnerDialog.showSpinerDialog()
+    }
+
+    private fun dialogSpinnerTeamVisite() {
+        val spinnerDialog = SpinnerDialog(activity, teamsVisite, "Seleccione un equipo", R.style.DialogAnimations_SmileWindow)
+        spinnerDialog.bindOnSpinerListener(object : OnSpinerItemClick {
+            override fun onClick(item: String, position: Int) {
+                teamVisite = teamsVisite[position]
+//                presenter.getSubMenuForId(applicationContext, tournament)
+                btnTeamVisite.text = item
+                validateActive(btnTeamVisite, teamVisite.IS_ACTIVE, 0)
+//
+//                tvTournament.text = item
+//                setDividerLine(tournament.IS_ACTIVE)
+            }
+        })
+
+        spinnerDialog.showSpinerDialog()
+    }
+
+    private fun dialogSpinnerTimeMatch() {
+        val spinnerDialog = SpinnerDialog(activity, timeMatchs, "Seleccione un tiempo de juego", R.style.DialogAnimations_SmileWindow)
+        spinnerDialog.bindOnSpinerListener(object : OnSpinerItemClick {
+            override fun onClick(item: String, position: Int) {
+                timeMatch = timeMatchs[position]
+//                presenter.getSubMenuForId(applicationContext, tournament)
+                btnTimeMatch.text = item
+                validateActive(btnTimeMatch, teamVisite.IS_ACTIVE, R.drawable.time_icon)
+//
+//                tvTournament.text = item
+//                setDividerLine(tournament.IS_ACTIVE)
+            }
+        })
+
+        spinnerDialog.showSpinerDialog()
+    }
+
+    private fun validateActive(button: Button, is_active: Int, icone: Int) {
+        if (is_active == 0)
+            button.setCompoundDrawablesWithIntrinsicBounds(icone, 0, android.R.drawable.presence_busy, 0)
+        else
+            button.setCompoundDrawablesWithIntrinsicBounds(icone, 0, 0, 0)
+    }
 
     private fun goToActivity(activity: Activity) {
         startActivity(Intent(getActivity(), activity::class.java))
@@ -171,9 +256,10 @@ class FixtureCreateFragment : BaseFragment(),
     }
 
     override fun onDateSet(dialog: CalendarDatePickerDialogFragment?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        day = "$dayOfMonth-$monthOfYear-$year" //"$year-$monthOfYear-$dayOfMonth"
+        val month = monthOfYear + 1
+        day = "$dayOfMonth-$month-$year" //"$year-$monthOfYear-$dayOfMonth"
         //textViewDay.text = "$dayOfMonth-$monthOfYear-$year"
-        textViewDay.text = day
+        buttonDay.text = day
     }
 
     private fun openTimer() {
@@ -186,7 +272,7 @@ class FixtureCreateFragment : BaseFragment(),
 
     override fun onDialogTimeSet(reference: Int, hourOfDay: Int, minute: Int) {
         hour = "$hourOfDay:$minute"
-        textViewHour.text = hour
+        buttonHour.text = hour
     }
 
 //    private fun setVisivilityFab(fab: FloatingActionButton, isOpened: Boolean) {
@@ -221,12 +307,12 @@ class FixtureCreateFragment : BaseFragment(),
         this.tournaments = tournaments
         this.teamsLocal = teams
         this.teamsVisite = teams
-        adapterSpinnerSubMenus.refresh(submenus)
-        adapterSpinnerFieldMatch.refresh(fieldMatchs)
-        adapterSpinnerTimeMatch.refresh(timeMatchs)
-        adapterSpinnerTournament.refresh(tournaments)
-        adapterSpinnerTeamLocal.refresh(teams)
-        adapterSpinnerTeamVisite.refresh(teams)
+//        adapterSpinnerSubMenus.refresh(submenus)
+//        adapterSpinnerFieldMatch.refresh(fieldMatchs)
+//        adapterSpinnerTimeMatch.refresh(timeMatchs)
+//        adapterSpinnerTournament.refresh(tournaments)
+//        adapterSpinnerTeamLocal.refresh(teams)
+//        adapterSpinnerTeamVisite.refresh(teams)
         if (is_update) {
             presenter.getFixture(activity, id_fixture)
         } else {
@@ -238,29 +324,29 @@ class FixtureCreateFragment : BaseFragment(),
     private fun getPresenterInj(): FixtureCreateFragmentPresenter =
             component.getPresenter()
 
-    private fun getAdapterSubMenus(): FixtureCreateFragmentSubMenuSpinnerAdapter =
-            component.getAdapterSubMenus()
-
-    private fun getAdapterFieldMatch(): FixtureCreateFragmentFieldSpinnerAdapter =
-            component.getAdapterFieldMatch()
-
-    private fun getAdapterTimeMatch(): FixtureCreateFragmentTimesSpinnerAdapter =
-            component.getAdapterTimeMatch()
-
-    private fun getAdapterTournament(): FixtureCreateFragmentTournamentSpinnerAdapter =
-            component.getAdapterTournament()
-
-    private fun getAdapterTeamLocal(): FixtureCreateFragmentTeamSpinnerAdapter =
-            component.getAdapterTeamLocal()
-
-    private fun getAdapterTeamVisite(): FixtureCreateFragmentTeamSpinnerAdapter =
-            component.getAdapterTeamVisite()
+//    private fun getAdapterSubMenus(): FixtureCreateFragmentSubMenuSpinnerAdapter =
+//            component.getAdapterSubMenus()
+//
+//    private fun getAdapterFieldMatch(): FixtureCreateFragmentFieldSpinnerAdapter =
+//            component.getAdapterFieldMatch()
+//
+//    private fun getAdapterTimeMatch(): FixtureCreateFragmentTimesSpinnerAdapter =
+//            component.getAdapterTimeMatch()
+//
+//    private fun getAdapterTournament(): FixtureCreateFragmentTournamentSpinnerAdapter =
+//            component.getAdapterTournament()
+//
+//    private fun getAdapterTeamLocal(): FixtureCreateFragmentTeamSpinnerAdapter =
+//            component.getAdapterTeamLocal()
+//
+//    private fun getAdapterTeamVisite(): FixtureCreateFragmentTeamSpinnerAdapter =
+//            component.getAdapterTeamVisite()
 
     private fun isFixtureUpdate() {
         is_update = activity.intent.getBooleanExtra("is_update", false)
         if (is_update) {
             id_fixture = activity.intent.getIntExtra("id_fixture", 0)
-            textViewButton.text = getString(R.string.update_button, "Fixture")
+            btnSave.text = getString(R.string.update_button, "Fixture")
         }
     }
 
@@ -275,56 +361,57 @@ class FixtureCreateFragment : BaseFragment(),
 //            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
 //            }
 //        }
-        spinnerFieldMatch.adapter = adapterSpinnerFieldMatch
-        spinnerFieldMatch.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//        spinnerFieldMatch.adapter = adapterSpinnerFieldMatch
+//        spinnerFieldMatch.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//
+//            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
+//                fieldMatch = fieldMatchs[pos]
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
+//            }
+//        }
+//        spinnerTimeMatch.adapter = adapterSpinnerTimeMatch
+//        spinnerTimeMatch.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//
+//            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
+//                timeMatch = timeMatchs[pos]
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
+//            }
+//        }
 
-            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-                fieldMatch = fieldMatchs[pos]
-            }
-
-            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
-            }
-        }
-        spinnerTimeMatch.adapter = adapterSpinnerTimeMatch
-        spinnerTimeMatch.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-                timeMatch = timeMatchs[pos]
-            }
-
-            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
-            }
-        }
-        spinnerTournament.adapter = adapterSpinnerTournament
-        spinnerTournament.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-                tournament = tournaments[pos]
-            }
-
-            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
-            }
-        }
-        spinnerTeamLocal.adapter = adapterSpinnerTeamLocal
-        spinnerTeamLocal.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-                teamLocal = teamsLocal[pos]
-            }
-
-            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
-            }
-        }
-        spinnerTeamVisite.adapter = adapterSpinnerTeamVisite
-        spinnerTeamVisite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
-            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-                teamVisite = teamsVisite[pos]
-            }
-
-            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
-            }
-        }
+//        spinnerTournament.adapter = adapterSpinnerTournament
+//        spinnerTournament.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//
+//            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
+//                tournament = tournaments[pos]
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
+//            }
+//        }
+//        spinnerTeamLocal.adapter = adapterSpinnerTeamLocal
+//        spinnerTeamLocal.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//
+//            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
+//                teamLocal = teamsLocal[pos]
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
+//            }
+//        }
+//        spinnerTeamVisite.adapter = adapterSpinnerTeamVisite
+//        spinnerTeamVisite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//
+//            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
+//                teamVisite = teamsVisite[pos]
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
+//            }
+//        }
     }
 
     override fun onClickButtonSave() {
@@ -385,76 +472,86 @@ class FixtureCreateFragment : BaseFragment(),
     override fun fillViewUpdate() {
         with(fixture) {
             id_fixture = ID_FIXTURE_KEY
+            
            // spinnerSubMenu.setSelection(getPositionSpinners(ID_SUBMENU_KEY, 1))
-            spinnerFieldMatch.setSelection(getPositionSpinners(ID_FIELD_MATCH, 2))
-            spinnerTimeMatch.setSelection(getPositionSpinners(ID_TIMES_MATCH, 3))
-            spinnerTournament.setSelection(getPositionSpinners(ID_TOURNAMENT, 4))
-            spinnerTeamLocal.setSelection(getPositionSpinners(ID_LOCAL_TEAM, 5))
-            spinnerTeamVisite.setSelection(getPositionSpinners(ID_VISITE_TEAM, 6))
+           // spinnerFieldMatch.setSelection(getPositionSpinners(ID_FIELD_MATCH, 2))
+           // spinnerTimeMatch.setSelection(getPositionSpinners(ID_TIMES_MATCH, 3))
+           // spinnerTournament.setSelection(getPositionSpinners(ID_TOURNAMENT, 4))
+            //spinnerTeamLocal.setSelection(getPositionSpinners(ID_LOCAL_TEAM, 5))
+            //spinnerTeamVisite.setSelection(getPositionSpinners(ID_VISITE_TEAM, 6))
             day = DATE_MATCH
             hour = HOUR_MATCH
-            textViewDay.text = day
-            textViewHour.text = hour
+            buttonDay.text = day
+            buttonHour.text = hour
             editTextResultLocal.text = Editable.Factory.getInstance().newEditable(RESULT_LOCAL)
             editTextResultVisite.text = Editable.Factory.getInstance().newEditable(RESULT_VISITE)
             editTextObservation.text = Editable.Factory.getInstance().newEditable(OBSERVATION)
         }
     }
 
-    private fun getPositionSpinners(id: Int, type: Int): Int {
-        var index = 0
+    private fun fillUpdateButton(button: Button){
+
+    }
+
+    private fun getPositionLists(id: Int, type: Int) {
+        //var index = 0
         when (type) {
 
             1 -> {
                 for (i in 0 until subMenuDrawers.size) {
                     if (subMenuDrawers[i].ID_SUBMENU_KEY == id) {
-                        index = i
-                        return index
+                        subMenuDrawer = subMenuDrawers[i]
+                        btnSubMenu.text = subMenuDrawer.toString()
+                        break
                     }
                 }
             }
             2 -> {
                 for (i in 0 until fieldMatchs.size) {
                     if (fieldMatchs[i].ID_FIELD_MATCH_KEY == id) {
-                        index = i
-                        return index
+                        fieldMatch = fieldMatchs[i]
+                        btnField.text = fieldMatch.FIELD_MATCH
+                        break
                     }
                 }
             }
             3 -> {
                 for (i in 0 until timeMatchs.size) {
                     if (timeMatchs[i].ID_TIME_MATCH_KEY == id) {
-                        index = i
-                        return index
+                        timeMatch = timeMatchs[i]
+                        btnTimeMatch.text = timeMatch.TIME_MATCH
+                        break
                     }
                 }
             }
             4 -> {
                 for (i in 0 until tournaments.size) {
                     if (tournaments[i].ID_TOURNAMENT_KEY == id) {
-                        index = i
-                        return index
+                        tournament = tournaments[i]
+                        btnTournament.text = tournament.TOURNAMENT
+                        break
                     }
                 }
             }
             5 -> {
                 for (i in 0 until teamsLocal.size) {
                     if (teamsLocal[i].ID_TEAM_KEY == id) {
-                        index = i
-                        return index
+                        teamLocal = teamsLocal[i]
+                        btnTeamLocal.text = teamLocal.NAME
+                        break
                     }
                 }
             }
             6 -> {
                 for (i in 0 until teamsVisite.size) {
                     if (teamsVisite[i].ID_TEAM_KEY == id) {
-                        index = i
-                        return index
+                        teamVisite = teamsVisite[i]
+                        btnTeamVisite.text = teamVisite.NAME
+                        break
                     }
                 }
             }
         }
-        return index
     }
 
     override fun saveSuccess() {
@@ -484,15 +581,15 @@ class FixtureCreateFragment : BaseFragment(),
         editTextResultLocal.text.clear()
         editTextResultVisite.text.clear()
         editTextObservation.text.clear()
-        textViewDay.text = getString(R.string.day)
-        textViewHour.text = getString(R.string.hour)
-        textViewButton.text = getString(R.string.save_button, "Fixture")
+        buttonDay.text = getString(R.string.day)
+        buttonHour.text = getString(R.string.hour)
+        btnSave.text = getString(R.string.save_button, "Fixture")
         is_update = false
     }
 
     override fun setVisibilityViews(isVisible: Int) {
         linearConteinerFixture.visibility = isVisible
-        buttonSave.visibility = isVisible
+        btnSave.visibility = isVisible
     }
 
     private fun calendarOnResume() {

@@ -10,6 +10,7 @@
 
 
     <dimen name="dim_10dp">10dp</dimen>
+    <dimen name="dim_5dp">5dp</dimen>
     <!--BUTTON-->
     <dimen name="button_size">16sp</dimen>
     <dimen name="padding_button">12dp</dimen>

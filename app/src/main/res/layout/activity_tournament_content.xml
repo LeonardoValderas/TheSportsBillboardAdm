@@ -89,8 +89,10 @@
                         android:id="@+id/buttonTournament"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Sin Torneos"
-                        android:textColor="@color/colorWhiteGrey" />
+                        android:background="@drawable/border_style_spinner"
+                        android:drawableRight="@mipmap/ic_down_arrow"
+                        android:text="Torneos"
+                        android:textColor="@color/colorBlack" />
 
                     <View
                         android:id="@+id/diviverLine"
@@ -152,7 +154,6 @@
             android:id="@+id/imageViewInformationTournament"
             style="@style/ButtonInformation" />
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -181,10 +182,11 @@
                     android:id="@+id/btnSubMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/custom_select_button"
+                    android:layout_margin="@dimen/dim_5dp"
+                    android:background="@drawable/border_style_spinner"
+                    android:drawableRight="@mipmap/ic_down_arrow"
                     android:text="@string/submenu.title"
-                    android:textColor="@color/colorWhiteGrey" />
+                    android:textColor="@color/colorBlack" />
 
                 <TextView
                     android:id="@+id/tvSubMenu"
@@ -192,8 +194,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:textColor="@color/colorSecondary_text"
+                    android:textColor="@color/redColor"
                     android:textSize="12sp"
+                    android:visibility="gone"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -217,10 +220,11 @@
                     android:id="@+id/btnTournamentSubmenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/custom_select_button_green"
+                    android:layout_margin="@dimen/dim_5dp"
+                    android:background="@drawable/border_style_spinner"
+                    android:drawableRight="@mipmap/ic_down_arrow"
                     android:text="Torneo"
-                    android:textColor="@color/colorWhiteGrey" />
+                    android:textColor="@color/colorBlack" />
 
                 <TextView
                     android:id="@+id/tvTournament"
@@ -230,6 +234,7 @@
                     android:gravity="center"
                     android:textColor="@color/colorSecondary_text"
                     android:textSize="12sp"
+                    android:visibility="gone"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>

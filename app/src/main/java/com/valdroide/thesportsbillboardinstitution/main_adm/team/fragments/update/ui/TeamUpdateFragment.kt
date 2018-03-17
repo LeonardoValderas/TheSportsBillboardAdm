@@ -16,11 +16,12 @@ import org.jetbrains.anko.yesButton
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.activity.TabTeamActivity
 import com.valdroide.thesportsbillboardinstitution.utils.*
 import com.valdroide.thesportsbillboardinstitution.utils.base.BaseFragment
+import javax.inject.Inject
 
 class TeamUpdateFragment : BaseFragment(), TeamUpdateFragmentView, GenericOnItemClick<Team>, OnMenuItemClickListener {
 
     //region INIT VARIABLE
-    private lateinit var component: TeamUpdateFragmentComponent
+    @Inject
     lateinit var presenter: TeamUpdateFragmentPresenter
     lateinit var adapterTeam: TeamUpdateFragmentAdapter
     var teams: MutableList<Team> = arrayListOf()
@@ -53,12 +54,9 @@ class TeamUpdateFragment : BaseFragment(), TeamUpdateFragmentView, GenericOnItem
     override fun setupInjection() {
         val app = activity.application as TheSportsBillboardInstitutionApp
         app.firebaseAnalyticsInstance().setCurrentScreen(activity, javaClass.simpleName, null)
-        component = app.getTeamUpdateFragmentComponent(this, this, this)
-        presenter = getPresenterInj()
+        app.getTeamUpdateFragmentComponent(this, this, this).inject(this)
         adapterTeam = getAdapter()
     }
-
-    open fun getPresenterInj(): TeamUpdateFragmentPresenter = component.getPresenter()
 
     //I dont realice inject because a have error
     open fun getAdapter(): TeamUpdateFragmentAdapter = TeamUpdateFragmentAdapter(activity, this)

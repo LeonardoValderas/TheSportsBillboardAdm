@@ -166,6 +166,11 @@
         <item>Eliminar Item</item>
         <item>Otro</item>
     </array>
-
-
+    <string name="title_activity_prueba">PruebaActivity</string>
+    <string name="menu.submenu">Menu - SubMenu</string>
+    <string name="menu.submenu.empty">Debe crear un submenu desde la opción Menus y Submenus</string>
+    <string name="select.menu">Seleccione un menu</string>
+    <string name="select.submenu">Seleccione un sub menu</string>
+    <string name="menu.empty.error">Debe crear un menu</string>
+    <string name="submenu.empty.error">Debe crear un sub menu</string>
 </resources>

@@ -47,28 +47,6 @@ object Utils {
     const val URL_ACCOUNT: String = "http://10.0.3.2:8080/the_sports_billboard_institution/adm/account/image_account/"
     const val PNG: String = ".PNG"
 
-    fun setupViewpagerTabs(viewPager: ViewPager, tabs: TabLayout, adapter: SectionsPagerAdapter?): ViewPager {
-        viewPager.setAdapter(adapter)
-        viewPager.setPageTransformer(true, RotateUpTransformer())
-        tabs.setupWithViewPager(viewPager)
-        tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
-
-        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                //              hideKeyBoard()
-            }
-
-            override fun onPageSelected(position: Int) {
-                //            hideKeyBoard()
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
-        })
-        return viewPager
-    }
-
     fun showSnackBar(conteiner: View, msg: String) {
         Snackbar.make(conteiner, msg, Snackbar.LENGTH_LONG).show()
     }

@@ -3,60 +3,64 @@ package com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Adapter
-import android.widget.AdapterView
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.MenuSubMenuActivityPresenter
-import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.di.MenuSubMenuActivityComponent
-import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui.adapter.MenuActivityAdapter
-import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui.adapter.SubMenuActivityAdapter
 import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui.dialog.CustomDialog
 import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui.dialog.OnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.model.entities.MenuDrawer
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.base.BaseActivity
+import com.valdroide.thesportsbillboardinstitution.utils.generics.OnSpinerItemClick
+import com.valdroide.thesportsbillboardinstitution.utils.generics.SpinnerDialog
 import kotlinx.android.synthetic.main.activity_menu_submenu.*
 import kotlinx.android.synthetic.main.activity_menu_submenu_content.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
+import javax.inject.Inject
 
 
-open class MenuSubMenuActivity : AppCompatActivity(), MenuSubMenuActivityView, View.OnClickListener, OnItemClickListener {
-
-    private lateinit var presenter: MenuSubMenuActivityPresenter
-    private lateinit var component: MenuSubMenuActivityComponent
-    private var isRegister: Boolean = false
-    private var menuDrawer = MenuDrawer()
-    private var subMenuDrawer = SubMenuDrawer()
+open class MenuSubMenuActivity : BaseActivity(), MenuSubMenuActivityView, View.OnClickListener, OnItemClickListener {
+    @Inject
+    lateinit var presenter: MenuSubMenuActivityPresenter
+    private var menuDrawer: MenuDrawer? = null
+    private var subMenuDrawer: SubMenuDrawer? = null
     private lateinit var menuDrawers: MutableList<MenuDrawer>
     private lateinit var subMenuDrawers: MutableList<SubMenuDrawer>
-    private lateinit var adapterSpinnerMenus: MenuActivityAdapter
-    private lateinit var adapterSpinnerSubMenus: SubMenuActivityAdapter
     private var alert: CustomDialog? = null
-    private var msg = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menu_submenu)
-        setupInjection()
         initToobar()
-        register()
-        initSpinnerAdapter()
         getMenuSubMenu()
         setOnclickButtons()
     }
 
+    override fun getLayoutResourceId(): Int = R.layout.activity_menu_submenu
+
+    override fun validateEvenBusRegisterForLifeCycle(isRegister: Boolean) {
+        if (isRegister)
+            presenter.onCreate()
+        else
+            presenter.onDestroy()
+    }
+
     private fun setOnclickButtons() {
-        fabCreateMenu.setOnClickListener(this)
-        fabUpdateMenu.setOnClickListener(this)
-        fabActiveMenu.setOnClickListener(this)
-        fabDeleteMenu.setOnClickListener(this)
-        fabCreateSubMenu.setOnClickListener(this)
-        fabUpdateSubMenu.setOnClickListener(this)
-        fabActiveSubMenu.setOnClickListener(this)
-        fabDeleteSubMenu.setOnClickListener(this)
+        setOnClickView(btnMenu)
+        setOnClickView(btnSubMenu)
+        setOnClickView(fabCreateMenu)
+        setOnClickView(fabUpdateMenu)
+        setOnClickView(fabActiveMenu)
+        setOnClickView(fabDeleteMenu)
+        setOnClickView(fabCreateSubMenu)
+        setOnClickView(fabUpdateSubMenu)
+        setOnClickView(fabActiveSubMenu)
+        setOnClickView(fabDeleteSubMenu)
+    }
+
+    private fun setOnClickView(view: View) {
+        view.setOnClickListener(this)
     }
 
     private fun getMenuSubMenu() {
@@ -68,98 +72,127 @@ open class MenuSubMenuActivity : AppCompatActivity(), MenuSubMenuActivityView, V
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
-    fun setupInjection() {
+    override fun setupInjection() {
         val app = application as TheSportsBillboardInstitutionApp
         app.firebaseAnalyticsInstance().setCurrentScreen(this, javaClass.simpleName, null)
-        component = app.getMenuSubMenuActivityComponent(this, this)
-        presenter = getPresenter()
-        adapterSpinnerMenus = getAdapterMenus()
-        adapterSpinnerSubMenus = getAdapterSubMenus()
+        app.getMenuSubMenuActivityComponent(this, this).inject(this)
     }
-
-    open fun getPresenter(): MenuSubMenuActivityPresenter =
-            component.getPresenter()
-
-    private fun getAdapterMenus(): MenuActivityAdapter =
-            component.getAdapterMenus()
-
-    private fun getAdapterSubMenus(): SubMenuActivityAdapter =
-            component.getAdapterSubMenus()
 
     override fun setMenuSubMenu(menuDrawers: MutableList<MenuDrawer>, subMenuDrawers: MutableList<SubMenuDrawer>) {
         this.menuDrawers = menuDrawers
         this.subMenuDrawers = subMenuDrawers
-        adapterSpinnerMenus.refresh(menuDrawers)
-        adapterSpinnerSubMenus.refresh(subMenuDrawers)
+        validateSpinners()
     }
 
     override fun onClick(v: View?) {
+        if (v == fabCreateMenu) {
+            saveMenuSubMenuOnClick(true)
+            return
+        } else
+            if (!menuListAny()) {
+                errorMenuSubMenuEmpty(true)
+                return
+            }
         when (v) {
-            fabCreateMenu ->
-                saveMenuAlert()
-            fabUpdateMenu ->
-                updateMenuAlert()
-            fabActiveMenu -> {
-                if (menuDrawers.isNotEmpty()) {
-                    if (menuDrawer.IS_ACTIVE == 0)
-                        msg = getString(R.string.active_menu_alerte_msg, "activar", "menu")
-                    else
-                        msg = getString(R.string.active_menu_alerte_msg, "desactivar", "menu")
-                    showAlertDialog(getString(R.string.alert_title), msg, menuDrawer, null, true, false)
-                } else
-                    setError(getString(R.string.spinner_empty, "un menu"))
-            }
-            fabDeleteMenu -> {
-                if (menuDrawers.isNotEmpty())
-                    showAlertDialog(getString(R.string.alert_title), getString(R.string.delete_menu_alerte_msg, "menu"), menuDrawer, null, true, true)
-                else
-                    setError(getString(R.string.spinner_empty, "un menu"))
-            }
-            fabCreateSubMenu ->
-                saveSubMenuAlert()
-            fabUpdateSubMenu ->
-                updateSubMenuAlert()
-            fabActiveSubMenu -> {
-                if (subMenuDrawers.isNotEmpty()) {
-                    if (subMenuDrawer.IS_ACTIVE == 0)
-                        msg = getString(R.string.active_menu_alerte_msg, "activar", "submenu")
-                    else
-                        msg = getString(R.string.active_menu_alerte_msg, "desactivar", "submenu")
-                    showAlertDialog(getString(R.string.alert_title), msg, null, subMenuDrawer, false, false)
-                } else
-                    setError(getString(R.string.spinner_empty, "un submenu"))
-            }
-            fabDeleteSubMenu -> {
-                if (subMenuDrawers.isNotEmpty())
-                    showAlertDialog(getString(R.string.alert_title), getString(R.string.delete_menu_alerte_msg, "submenu"), null, subMenuDrawer, false, true)
-                else
-                    setError(getString(R.string.spinner_empty, "un submenu"))
-            }
+            btnMenu -> onClickMenuSubmenu(true)
+            fabCreateMenu -> saveMenuSubMenuOnClick(true)
+            fabUpdateMenu -> updateMenuSubMenuOnClick(true)
+            fabActiveMenu -> activeAndDeleteMenuOnClick(false)
+            fabDeleteMenu -> activeAndDeleteMenuOnClick(true)
+
+            btnSubMenu -> onClickMenuSubmenu(false)
+            fabCreateSubMenu -> saveMenuSubMenuOnClick(false)
+            fabUpdateSubMenu -> updateMenuSubMenuOnClick(false)
+            fabActiveSubMenu -> activeAndDeleteSubMenuOnClick(false)
+            fabDeleteSubMenu -> activeAndDeleteSubMenuOnClick(true)
         }
     }
 
-    private fun initSpinnerAdapter() {
-        spinnerMenu.adapter = adapterSpinnerMenus
-        spinnerMenu.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+    private fun onClickMenuSubmenu(isMenu: Boolean) {
+        if (isMenu)
+            dialogSpinnerMenu()
+        else
+            if (subMenuListAny()) dialogSpinnerSubMenu() else setError(getString(R.string.submenu_empty_error))
+    }
 
-            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-                menuDrawer = menuDrawers[pos]
-            }
+    private fun menuListAny(): Boolean = menuDrawers.any()
 
-            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
-            }
+    private fun subMenuListAny(): Boolean = subMenuDrawers.any()
+
+    private fun activeAndDeleteMenuOnClick(isDelete: Boolean) {
+        if (menuDrawer == null) {
+            setError(getString(R.string.select_menu))
+            return
+        }
+        if (isDelete)
+            showAlertDialog(getString(R.string.alert_title), getString(R.string.delete_menu_alerte_msg, "menu"), menuDrawer, null, true, true)
+        else
+            showAlertDialog(getString(R.string.alert_title), returnMessangeActive(true), menuDrawer, null, true, false)
+    }
+
+    private fun activeAndDeleteSubMenuOnClick(isDelete: Boolean) {
+        if (subMenuDrawer == null) {
+            setError(getString(R.string.select_submenu))
+            return
         }
 
-        spinnerSubMenu.adapter = adapterSpinnerSubMenus
-        spinnerSubMenu.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        if (isDelete)
+            showAlertDialog(getString(R.string.alert_title), getString(R.string.delete_menu_alerte_msg, "submenu"), null, subMenuDrawer, false, true)
+        else
+            showAlertDialog(getString(R.string.alert_title), returnMessangeActive(false), null, subMenuDrawer, false, false)
+    }
 
-            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-                subMenuDrawer = subMenuDrawers[pos]
-            }
-
-            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
-            }
+    private fun returnMessangeActive(isMenu: Boolean): String {
+        if (isMenu) {
+            if (menuDrawer!!.IS_ACTIVE == 0)
+                return getString(R.string.active_menu_alerte_msg, "activar", "menu")
+            else
+                return getString(R.string.active_menu_alerte_msg, "desactivar", "menu")
+        } else {
+            if (subMenuDrawer!!.IS_ACTIVE == 0)
+                return getString(R.string.active_menu_alerte_msg, "activar", "sub menu")
+            else
+                return getString(R.string.active_menu_alerte_msg, "desactivar", "sub menu")
         }
+    }
+
+    private fun validateSpinners() {
+        menuDrawer = null
+        subMenuDrawer = null
+
+        if (!menuDrawers.any())
+            btnMenu.text = "Menu"
+        else
+            btnMenu.text = getString(R.string.select_menu)
+
+        if (!subMenuDrawers.any())
+            btnSubMenu.text = "Sub Menu"
+        else
+            btnSubMenu.text = getString(R.string.select_submenu)
+    }
+
+    private fun dialogSpinnerMenu() {
+        val spinnerDialog = SpinnerDialog(this@MenuSubMenuActivity, menuDrawers, "Seleccione un menu", R.style.DialogAnimations_SmileWindow)
+        spinnerDialog.bindOnSpinerListener(object : OnSpinerItemClick {
+            override fun onClick(item: String, position: Int) {
+                menuDrawer = menuDrawers[position]
+                btnMenu.text = item
+            }
+        })
+
+        spinnerDialog.showSpinerDialog()
+    }
+
+    private fun dialogSpinnerSubMenu() {
+        val spinnerDialog = SpinnerDialog(this@MenuSubMenuActivity, subMenuDrawers, "Seleccione un sub menu", R.style.DialogAnimations_SmileWindow)
+        spinnerDialog.bindOnSpinerListener(object : OnSpinerItemClick {
+            override fun onClick(item: String, position: Int) {
+                subMenuDrawer = subMenuDrawers[position]
+                btnSubMenu.text = subMenuDrawer.toString()
+            }
+        })
+
+        spinnerDialog.showSpinerDialog()
     }
 
     override fun setError(error: String) {
@@ -187,18 +220,41 @@ open class MenuSubMenuActivity : AppCompatActivity(), MenuSubMenuActivityView, V
         presenter.updateSubMenu(context, submenu)
     }
 
-    private fun saveMenuAlert() {
-        alert = CustomDialog.Builder(this).isMenu(true).isUpdate(false).setOnClick(this).getDialog()
-        alert!!.show()
-    }
-
-    private fun updateMenuAlert() {
-        if (menuDrawers.isEmpty()) {
-            setError(getString(R.string.spinner_empty, "un menu"))
+    private fun saveMenuSubMenuOnClick(isMenu: Boolean) {
+        if (isMenu) {
+            alert = CustomDialog.Builder(this).isMenu(true).isUpdate(false).setOnClick(this).getDialog()
+            alert!!.show()
         } else {
-            alert = CustomDialog.Builder(this).isMenu(true).isUpdate(true).withMenu(menuDrawer).setOnClick(this).getDialog()
+            alert = CustomDialog.Builder(this).isMenu(false).isUpdate(false).withSubMenu(menuDrawers, subMenuDrawer).setOnClick(this).getDialog()
             alert!!.show()
         }
+    }
+
+    private fun updateMenuSubMenuOnClick(isMenu: Boolean) {
+        if (isMenu) {
+            if (menuDrawer == null)
+                setError(getString(R.string.select_menu))
+            else {
+                alert = CustomDialog.Builder(this).isMenu(true).isUpdate(true).withMenu(menuDrawer!!).setOnClick(this).getDialog()
+                alert!!.show()
+            }
+        } else {
+            if (!subMenuListAny())
+                errorMenuSubMenuEmpty(false)
+            else if (subMenuDrawer == null)
+                setError(getString(R.string.select_submenu))
+            else {
+                alert = CustomDialog.Builder(this).isMenu(false).isUpdate(true).withSubMenu(menuDrawers, subMenuDrawer!!).setOnClick(this).getDialog()
+                alert!!.show()
+            }
+        }
+    }
+
+    private fun errorMenuSubMenuEmpty(isMenu: Boolean) {
+        if (isMenu)
+            setError(getString(R.string.spinner_empty, "un menu"))
+        else
+            setError(getString(R.string.spinner_empty, "un sub menu"))
     }
 
     override fun menuSaveSuccess() {
@@ -207,26 +263,6 @@ open class MenuSubMenuActivity : AppCompatActivity(), MenuSubMenuActivityView, V
 
     override fun eventSuccess(msg: String) {
         Utils.showSnackBar(conteiner, msg)
-    }
-
-    private fun saveSubMenuAlert() {
-        if (menuDrawers.isEmpty())
-            setError(getString(R.string.spinner_empty, "un menu"))
-        else {
-            alert = CustomDialog.Builder(this).isMenu(false).isUpdate(false).withSubMenu(menuDrawers, subMenuDrawer).setOnClick(this).getDialog()
-            alert!!.show()
-        }
-    }
-
-    private fun updateSubMenuAlert() {
-        if (menuDrawers.isEmpty())
-            setError(getString(R.string.spinner_empty, "un menu"))
-        else if (subMenuDrawers.isEmpty())
-            setError(getString(R.string.spinner_empty, "un submenu"))
-        else {
-            alert = CustomDialog.Builder(this).isMenu(false).isUpdate(true).withSubMenu(menuDrawers, subMenuDrawer).setOnClick(this).getDialog()
-            alert!!.show()
-        }
     }
 
     private fun showAlertDialog(title: String,
@@ -243,13 +279,13 @@ open class MenuSubMenuActivity : AppCompatActivity(), MenuSubMenuActivityView, V
         alertDilog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", { dialogInterface, i ->
             if (isMenu) {
                 if (!isDelete) {
-                    menuDrawer.IS_ACTIVE = if (menuDrawer.IS_ACTIVE == 0) 1 else 0
+                    menuDrawer!!.IS_ACTIVE = if (menuDrawer!!.IS_ACTIVE == 0) 1 else 0
                     presenter.activeOrUnActiveMenu(this, menu!!)
                 } else
                     presenter.deleteMenu(this, menu!!)
             } else {
                 if (!isDelete) {
-                    subMenuDrawer.IS_ACTIVE = if (subMenuDrawer.IS_ACTIVE == 0) 1 else 0
+                    subMenuDrawer!!.IS_ACTIVE = if (subMenuDrawer!!.IS_ACTIVE == 0) 1 else 0
                     presenter.activeOrUnActiveSubMenu(this, subMenu!!)
                 } else
                     presenter.deleteSubMenu(this, subMenu!!)
@@ -274,53 +310,5 @@ open class MenuSubMenuActivity : AppCompatActivity(), MenuSubMenuActivityView, V
     override fun showProgressBar() {
         progressBar.visibility = View.VISIBLE
         conteinerContent.visibility = View.INVISIBLE
-    }
-
-    fun register() {
-        if (!isRegister) {
-            presenter.onCreate()
-            isRegister = true
-        }
-    }
-
-    fun unregister() {
-        if (isRegister) {
-            presenter.onDestroy()
-            isRegister = false
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        unregister()
-//        mAd.pause(this)
-//        if (mAdView != null) {
-//            mAdView.pause()
-//        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        register()
-//        mAd.resume(this)
-//        if (mAdView != null) {
-//            mAdView.resume()
-//        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        register()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        unregister()
-    }
-
-
-    override fun onDestroy() {
-        unregister()
-        super.onDestroy()
     }
 }

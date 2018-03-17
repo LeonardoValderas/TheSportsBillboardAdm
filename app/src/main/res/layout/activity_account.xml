@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     tools:context="com.valdroide.thesportsbillboardinstitution.main_user.account.ui.AccountActivity">
 
-    <include layout="@layout/toolbar_layout" />
+    <!--<include layout="@layout/toolbar_layout" />-->
     <include layout="@layout/content_account" />
 
     <com.github.clans.fab.FloatingActionMenu

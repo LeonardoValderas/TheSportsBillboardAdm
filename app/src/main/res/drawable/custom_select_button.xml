@@ -4,42 +4,45 @@
     <item android:state_pressed="true">
         <shape>
             <gradient android:angle="90"
-                android:centerColor="@color/colorPrimary"
-                android:endColor="@color/colorPrimaryDark"
-                android:startColor="@color/colorPrimaryDark" />
+                android:centerColor="@color/bpLine_background"
+                android:endColor="@color/bpLine_background"
+                android:startColor="@color/bpLine_background" />
             <!--<stroke-->
             <!--android:width="3dp"-->
             <!--android:color="@color/colorAccent" />-->
-            <corners android:radius="8dp" />
+            <corners android:radius="10dp" />
             <padding android:bottom="5dp" android:left="5dp" android:right="5dp" android:top="5dp" />
         </shape>
     </item>
 
-    <item android:state_focused="true">
-        <shape>
-            <gradient android:angle="90"
-                android:centerColor="@color/colorPrimary"
-                android:endColor="@color/colorPrimaryDark"
-                android:startColor="@color/colorPrimaryDark" />
-            <!--<stroke-->
-            <!--android:width="3dp"-->
-            <!--android:color="@color/colorAccent" />-->
-            <corners android:radius="8dp" />
-            <padding android:bottom="5dp" android:left="5dp" android:right="5dp" android:top="5dp" />
-        </shape>
-    </item>
+    <!--<item android:state_focused="true">-->
+        <!--<shape>-->
+            <!--<gradient android:angle="90"-->
+                <!--android:centerColor="@color/calendar_selected_date_text"-->
+                <!--android:endColor="@color/bpLine_background"-->
+                <!--android:startColor="@color/bpLine_background" />-->
+            <!--&lt;!&ndash;<stroke&ndash;&gt;-->
+            <!--&lt;!&ndash;android:width="3dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:color="@color/colorAccent" />&ndash;&gt;-->
+            <!--<corners android:radius="8dp" />-->
+            <!--<padding android:bottom="5dp" android:left="5dp" android:right="5dp" android:top="5dp" />-->
+        <!--</shape>-->
+    <!--</item>-->
 
     <item>
         <shape>
             <gradient android:angle="90"
-                android:centerColor="@color/colorPrimary"
-                android:endColor="@color/colorPrimary"
-                android:startColor="@color/colorPrimary" />
+                android:centerColor="@color/default_keyboard_indicator_color_dark"
+                android:endColor="@color/default_keyboard_indicator_color_dark"
+                android:startColor="@color/default_keyboard_indicator_color_dark" />
             <!--<stroke-->
             <!--android:width="3dp"-->
             <!--android:color="@color/colorAccent" />-->
-            <corners android:radius="8dp" />
-            <padding android:bottom="5dp" android:left="5dp" android:right="5dp" android:top="5dp" />
+            <corners android:radius="10dp" />
+            <padding android:bottom="5dp"
+                android:left="5dp"
+                android:right="5dp"
+                android:top="5dp" />
         </shape>
     </item>
 </selector>

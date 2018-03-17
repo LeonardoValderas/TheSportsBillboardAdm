@@ -425,10 +425,6 @@ interface ApiService {
     fun getTournamentsAndSubMenus(): Observable<TournamentResponse>
 
     @FormUrlEncoded
-    @POST("adm/tournament/getSubMenusTournament.php")
-    fun getSubMenuForTournament(@Field("id_tournament") id_tournament: Int): Observable<TournamentResponse>
-
-    @FormUrlEncoded
     @POST("adm/tournament/saveTournament.php")
     fun saveTournament(@Field("tournament") tournament: String,
                     @Field("user_work") user_work: Int,
@@ -449,9 +445,6 @@ interface ApiService {
                                    @Field("user_work") user_work: Int,
                                    @Field("date_update") date_update: String): Single<WSResponse>
 
-    @GET("adm/tournament/getTournament.php")
-    fun getTournament(): Observable<TournamentResponse>
-
     @FormUrlEncoded
     @POST("adm/tournament/deleteTournament.php")
     fun deleteTournament(@Field("id_tournament") id_tournament: Int, @Field("user_work") user_work: Int, @Field("date_delete") date_delete: String): Single<WSResponse>
@@ -462,10 +455,6 @@ interface ApiService {
                                  @Field("id_tournament") tournament: Int,
                                  @Field("user_work") user_work: Int,
                                  @Field("date_create") date_create: String): Single<WSResponse>
-
-    @FormUrlEncoded
-    @POST("adm/tournament/getTournamentForSubMenu.php")
-    fun getTournamentForSubMenu(@Field("id_submenu") id_submenu: Int): Observable<TournamentResponse>
 
     @FormUrlEncoded
     @POST("adm/tournament/getTournamentToSubMenu.php")

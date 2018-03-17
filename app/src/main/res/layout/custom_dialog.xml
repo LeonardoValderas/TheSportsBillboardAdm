@@ -54,14 +54,37 @@
             android:textStyle="bold"
             android:textColor="@color/colorPrimary" />
 
-        <Spinner
-            android:id="@+id/spinnerMenuD"
+        <Button
+            android:id="@+id/btnSpinnerMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/border_style_spinner" />
+            android:background="@drawable/border_style_spinner"
+            android:drawableRight="@mipmap/ic_down_arrow"
+            android:text="Sub Menu"
+            android:textColor="@color/colorBlack" />
+
+        <TextView
+            android:id="@+id/tv_error_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="Seleccione un menu..."
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:textColor="@color/redColor" />
+        <!--<Spinner-->
+            <!--android:id="@+id/spinnerMenuD"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@drawable/border_style_spinner" />-->
 
 
         <android.support.design.widget.TextInputLayout

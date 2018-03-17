@@ -47,7 +47,7 @@ open class NavigationActivity : AppCompatActivity(), NavigationActivityView {
         setContentView(R.layout.activity_navigation)
         register()
         getMenuSubmenu()
-        navList = findViewById(R.id.navList) as ExpandableListView
+        navList = findViewById<ExpandableListView>(R.id.navList)
         setSupportActionBar(toolbar)
         initDrawerToggle()
         initHeaderNav()
@@ -152,7 +152,7 @@ open class NavigationActivity : AppCompatActivity(), NavigationActivityView {
                         //presenter.setUpdateCategory(this@NavigationActivity, mExpandableListAdapter!!.getGroup(groupPosition).toString())
 
                         if (navList == null) {
-                            navList = findViewById(R.id.navList) as ExpandableListView
+                            navList = findViewById<ExpandableListView>(R.id.navList)
                         }
                         navList.collapseGroup(previousItem) //null
                     }

@@ -10,7 +10,8 @@ import com.valdroide.thesportsbillboardinstitution.utils.Communicator
 abstract class BaseFragment : Fragment() {
 
     private var isRegister: Boolean = false
-    private lateinit var communicator: Communicator
+    //private lateinit var communicator: Communicator
+ //   protected abstract val communicator: Communicator
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =

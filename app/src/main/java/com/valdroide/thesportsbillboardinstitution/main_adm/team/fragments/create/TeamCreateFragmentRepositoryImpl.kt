@@ -13,7 +13,6 @@ import com.valdroide.thesportsbillboardinstitution.utils.Utils
 
 class TeamCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: ApiService, val scheduler: SchedulersInterface) : TeamCreateFragmentRepository {
 
-
     private var team: Team? = null
     private var response: WSResponse? = null
     private var id_user = 1

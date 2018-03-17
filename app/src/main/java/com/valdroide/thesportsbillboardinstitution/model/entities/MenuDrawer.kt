@@ -12,5 +12,5 @@ data class MenuDrawer(@SerializedName("id")
                       @SerializedName("is_active")
                       @Expose
                       var IS_ACTIVE: Int = 0) {
-    override fun toString(): String = MENU
+    override fun toString(): String = MENU.plus(if(IS_ACTIVE == 0) " (No Activo)" else " (Activo)")
 }

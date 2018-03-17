@@ -15,9 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!--SECTION USER-->
+        <!-- SECTION USER -->
 
-        <activity android:name=".main_user.splash.ui.SplashActivity"></activity>
+        <activity android:name=".main_user.splash.ui.SplashActivity" />
         <activity
             android:name=".main_user.account.ui.AccountActivity"
             android:label="@string/title_activity_account">
@@ -27,17 +27,14 @@
         </activity>
         <activity
             android:name=".main_user.navigation.ui.NavigationActivity"
-            android:label="@string/app_name">
-        </activity>
-
-
+            android:label="@string/app_name"></activity>
         <activity android:name=".main_user.tab.TabActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".main_user.navigation.ui.NavigationActivity" />
         </activity>
 
-        <!--SECTION ADMINISTRATOR-->
+        <!-- SECTION ADMINISTRATOR -->
 
         <activity
             android:name=".main_adm.navigation.ui.NavigationAdmActivity"
@@ -47,9 +44,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".main_adm.login.activity.TabLoginActivity"
             android:label="@string/login_title_tab">
@@ -116,5 +111,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".main_adm.navigation.ui.NavigationAdmActivity" />
         </activity>
+        <activity
+            android:name=".main_adm.PruebaActivity"
+            android:label="@string/title_activity_prueba"
+            android:theme="@style/AppTheme"></activity>
     </application>
+
 </manifest>
