@@ -8,7 +8,6 @@ import org.greenrobot.eventbus.Subscribe
 
 class FixtureFragmentPresenterImpl(var view: FixtureFragmentView, val event: EventBus, val interactor: FixtureFragmentInteractor) : FixtureFragmentPresenter {
 
-
     override fun getViewPresenter(): FixtureFragmentView = view
 
     override fun setViewPresenter(view: FixtureFragmentView) {

@@ -44,7 +44,7 @@ class FixtureCreateFragmentModule(val view: FixtureCreateFragmentView, val conte
         val client = ApiClient()
         return client.getApiService()
     }
-
+/*
     @Provides
     @Named("spinner_menu")
     fun provideSubMenuSpinnerAdapter(context: Fragment, submenus: MutableList<SubMenuDrawer>): FixtureCreateFragmentSubMenuSpinnerAdapter =
@@ -98,4 +98,5 @@ class FixtureCreateFragmentModule(val view: FixtureCreateFragmentView, val conte
     @Provides
     @Named("teams_visite")
     fun provideTeamsVisiteList(): MutableList<Team> = arrayListOf()
+    */
 }

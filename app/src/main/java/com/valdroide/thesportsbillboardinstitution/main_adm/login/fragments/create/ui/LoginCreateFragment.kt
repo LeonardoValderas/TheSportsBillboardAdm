@@ -11,13 +11,13 @@ import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.create.LoginCreateFragmentPresenter
 import com.valdroide.thesportsbillboardinstitution.model.entities.Login
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.fragment_login_create.*
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.create.di.LoginCreateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.utils.Communicator
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 
@@ -82,7 +82,7 @@ class LoginCreateFragment : Fragment(), LoginCreateFragmentView {
                         if (isPass == false)
                             editTextPass.error = getString(R.string.login_error_pass)
                     }
-                }, { e -> Utils.showSnackBar(conteiner, e.message.toString()) })
+                }, { e -> showShackBar(e.message.toString()) })
     }
 
     private fun fillLogin() {
@@ -152,17 +152,19 @@ class LoginCreateFragment : Fragment(), LoginCreateFragmentView {
 
     override fun saveSuccess() {
         communication.refreshAdapter()
-        Utils.showSnackBar(conteiner, getString(R.string.save_success, "Login", "o"))
+        showShackBar(getString(R.string.save_success, "Login", "o"))
     }
 
     override fun editSuccess() {
         communication.refreshAdapter()
-        Utils.showSnackBar(conteiner, getString(R.string.update_success, "Login", "o"))
+        showShackBar(getString(R.string.update_success, "Login", "o"))
     }
 
     override fun setError(error: String) {
-        Utils.showSnackBar(conteiner, error)
+        showShackBar(error)
     }
+
+    private fun showShackBar(msg: String) = ViewComponentHelper.showSnackBar(conteiner, msg)
 
     override fun hideProgressDialog() {
         progressBar.visibility = View.GONE

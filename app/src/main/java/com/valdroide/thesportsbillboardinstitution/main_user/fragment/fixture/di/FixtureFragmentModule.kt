@@ -16,6 +16,7 @@ import javax.inject.Singleton
 
 @Module
 class FixtureFragmentModule(val view: FixtureFragmentView, val listener: OnItemClickListener) {
+
     @Provides
     @Singleton
     fun provideFixtureFragmentView(): FixtureFragmentView = this.view
@@ -25,12 +26,10 @@ class FixtureFragmentModule(val view: FixtureFragmentView, val listener: OnItemC
     fun provideFixtureFragmentPresenter(view: FixtureFragmentView, event: EventBus, interactor: FixtureFragmentInteractor): FixtureFragmentPresenter
             = FixtureFragmentPresenterImpl(view, event, interactor)
 
-
     @Provides
     @Singleton
     fun provideFixtureFragmentInteractor(repository: FixtureFragmentRepository): FixtureFragmentInteractor
             = FixtureFragmentInteractorImpl(repository)
-
 
     @Provides
     @Singleton
@@ -49,7 +48,6 @@ class FixtureFragmentModule(val view: FixtureFragmentView, val listener: OnItemC
     @Singleton
     fun provideFixtureFragmentAdapter(fixtures: MutableList<Fixture>, listener: OnItemClickListener, fragment: Fragment): FixtureFragmentAdapter
             = FixtureFragmentAdapter(fixtures, listener, fragment)
-
 
     @Provides
     @Singleton

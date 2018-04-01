@@ -10,7 +10,6 @@ import com.valdroide.thesportsbillboardinstitution.main_user.account.di.AccountA
 import com.valdroide.thesportsbillboardinstitution.model.entities.Account
 import kotlinx.android.synthetic.main.activity_account.*
 import android.view.View
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.content_account.*
 import android.support.v4.content.ContextCompat
 import com.google.firebase.crash.FirebaseCrash
@@ -19,6 +18,9 @@ import android.support.annotation.NonNull
 import android.content.Intent
 import android.net.Uri
 import android.webkit.URLUtil
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ImageHelper
+import com.valdroide.thesportsbillboardinstitution.utils.helper.PermissionHelper
 import kotlinx.android.synthetic.main.activity_tab.*
 
 open class AccountActivity : AppCompatActivity(), AccountActivityView, View.OnClickListener {
@@ -78,7 +80,7 @@ open class AccountActivity : AppCompatActivity(), AccountActivityView, View.OnCl
 
     private fun fillViews(account: Account) {
         with(account) {
-            Utils.setPicasso(applicationContext, URL_IMAGE, R.drawable.adeful, imageView)
+            ImageHelper.setPicasso(applicationContext, URL_IMAGE, R.drawable.adeful, imageView)
             textViewDescription.text = DESCRIPTION
             textViewPhone.text = PHONE
             textViewEmail.text = EMAIL
@@ -113,7 +115,7 @@ open class AccountActivity : AppCompatActivity(), AccountActivityView, View.OnCl
                 if (validateUrl(url_web))
                     onClickFabWeb()
                 else
-                    Utils.showSnackBar(conteiner, getString(R.string.web_address_invalid))
+                    ViewComponentHelper.showSnackBar(conteiner, getString(R.string.web_address_invalid))
             } else
                 snackBarEmptyData()
             fabFace -> if (textViewFace.text != null && !textViewFace.text.isEmpty()) {
@@ -158,15 +160,15 @@ open class AccountActivity : AppCompatActivity(), AccountActivityView, View.OnCl
         }
     */
     private fun snackBarEmptyData() {
-        Utils.showSnackBar(conteiner, getString(R.string.data_empty_account))
+        ViewComponentHelper.showSnackBar(conteiner, getString(R.string.data_empty_account))
     }
 
     override fun onClickFabPhone() {
-        if (!Utils.oldPhones()) {
+        if (!PermissionHelper.oldPhones()) {
             val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
-            Utils.checkForPermission(this, permissionCheck, PERMISSION_CALL, Manifest.permission.CALL_PHONE)
+            PermissionHelper.checkForPermission(this, permissionCheck, PERMISSION_CALL, Manifest.permission.CALL_PHONE)
         }
-        if (Utils.hasPermission(this, Manifest.permission.CALL_PHONE)) {
+        if (PermissionHelper.hasPermission(this, Manifest.permission.CALL_PHONE)) {
             callPhone(number_phone)
         }
     }
@@ -228,7 +230,7 @@ open class AccountActivity : AppCompatActivity(), AccountActivityView, View.OnCl
     }
 
     override fun setError(error: String) {
-        Utils.showSnackBar(conteiner, error)
+        ViewComponentHelper.showSnackBar(conteiner, error)
     }
 
     override fun hideProgressBar() {

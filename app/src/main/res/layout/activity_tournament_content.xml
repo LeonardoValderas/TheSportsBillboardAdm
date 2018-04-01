@@ -63,7 +63,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="15"
-                    android:src="@android:drawable/ic_input_add"
+                    android:src="@android:drawable/ic_menu_save"
                     android:tint="@color/colorWhite"
                     fab:fab_colorNormal="@color/colorPrimary"
                     fab:fab_colorPressed="@color/colorPrimaryDark"
@@ -90,6 +90,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/border_style_spinner"
+                        android:drawableLeft="@mipmap/tournament_icon"
                         android:drawableRight="@mipmap/ic_down_arrow"
                         android:text="Torneos"
                         android:textColor="@color/colorBlack" />
@@ -97,11 +98,11 @@
                     <View
                         android:id="@+id/diviverLine"
                         android:layout_width="match_parent"
-                        android:layout_height="2dp"
+                        android:layout_height="4dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginTop="2dp"
-                        android:background="@color/redColor" />
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -184,9 +185,19 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dim_5dp"
                     android:background="@drawable/border_style_spinner"
+                    android:drawableLeft="@mipmap/submenu_icon"
                     android:drawableRight="@mipmap/ic_down_arrow"
                     android:text="@string/submenu.title"
                     android:textColor="@color/colorBlack" />
+
+                <View
+                    android:id="@+id/diviverLineSubmenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="2dp"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tvSubMenu"
@@ -196,8 +207,8 @@
                     android:gravity="center"
                     android:textColor="@color/redColor"
                     android:textSize="12sp"
-                    android:visibility="gone"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -222,6 +233,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dim_5dp"
                     android:background="@drawable/border_style_spinner"
+                    android:drawableLeft="@mipmap/tournament_icon"
                     android:drawableRight="@mipmap/ic_down_arrow"
                     android:text="Torneo"
                     android:textColor="@color/colorBlack" />
@@ -234,8 +246,8 @@
                     android:gravity="center"
                     android:textColor="@color/colorSecondary_text"
                     android:textSize="12sp"
-                    android:visibility="gone"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

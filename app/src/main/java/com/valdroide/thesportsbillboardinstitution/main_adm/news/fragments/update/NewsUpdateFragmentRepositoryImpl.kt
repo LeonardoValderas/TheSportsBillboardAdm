@@ -9,7 +9,7 @@ import com.valdroide.thesportsbillboardinstitution.lib.base.SchedulersInterface
 import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.update.events.NewsUpdateFragmentEvent
 import com.valdroide.thesportsbillboardinstitution.model.entities.News
 import com.valdroide.thesportsbillboardinstitution.model.entities.WSResponse
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.DateTimeHelper
 
 class NewsUpdateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: ApiService, val scheduler: SchedulersInterface) : NewsUpdateFragmentRepository {
 
@@ -51,7 +51,7 @@ class NewsUpdateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: A
 
     override fun activeUnActiveNews(context: Context, news: News) {
         try {
-            apiService.activeOrUnActiveNews(news.ID_NEWS_KEY, news.IS_ACTIVE, 1, Utils.getFechaOficialSeparate())
+            apiService.activeOrUnActiveNews(news.ID_NEWS_KEY, news.IS_ACTIVE, 1, getOficialDate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->
@@ -79,10 +79,11 @@ class NewsUpdateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: A
         }
     }
 
+    private fun getOficialDate(): String = DateTimeHelper.getFechaOficialSeparate()
 
     override fun deleteNews(context: Context, news: News) {
         try {
-            apiService.deleteNews(news.ID_NEWS_KEY, 1, Utils.getFechaOficialSeparate())
+            apiService.deleteNews(news.ID_NEWS_KEY, 1, getOficialDate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->

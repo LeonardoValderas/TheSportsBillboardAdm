@@ -14,6 +14,7 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.upd
 import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.update.ui.adapter.PlayerUpdateFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.model.entities.Player
 import com.valdroide.thesportsbillboardinstitution.utils.*
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
 import kotlinx.android.synthetic.main.fragment_player.*
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.support.v4.alert
@@ -154,7 +155,7 @@ class PlayerUpdateFragment : Fragment(), PlayerUpdateFragmentView, GenericOnItem
     //region VIEW
     override fun updatePlayerSuccess() {
         adapterPlayer.notifyDataSetChanged()
-        Utils.showSnackBar(conteiner, getString(R.string.update_success, "Jugador", "o"))
+        showSnackBar(getString(R.string.update_success, "Jugador", "o"))
     }
 
     override fun setAllPlayers(Players: MutableList<Player>) {
@@ -164,12 +165,14 @@ class PlayerUpdateFragment : Fragment(), PlayerUpdateFragmentView, GenericOnItem
 
     override fun deletePlayerSuccess() {
         adapterPlayer.delete(position)
-        Utils.showSnackBar(conteiner, activity.getString(R.string.delete_success, "Jugador", "o"))
+        showSnackBar(activity.getString(R.string.delete_success, "Jugador", "o"))
     }
 
     override fun setError(error: String) {
-        Utils.showSnackBar(conteiner, error)
+        showSnackBar(error)
     }
+
+    private fun showSnackBar(msg: String) = ViewComponentHelper.showSnackBar(conteiner, msg)
 
     override fun hideSwipeRefreshLayout() {
         verifySwipeRefresh(false)

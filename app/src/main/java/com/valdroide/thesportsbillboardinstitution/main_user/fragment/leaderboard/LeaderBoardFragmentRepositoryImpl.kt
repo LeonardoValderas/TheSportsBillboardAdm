@@ -13,6 +13,7 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.WSResponse
 class LeaderBoardFragmentRepositoryImpl(val eventBus: EventBus, val apiService: ApiService, val scheduler: SchedulersInterface) : LeaderBoardFragmentRepository {
     private var response: WSResponse? = null
     private var leaderBoards: MutableList<LeaderBoard>? = null
+
     override fun getLeaderBoards(context: Context, id_submenu: Int) {
         try {
             apiService.getLeaderBoards(id_submenu)

@@ -12,7 +12,7 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.Player
 import com.valdroide.thesportsbillboardinstitution.model.entities.Position
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 import com.valdroide.thesportsbillboardinstitution.model.entities.WSResponse
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.DateTimeHelper
 
 class PlayerCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: ApiService, val scheduler: SchedulersInterface) : PlayerCreateFragmentRepository {
 
@@ -55,12 +55,14 @@ class PlayerCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService:
         }
     }
 
+    private fun getOficialDate(): String = DateTimeHelper.getFechaOficialSeparate()
+
     override fun savePlayer(context: Context, player: Player) {
         if (id_user != 0) {
             try {
                 apiService.savePlayer(player.NAME, player.ID_POSITION, player.ID_SUB_MENU,
                         player.URL_IMAGE, player.NAME_IMAGE, player.ENCODE, 1,
-                        Utils.getFechaOficialSeparate())
+                        getOficialDate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->
@@ -95,7 +97,7 @@ class PlayerCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService:
         if (id_user != 0) {
             try {
                 apiService.updatePlayer(player.ID_PLAYER_KEY, player.NAME, player.ID_POSITION, player.ID_SUB_MENU, player.URL_IMAGE, player.NAME_IMAGE, player.ENCODE, player.BEFORE,
-                        player.IS_ACTIVE, 1, Utils.getFechaOficialSeparate())
+                        player.IS_ACTIVE, 1, getOficialDate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->
@@ -162,7 +164,7 @@ class PlayerCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService:
         if (id_user != 0) {
             try {
                 apiService.savePosition(position.POSITION, id_user,
-                        Utils.getFechaOficialSeparate())
+                        getOficialDate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->
@@ -197,7 +199,7 @@ class PlayerCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService:
     override fun updatePosition(context: Context, position: Position) {
         if (id_user != 0) {
             try {
-                apiService.updatePosition(position.ID_POSITION_KEY, position.POSITION, id_user, Utils.getFechaOficialSeparate())
+                apiService.updatePosition(position.ID_POSITION_KEY, position.POSITION, id_user, getOficialDate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->

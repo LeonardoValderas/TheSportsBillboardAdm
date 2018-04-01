@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/conteiner"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -32,6 +32,8 @@
                     android:id="@+id/linearConteinerFixture"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/border_style_linear"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -44,32 +46,21 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="5dp"
                             android:layout_weight="90"
-                            android:background="@drawable/border_style_linear"
-                            android:orientation="horizontal">
-
-                            <!--<ImageView-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_gravity="center"-->
-                                <!--android:src="@drawable/fixture_icon" />-->
+                            android:orientation="horizontal"
+                            android:padding="5dp">
 
                             <Button
                                 android:id="@+id/btnSubMenu"
-                                android:drawableLeft="@drawable/fixture_icon"
-                                android:layout_marginLeft="@dimen/dim_5dp"
-                                android:textColor="@color/colorPrimary_text"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dim_5dp"
+                                android:background="@drawable/border_style_spinner"
+                                android:drawableLeft="@mipmap/submenu_icon"
+                                android:drawableRight="@mipmap/ic_down_arrow"
                                 android:text="Menu - SubMenu"
-                                />
+                                android:textColor="@color/colorPrimary_text" />
 
-                            <!--<Spinner-->
-                                <!--android:id="@+id/spinnerSubMenu"-->
-                                <!--android:layout_width="match_parent"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:background="@drawable/border_style_spinner" />-->
                         </LinearLayout>
 
                         <ImageView
@@ -89,155 +80,67 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:background="@drawable/border_style_linear"
                         android:orientation="horizontal"
                         android:padding="5dp">
 
-
                         <Button
                             android:id="@+id/btnTournament"
-                            android:drawableLeft="@drawable/tournament_icon"
-                            android:layout_marginLeft="@dimen/dim_5dp"
-                            android:textColor="@color/colorPrimary_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dim_5dp"
+                            android:background="@drawable/border_style_spinner"
+                            android:drawableLeft="@mipmap/tournament_icon"
+                            android:drawableRight="@mipmap/ic_down_arrow"
                             android:text="Torneo"
-                            />
-
-
-                        <!--<ImageView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_gravity="center"-->
-                            <!--android:src="@drawable/tournament_icon" />-->
-
-                        <!--<Spinner-->
-                            <!--android:id="@+id/spinnerTournament"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:background="@drawable/border_style_spinner" />-->
+                            android:textColor="@color/colorPrimary_text" />
 
                     </LinearLayout>
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/border_style_linear"
                         android:orientation="horizontal"
                         android:padding="5dp">
 
-                        <!--<com.brouding.blockbutton.BlockButton-->
-                            <!--android:id="@+id/buttonDay"-->
-                            <!--android:layout_width="0dp"-->
-                            <!--android:layout_height="40dp"-->
-                            <!--android:layout_gravity="center"-->
-                            <!--android:layout_marginRight="5dp"-->
-                            <!--android:layout_weight="30"-->
-                            <!--android:gravity="center"-->
-                            <!--android:orientation="vertical"-->
-                            <!--app:buttonColor="@color/colorPrimary_light"-->
-                            <!--app:buttonDisabledColor="#999999"-->
-                            <!--app:buttonDisabledGapColor="@color/colorSecondary_text"-->
-                            <!--app:buttonGapColor="@color/colorPrimaryDark"-->
-                            <!--app:pushDepthDp="2">-->
-
-                            <!--<TextView-->
-                                <!--android:id="@+id/textViewDay"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:padding="3dp"-->
-                                <!--android:text="@string/day"-->
-                                <!--android:textColor="@color/colorPrimary"-->
-                                <!--android:textSize="16dp"-->
-                                <!--android:textStyle="bold" />-->
-
-                        <!--</com.brouding.blockbutton.BlockButton>-->
-
                         <Button
                             android:id="@+id/buttonDay"
-                            android:layout_marginRight="5dp"
-                            android:textColor="@color/colorPrimary_text"
                             android:layout_width="0dp"
-                            android:background="@drawable/custom_select_button_green"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
                             android:layout_weight="30"
+                            android:background="@drawable/custom_select_button_green"
                             android:text="@string/day"
-                            />
+                            android:textColor="@color/bpWhite" />
+
                         <Button
                             android:id="@+id/buttonHour"
-                            android:textColor="@color/colorPrimary_text"
                             android:layout_width="0dp"
-                            android:background="@drawable/custom_select_button_green"
                             android:layout_height="wrap_content"
                             android:layout_weight="26"
+                            android:background="@drawable/custom_select_button_green"
                             android:text="@string/hour"
-                            />
-
-
-                        <!--<com.brouding.blockbutton.BlockButton-->
-                            <!--android:id="@+id/buttonHour"-->
-                            <!--android:layout_width="0dp"-->
-                            <!--android:layout_height="40dp"-->
-                            <!--android:layout_gravity="center"-->
-                            <!--android:layout_marginRight="4dp"-->
-                            <!--android:layout_weight="26"-->
-                            <!--android:gravity="center"-->
-                            <!--android:orientation="vertical"-->
-                            <!--app:buttonColor="@color/colorPrimary_light"-->
-                            <!--app:buttonDisabledColor="#999999"-->
-                            <!--app:buttonDisabledGapColor="@color/colorSecondary_text"-->
-                            <!--app:buttonGapColor="@color/colorPrimaryDark"-->
-                            <!--app:pushDepthDp="2">-->
-
-                            <!--<TextView-->
-                                <!--android:id="@+id/textViewHour"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:padding="3dp"-->
-                                <!--android:text="@string/hour"-->
-                                <!--android:textColor="@color/colorPrimary"-->
-                                <!--android:textSize="16dp"-->
-                                <!--android:textStyle="bold" />-->
-
-                        <!--</com.brouding.blockbutton.BlockButton>-->
-
+                            android:textColor="@color/bpWhite" />
 
                         <Button
                             android:id="@+id/btnField"
-                            android:drawableLeft="@drawable/field_icon"
-                            android:layout_marginLeft="@dimen/dim_5dp"
-                            android:textColor="@color/colorPrimary_text"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dim_5dp"
                             android:layout_weight="50"
-                            android:text="Torneo"
-                            />
-
-                        <!--<Spinner-->
-                            <!--android:id="@+id/spinnerFieldMatch"-->
-                            <!--android:layout_width="0dp"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_weight="50"-->
-                            <!--android:background="@drawable/border_style_spinner" />-->
-
-                        <!--<ImageView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_gravity="center"-->
-                            <!--android:layout_marginLeft="2dp"-->
-                            <!--android:src="@drawable/field_icon" />-->
+                            android:background="@drawable/border_style_spinner"
+                            android:drawableLeft="@mipmap/field_icon"
+                            android:drawableRight="@mipmap/ic_down_arrow"
+                            android:text="Lugar"
+                            android:textColor="@color/colorPrimary_text" />
 
                     </LinearLayout>
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:background="@drawable/border_style_linear"
                         android:orientation="vertical"
                         android:padding="5dp">
 
@@ -252,41 +155,29 @@
                                 android:layout_weight="50"
                                 android:orientation="vertical">
 
-                                <!--<TextView-->
-                                    <!--android:layout_width="match_parent"-->
-                                    <!--android:layout_height="wrap_content"-->
-                                    <!--android:gravity="center"-->
-                                    <!--android:text="Local"-->
-                                    <!--android:textColor="@color/colorPrimary" />-->
                                 <Button
                                     android:id="@+id/btnTeamLocal"
-                                    android:textColor="@color/colorPrimary_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:background="@drawable/border_style_spinner"
+                                    android:drawableRight="@mipmap/ic_down_arrow"
                                     android:text="Equipo Local"
-                                    />
+                                    android:textColor="@color/colorPrimary_text" />
 
-                                <!--<Spinner-->
-                                    <!--android:id="@+id/spinnerTeamLocal"-->
-                                    <!--android:layout_width="match_parent"-->
-                                    <!--android:layout_height="wrap_content"-->
-                                    <!--android:layout_marginLeft="5dp"-->
-                                    <!--android:background="@drawable/border_style_spinner" />-->
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="3dp"
-                                android:gravity="center"
                                 android:layout_marginRight="3dp"
-                                >
+                                android:gravity="center">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:src="@drawable/team_icon" />
+                                    android:src="@mipmap/team_icon" />
 
                             </LinearLayout>
 
@@ -298,24 +189,12 @@
 
                                 <Button
                                     android:id="@+id/btnTeamVisite"
-                                    android:textColor="@color/colorPrimary_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:background="@drawable/border_style_spinner"
+                                    android:drawableRight="@mipmap/ic_down_arrow"
                                     android:text="Equipo Visita"
-                                    />
-                                <!--<TextView-->
-                                    <!--android:layout_width="match_parent"-->
-                                    <!--android:layout_height="wrap_content"-->
-                                    <!--android:gravity="center"-->
-                                    <!--android:text="Visitante"-->
-                                    <!--android:textColor="@color/colorPrimary" />-->
-
-                                <!--<Spinner-->
-                                    <!--android:id="@+id/spinnerTeamVisite"-->
-                                    <!--android:layout_width="match_parent"-->
-                                    <!--android:layout_height="wrap_content"-->
-                                    <!--android:layout_marginRight="5dp"-->
-                                    <!--android:background="@drawable/border_style_spinner" />-->
+                                    android:textColor="@color/colorPrimary_text" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -325,7 +204,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:background="@drawable/border_style_linear"
                         android:orientation="horizontal"
                         android:padding="5dp">
 
@@ -333,14 +211,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/ball_icon" />
+                            android:src="@mipmap/ball_icon" />
 
                         <EditText
                             android:id="@+id/editTextResultLocal"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="25"
-                            android:gravity="center"
+                            android:layout_weight="20"
+                            android:gravity="left"
                             android:inputType="number"
                             android:maxLength="2" />
 
@@ -348,98 +226,61 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/ball_icon" />
+                            android:src="@mipmap/ball_icon" />
 
                         <EditText
                             android:id="@+id/editTextResultVisite"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="25"
-                            android:gravity="center"
+                            android:layout_weight="20"
+                            android:gravity="left"
                             android:inputType="number"
                             android:maxLength="2" />
 
                         <Button
                             android:id="@+id/btnTimeMatch"
-                            android:drawableLeft="@drawable/time_icon"
-                            android:textColor="@color/colorPrimary_text"
                             android:layout_width="0dp"
-                            android:layout_weight="50"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="45"
+                            android:background="@drawable/border_style_spinner"
+                            android:drawableLeft="@mipmap/time_icon"
+                            android:drawableRight="@mipmap/ic_down_arrow"
                             android:text="Tiempo"
-                            />
-                        <!--<Spinner-->
-                            <!--android:id="@+id/spinnerTimeMatch"-->
-                            <!--android:layout_width="0dp"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_weight="50"-->
-                            <!--android:background="@drawable/border_style_spinner" />-->
-
-                        <!--<ImageView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_gravity="center"-->
-                            <!--android:src="@drawable/time_icon" />-->
+                            android:textColor="@color/colorPrimary_text" />
 
                     </LinearLayout>
 
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/textInputLayoutObservation"
+                </LinearLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayoutObservation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp">
+
+                    <EditText
+                        android:id="@+id/editTextObservation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp">
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:hint="Observación"
+                        android:maxLength="50"
+                        android:textSize="18sp" />
 
-                        <EditText
-                            android:id="@+id/editTextObservation"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:hint="Observación"
-                            android:maxLength="50"
-                            android:textSize="18sp" />
-
-                    </android.support.design.widget.TextInputLayout>
-                </LinearLayout>
+                </android.support.design.widget.TextInputLayout>
 
                 <Button
                     android:id="@+id/btnSave"
-                    android:textColor="@color/colorWhite"
                     android:layout_width="wrap_content"
-                    android:layout_weight="50"
-                    android:padding="10dp"
-                    android:background="@drawable/custom_select_button_blue"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="50"
+                    android:background="@drawable/custom_select_button_blue"
+                    android:padding="10dp"
                     android:text="Guardar"
-                    />
-
-                <!--<com.brouding.blockbutton.BlockButton-->
-                    <!--android:id="@+id/buttonSave"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="50dp"-->
-                    <!--android:layout_marginBottom="5dp"-->
-                    <!--android:layout_marginTop="5dp"-->
-                    <!--android:gravity="center"-->
-                    <!--android:orientation="vertical"-->
-                    <!--app:buttonColor="@color/colorPrimary"-->
-                    <!--app:buttonDisabledColor="#999999"-->
-                    <!--app:buttonDisabledGapColor="@color/colorSecondary_text"-->
-                    <!--app:buttonGapColor="@color/colorPrimaryDark"-->
-                    <!--app:pushDepthDp="2">-->
-
-                    <!--<TextView-->
-                        <!--android:id="@+id/textViewButton"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:paddingBottom="10dp"-->
-                        <!--android:paddingLeft="12dp"-->
-                        <!--android:paddingRight="12dp"-->
-                        <!--android:paddingTop="10dp"-->
-                        <!--android:textColor="@color/colorWhite"-->
-                        <!--android:textSize="17dp"-->
-                        <!--android:textStyle="bold" />-->
-
-                <!--</com.brouding.blockbutton.BlockButton>-->
+                    android:textColor="@color/colorWhite" />
 
             </LinearLayout>
         </RelativeLayout>
@@ -466,7 +307,7 @@
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/fixture_icon"
+            android:src="@mipmap/submenu_icon"
             fab:fab_label="Ir a Menus" />
 
         <com.github.clans.fab.FloatingActionButton
@@ -474,7 +315,7 @@
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/tournament_icon"
+            android:src="@mipmap/tournament_icon"
             fab:fab_label="Ir a Torneos" />
 
         <com.github.clans.fab.FloatingActionButton
@@ -482,14 +323,15 @@
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/team_icon"
+            android:src="@mipmap/team_icon"
             fab:fab_label="Ir a Equipos" />
+
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fabField"
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/field_icon"
+            android:src="@mipmap/field_icon"
             fab:fab_label="Ir a Lugar" />
 
         <com.github.clans.fab.FloatingActionButton
@@ -497,7 +339,7 @@
             style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/time_icon"
+            android:src="@mipmap/time_icon"
             fab:fab_label="Ir a Tiempos" />
 
     </com.github.clans.fab.FloatingActionMenu>

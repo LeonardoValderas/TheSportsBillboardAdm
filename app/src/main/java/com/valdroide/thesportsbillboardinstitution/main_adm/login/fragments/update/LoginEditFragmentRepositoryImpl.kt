@@ -9,7 +9,7 @@ import com.valdroide.thesportsbillboardinstitution.lib.base.SchedulersInterface
 import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.update.events.LoginEditFragmentEvent
 import com.valdroide.thesportsbillboardinstitution.model.entities.Login
 import com.valdroide.thesportsbillboardinstitution.model.entities.WSResponse
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.DateTimeHelper
 
 class LoginEditFragmentRepositoryImpl(val eventBus: EventBus, val apiService: ApiService, val scheduler: SchedulersInterface) : LoginEditFragmentRepository {
 
@@ -51,7 +51,7 @@ class LoginEditFragmentRepositoryImpl(val eventBus: EventBus, val apiService: Ap
 
     override fun activeOrUnActiveLogins(context: Context, login: Login) {
         try {
-            apiService.activeOrUnActiveLogin(login.ID_LOGIN_KEY, login.IS_ACTIVE, 1, Utils.getFechaOficialSeparate())
+            apiService.activeOrUnActiveLogin(login.ID_LOGIN_KEY, login.IS_ACTIVE, 1, DateTimeHelper.getFechaOficialSeparate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->
@@ -81,7 +81,7 @@ class LoginEditFragmentRepositoryImpl(val eventBus: EventBus, val apiService: Ap
 
     override fun deleteLogin(context: Context, login: Login) {
         try {
-            apiService.deleteLogin(login.ID_LOGIN_KEY, 1, Utils.getFechaOficialSeparate())
+            apiService.deleteLogin(login.ID_LOGIN_KEY, 1, DateTimeHelper.getFechaOficialSeparate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->

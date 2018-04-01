@@ -15,33 +15,74 @@
 
     <com.valdroide.thesportsbillboardinstitution.main_user.navigation.ScrimInsetsFrameLayout
         android:id="@+id/container2"
-        android:layout_width="match_parent"
+        android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:insetForeground="#29000000">
 
-        <ExpandableListView
-            android:id="@+id/navList"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:layout_marginTop="10dp"
-            android:background="@color/colorWhite"
-            android:dividerHeight="@dimen/divider_height"
-            android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft" />
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/ll_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_adeful"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/adeful" />
+
+                <View
+                    android:id="@+id/v_linea_sup"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/iv_adeful"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorBlack" />
+            </LinearLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_menu"
+                android:background="@color/cardview_light_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/ll_image"
+                 />
+
+            <ExpandableListView
+                android:id="@+id/navList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite"
+                android:dividerHeight="@dimen/divider_height"
+                android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+                android:visibility="gone" />
+        </RelativeLayout>
 
     </com.valdroide.thesportsbillboardinstitution.main_user.navigation.ScrimInsetsFrameLayout>
 
 
-
     <!--<android.support.design.widget.NavigationView-->
-        <!--android:id="@+id/nav_view"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="start"-->
-        <!--android:fitsSystemWindows="true"-->
-        <!--app:headerLayout="@layout/nav_header_navigation"-->
-        <!--app:menu="@menu/activity_navigation_drawer" />-->
+    <!--android:id="@+id/nav_view"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_gravity="start"-->
+    <!--android:fitsSystemWindows="true"-->
+    <!--app:headerLayout="@layout/nav_header_navigation"-->
+    <!--app:menu="@menu/activity_navigation_drawer" />-->
 
 </android.support.v4.widget.DrawerLayout>

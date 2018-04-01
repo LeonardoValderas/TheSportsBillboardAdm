@@ -16,8 +16,8 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.Player
 import com.valdroide.thesportsbillboardinstitution.model.entities.Sanction
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 import com.valdroide.thesportsbillboardinstitution.utils.Communicator
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
 import com.valdroide.thesportsbillboardinstitution.utils.GenericSpinnerAdapter
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.fragment_create_sanction.*
 
 class SanctionCreateFragment : Fragment(), SanctionCreateFragmentView, View.OnClickListener {
@@ -223,17 +223,19 @@ class SanctionCreateFragment : Fragment(), SanctionCreateFragmentView, View.OnCl
 
     override fun saveSuccess() {
         communication.refreshAdapter()
-        Utils.showSnackBar(conteiner, getString(R.string.save_success, "Sanción"))
+        showSnackBar(getString(R.string.save_success, "Sanción"))
     }
 
     override fun editSuccess() {
         communication.refreshAdapter()
-        Utils.showSnackBar(conteiner, getString(R.string.update_success, "Sanción"))
+        showSnackBar(getString(R.string.update_success, "Sanción"))
     }
 
     override fun setError(error: String) {
-        Utils.showSnackBar(conteiner, error)
+        showSnackBar(error)
     }
+
+    private fun showSnackBar(msg: String) = ViewComponentHelper.showSnackBar(conteiner, msg)
 
     override fun hideProgressDialog() {
         progressBar.visibility = View.GONE

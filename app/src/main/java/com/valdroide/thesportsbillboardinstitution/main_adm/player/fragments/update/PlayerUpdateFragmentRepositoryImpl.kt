@@ -10,7 +10,7 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.upd
 import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.events.TournamentActivityEvent
 import com.valdroide.thesportsbillboardinstitution.model.entities.Player
 import com.valdroide.thesportsbillboardinstitution.model.entities.WSResponse
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.DateTimeHelper
 
 class PlayerUpdateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: ApiService, val scheduler: SchedulersInterface) : PlayerUpdateFragmentRepository {
 
@@ -54,7 +54,7 @@ class PlayerUpdateFragmentRepositoryImpl(val eventBus: EventBus, val apiService:
     override fun activeUnActivePlayer(context: Context, player: Player) {
         if (id_user != 0) {
             try {
-                apiService.activeOrUnActivePlayer(player.ID_PLAYER_KEY, player.IS_ACTIVE, 1, Utils.getFechaOficialSeparate())
+                apiService.activeOrUnActivePlayer(player.ID_PLAYER_KEY, player.IS_ACTIVE, 1, getOficialDate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->
@@ -85,11 +85,12 @@ class PlayerUpdateFragmentRepositoryImpl(val eventBus: EventBus, val apiService:
         }
     }
 
+    private fun getOficialDate(): String = DateTimeHelper.getFechaOficialSeparate()
 
     override fun deletePlayer(context: Context, player: Player) {
         if (id_user != 0) {
             try {
-                apiService.deletePlayer(player.ID_PLAYER_KEY, 1, Utils.getFechaOficialSeparate())
+                apiService.deletePlayer(player.ID_PLAYER_KEY, 1, getOficialDate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->

@@ -10,7 +10,7 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.events.
 import com.valdroide.thesportsbillboardinstitution.model.entities.MenuDrawer
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 import com.valdroide.thesportsbillboardinstitution.model.entities.WSResponse
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.DateTimeHelper
 
 class MenuSubMenuActivityRepositoryImpl(val eventBus: EventBus, val apiService: ApiService, val scheduler: SchedulersInterface) : MenuSubMenuActivityRepository {
 
@@ -53,7 +53,7 @@ class MenuSubMenuActivityRepositoryImpl(val eventBus: EventBus, val apiService: 
 
     override fun saveMenu(context: Context, menu: MenuDrawer) {
         try {
-            apiService.saveMenu(menu.MENU, 1, Utils.getFechaOficialSeparate())
+            apiService.saveMenu(menu.MENU, 1, getOficialDate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->
@@ -79,7 +79,7 @@ class MenuSubMenuActivityRepositoryImpl(val eventBus: EventBus, val apiService: 
 
     override fun updateMenu(context: Context, menu: MenuDrawer) {
         try {
-            apiService.updateMenu(menu.ID_MENU_KEY, menu.MENU, menu.IS_ACTIVE, 1, Utils.getFechaOficialSeparate())
+            apiService.updateMenu(menu.ID_MENU_KEY, menu.MENU, menu.IS_ACTIVE, 1, getOficialDate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->
@@ -105,7 +105,7 @@ class MenuSubMenuActivityRepositoryImpl(val eventBus: EventBus, val apiService: 
 
     override fun activeOrUnActiveMenu(context: Context, menu: MenuDrawer) {
         try {
-            apiService.activeOrUnActiveMenu(menu.ID_MENU_KEY, menu.IS_ACTIVE, 1, Utils.getFechaOficialSeparate())
+            apiService.activeOrUnActiveMenu(menu.ID_MENU_KEY, menu.IS_ACTIVE, 1, getOficialDate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->
@@ -133,9 +133,11 @@ class MenuSubMenuActivityRepositoryImpl(val eventBus: EventBus, val apiService: 
         }
     }
 
+    private fun getOficialDate(): String = DateTimeHelper.getFechaOficialSeparate()
+
     override fun deleteMenu(context: Context, menu: MenuDrawer) {
         try {
-            apiService.deleteMenu(menu.ID_MENU_KEY, 1, Utils.getFechaOficialSeparate())
+            apiService.deleteMenu(menu.ID_MENU_KEY, 1, getOficialDate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->
@@ -165,7 +167,7 @@ class MenuSubMenuActivityRepositoryImpl(val eventBus: EventBus, val apiService: 
 
     override fun saveSubMenu(context: Context, subMenu: SubMenuDrawer) {
         try {
-            apiService.saveSubMenu(subMenu.SUBMENU, subMenu.ID_MENU_FOREIGN, 1, Utils.getFechaOficialSeparate())
+            apiService.saveSubMenu(subMenu.SUBMENU, subMenu.ID_MENU_FOREIGN, 1, getOficialDate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->
@@ -192,7 +194,7 @@ class MenuSubMenuActivityRepositoryImpl(val eventBus: EventBus, val apiService: 
     override fun updateSubMenu(context: Context, subMenu: SubMenuDrawer) {
         try {
             apiService.updateSubMenu(subMenu.ID_SUBMENU_KEY, subMenu.SUBMENU, subMenu.ID_MENU_FOREIGN,
-                    subMenu.IS_ACTIVE, 1, Utils.getFechaOficialSeparate())
+                    subMenu.IS_ACTIVE, 1, getOficialDate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->
@@ -218,7 +220,7 @@ class MenuSubMenuActivityRepositoryImpl(val eventBus: EventBus, val apiService: 
 
     override fun activeOrUnActiveSubMenu(context: Context, subMenu: SubMenuDrawer) {
         try {
-            apiService.activeOrUnActiveSubMenu(subMenu.ID_SUBMENU_KEY, subMenu.IS_ACTIVE, 1, Utils.getFechaOficialSeparate())
+            apiService.activeOrUnActiveSubMenu(subMenu.ID_SUBMENU_KEY, subMenu.IS_ACTIVE, 1, getOficialDate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->
@@ -248,7 +250,7 @@ class MenuSubMenuActivityRepositoryImpl(val eventBus: EventBus, val apiService: 
 
     override fun deleteSubMenu(context: Context, subMenu: SubMenuDrawer) {
         try {
-            apiService.deleteSubMenu(subMenu.ID_SUBMENU_KEY, 1, Utils.getFechaOficialSeparate())
+            apiService.deleteSubMenu(subMenu.ID_SUBMENU_KEY, 1, getOficialDate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->

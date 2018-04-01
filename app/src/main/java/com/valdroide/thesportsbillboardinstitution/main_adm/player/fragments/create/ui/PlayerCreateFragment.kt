@@ -27,9 +27,8 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.player.fragments.cre
 import com.valdroide.thesportsbillboardinstitution.model.entities.Player
 import com.valdroide.thesportsbillboardinstitution.model.entities.Position
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
-import com.valdroide.thesportsbillboardinstitution.utils.Communicator
-import com.valdroide.thesportsbillboardinstitution.utils.OnItemClickListenerDialog
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.*
+import com.valdroide.thesportsbillboardinstitution.utils.helper.*
 import kotlinx.android.synthetic.main.fragment_create_team.*
 import java.io.IOException
 
@@ -150,13 +149,13 @@ class PlayerCreateFragment : Fragment(),
             NAME = editTextName.text.toString()
             if (imageByte != null) {
                 try {
-                    encode = Utils.encodeToString(imageByte)
+                    encode = ImageHelper.encodeToString(imageByte)
                 } catch (e: Exception) {
                     FirebaseCrash.report(e)
                     encode = ""
                 }
-                name_image = Utils.getFechaOficial() + Utils.PNG
-                url_image = Utils.URL_PLAYER + name_image
+                name_image = DateTimeHelper.getFechaOficial() + ConstantHelper.PNG
+                url_image = UrlHelper.URL_PLAYER + name_image
             }
 
             ENCODE = encode
@@ -270,7 +269,7 @@ class PlayerCreateFragment : Fragment(),
     }
 
     private fun showAlertInformation() {
-        Utils.showAlertInformation(activity, "JUGADORES", getString(R.string.alert_info_player))
+        ViewComponentHelper.showAlertInformation(activity, "JUGADORES", getString(R.string.alert_info_player))
     }
     //endregion
 
@@ -290,20 +289,20 @@ class PlayerCreateFragment : Fragment(),
         if (editTextName.text.isEmpty())
             editTextName.error = getString(R.string.player_error_empty)
         else if (positions == null)
-            Utils.showSnackBar(conteiner, getString(R.string.position_empty_player))
+            showSnackBar(getString(R.string.position_empty_player))
         else if (submenus == null)
-            Utils.showSnackBar(conteiner, getString(R.string.submenu_empty_player))
+            showSnackBar(getString(R.string.submenu_empty_player))
         else
             fillPlayerEntity()
     }
 
     override fun onClickPhoto() {
-        if (!Utils.oldPhones()) {
+        if (!PermissionHelper.oldPhones()) {
             val permissionCheck = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            Utils.checkForPermission(activity, permissionCheck, Utils.PERMISSION_GALERY, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            PermissionHelper.checkForPermission(activity, permissionCheck, ConstantHelper.PERMISSION_GALERY, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
-        if (Utils.hasPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            Utils.ImageDialogLogo(null, this, Utils.PERMISSION_GALERY);
+        if (PermissionHelper.hasPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            ViewComponentHelper.ImageDialogLogo(null, this, ConstantHelper.PERMISSION_GALERY);
     }
 
     override fun setPlayerUpdate(player: Player) {
@@ -313,7 +312,7 @@ class PlayerCreateFragment : Fragment(),
     override fun fillViewUpdate() {
         with(player) {
             id_player = ID_PLAYER_KEY
-            Utils.setPicasso(activity, URL_IMAGE, R.drawable.players_icon, imageViewPlayer)
+            ImageHelper.setPicasso(activity, URL_IMAGE, R.drawable.players_icon, imageViewPlayer)
             editTextName.text = Editable.Factory.getInstance().newEditable(NAME)
             spinnerPosition.setSelection(getPositionSpinners(player.ID_POSITION, true))
             spinnerSubMenu.setSelection(getPositionSpinners(player.ID_SUB_MENU, false))
@@ -324,20 +323,23 @@ class PlayerCreateFragment : Fragment(),
     }
 
     override fun savePlayerSuccess() {
-        Utils.showSnackBar(conteiner, getString(R.string.save_success, "Jugador", "o"))
+        showSnackBar(getString(R.string.save_success, "Jugador", "o"))
     }
+
     override fun editPlayerSuccess() {
-        Utils.showSnackBar(conteiner, getString(R.string.update_success, "Jugador", "o"))
+        showSnackBar(getString(R.string.update_success, "Jugador", "o"))
     }
+
+    private fun showSnackBar(msg: String) = ViewComponentHelper.showSnackBar(conteiner, msg)
 
     override fun savePositionSuccess(position: Position) {
         adapterSpinnerPosition.addItem(position)
-        Utils.showSnackBar(conteiner, getString(R.string.save_success, "Posición", "a"))
+        showSnackBar(getString(R.string.save_success, "Posición", "a"))
     }
 
     override fun editPositionSuccess(position: Position) {
         adapterSpinnerPosition.updateItem(posi, position)
-        Utils.showSnackBar(conteiner, getString(R.string.update_success, "Posición", "a"))
+        showSnackBar(getString(R.string.update_success, "Posición", "a"))
     }
 
     override fun refreshAdapter() {
@@ -345,7 +347,7 @@ class PlayerCreateFragment : Fragment(),
     }
 
     override fun setError(error: String) {
-        Utils.showSnackBar(conteiner, error)
+        showSnackBar(error)
     }
 
     override fun hideProgressDialog() {
@@ -388,17 +390,17 @@ class PlayerCreateFragment : Fragment(),
     //region PHOTO METHODS
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == Utils.PERMISSION_GALERY)
+        if (requestCode == ConstantHelper.PERMISSION_GALERY)
             if (grantResults.count() > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                Utils.ImageDialogLogo(null, this, Utils.PERMISSION_GALERY);
+                ViewComponentHelper.ImageDialogLogo(null, this, ConstantHelper.PERMISSION_GALERY);
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
-            if (requestCode == Utils.PERMISSION_GALERY) {
+            if (requestCode == ConstantHelper.PERMISSION_GALERY) {
                 val imageUri = CropImage.getPickImageResultUri(activity, data)
-                Utils.startCropImageActivity(null, this, imageUri)
+                ImageHelper.startCropImageActivity(null, this, imageUri)
             }
             if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
                 val result = CropImage.getActivityResult(data)
@@ -407,7 +409,7 @@ class PlayerCreateFragment : Fragment(),
                     assignImage(result.uri)
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     if (!result.error.toString().contains("ENOENT"))
-                        Utils.showSnackBar(conteiner, getString(R.string.error_crop_image) + result.error)
+                        showSnackBar(getString(R.string.error_crop_image) + result.error)
                 }
             }
         } catch (e: Exception) {
@@ -417,9 +419,9 @@ class PlayerCreateFragment : Fragment(),
     }
 
     private fun assignImage(uri: Uri?) {
-        Utils.setPicasso(activity, uri.toString(), android.R.drawable.ic_menu_camera, imageViewPlayer)
+        ImageHelper.setPicasso(activity, uri.toString(), android.R.drawable.ic_menu_camera, imageViewPlayer)
         try {
-            imageByte = Utils.readBytes(uri, activity)
+            imageByte = ImageHelper.readBytes(uri, activity)
         } catch (e: IOException) {
             FirebaseCrash.report(e)
             e.printStackTrace()

@@ -10,10 +10,13 @@ import android.widget.TextView
 import android.view.LayoutInflater
 import android.widget.ImageView
 import com.valdroide.thesportsbillboardinstitution.R
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ImageHelper
 
 
-class NewsFragmentAdapter(internal var context: Context, internal var layoutResourceId: Int, internal var news: List<News>) : ArrayAdapter<News>(context, layoutResourceId, news) {
+class NewsFragmentAdapter(internal var context: Context,
+                          internal var layoutResourceId: Int,
+                          internal var news: List<News>) : ArrayAdapter<News>(context, layoutResourceId, news) {
+
     private val unfoldedIndexes = HashSet<Int>()
     private var defaultRequestBtnClickListener: View.OnClickListener? = null
 
@@ -48,7 +51,7 @@ class NewsFragmentAdapter(internal var context: Context, internal var layoutReso
         viewHolder.textViewTitle!!.text = new.TITLE
         viewHolder.textViewDateTitle!!.text = new.DATE_NEWS
         viewHolder.textViewTitleContent!!.text = new.TITLE
-        Utils.setPicassoWithOutRoundedConrners(context, new.URL_IMAGE, R.mipmap.ic_launcher, viewHolder.imageViewNews!!)
+        ImageHelper.setPicassoWithOutRoundedConrners(context, new.URL_IMAGE, R.mipmap.ic_launcher, viewHolder.imageViewNews!!)
         viewHolder.textViewDescription!!.text = new.DESCRIPTION
         viewHolder.textViewDate!!.text = new.DATE_NEWS
 

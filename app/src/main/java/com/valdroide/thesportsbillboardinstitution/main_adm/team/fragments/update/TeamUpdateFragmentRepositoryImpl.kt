@@ -10,7 +10,7 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.creat
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.events.TeamUpdateFragmentEvent
 import com.valdroide.thesportsbillboardinstitution.model.entities.Team
 import com.valdroide.thesportsbillboardinstitution.model.entities.WSResponse
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.DateTimeHelper
 
 class TeamUpdateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: ApiService, val scheduler: SchedulersInterface) : TeamUpdateFragmentRepository {
 
@@ -55,7 +55,7 @@ class TeamUpdateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: A
         //  id_user = Utils.getIdUserWork(context)
         if (id_user != 0) {
             try {
-                apiService.activeOrUnActiveTeam(team.ID_TEAM_KEY, team.IS_ACTIVE, id_user, Utils.getFechaOficialSeparate())
+                apiService.activeOrUnActiveTeam(team.ID_TEAM_KEY, team.IS_ACTIVE, id_user, DateTimeHelper.getFechaOficialSeparate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->
@@ -91,7 +91,7 @@ class TeamUpdateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: A
         //  id_user = Utils.getIdUserWork(context)
         if (id_user != 0) {
             try {
-                apiService.deleteTeam(team.ID_TEAM_KEY, team.NAME_IMAGE, id_user, Utils.getFechaOficialSeparate())
+                apiService.deleteTeam(team.ID_TEAM_KEY, team.NAME_IMAGE, id_user, DateTimeHelper.getFechaOficialSeparate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->

@@ -15,7 +15,7 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.updat
 import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.update.ui.adapter.NewsUpdateFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.update.ui.adapter.OnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.model.entities.News
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
 import kotlinx.android.synthetic.main.frame_recycler_refresh.*
 
 class NewsUpdateFragment : Fragment(), NewsUpdateFragmentView, OnItemClickListener {
@@ -104,7 +104,7 @@ class NewsUpdateFragment : Fragment(), NewsUpdateFragmentView, OnItemClickListen
 
     override fun updateNewsSuccess() {
         adapterNews.notifyDataSetChanged()
-        Utils.showSnackBar(conteiner, getString(R.string.update_success, "Noticia"))
+        showSnackBar(getString(R.string.update_success, "Noticia"))
     }
 
     private fun initRecyclerView() {
@@ -115,6 +115,8 @@ class NewsUpdateFragment : Fragment(), NewsUpdateFragmentView, OnItemClickListen
         }
     }
 
+    private fun showSnackBar(msg: String) = ViewComponentHelper.showSnackBar(conteiner, msg)
+
     override fun setAllNews(Newss: MutableList<News>) {
         this.Newss = Newss
         adapterNews.setNews(Newss)
@@ -122,11 +124,11 @@ class NewsUpdateFragment : Fragment(), NewsUpdateFragmentView, OnItemClickListen
 
     override fun deleteNewsSuccess() {
         adapterNews.deleteNews(position)
-        Utils.showSnackBar(conteiner, activity.getString(R.string.delete_success, "Noticia"))
+        showSnackBar(activity.getString(R.string.delete_success, "Noticia"))
     }
 
     override fun setError(error: String) {
-        Utils.showSnackBar(conteiner, error)
+        showSnackBar(error)
     }
 
     override fun hideSwipeRefreshLayout() {

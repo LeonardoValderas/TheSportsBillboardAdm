@@ -23,8 +23,8 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.creat
 import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.create.di.NewsCreateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.model.entities.News
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
-import com.valdroide.thesportsbillboardinstitution.utils.Communicator
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.*
+import com.valdroide.thesportsbillboardinstitution.utils.helper.*
 import kotlinx.android.synthetic.main.fragment_create_news.*
 import java.io.IOException
 
@@ -45,11 +45,6 @@ class NewsCreateFragment : Fragment(), NewsCreateFragmentView, View.OnClickListe
     private var name_before: String = ""
     private var url_image: String = ""
     private var imageByte: ByteArray? = null
-
-    companion object {
-        const val PERMISSION_GALERY: Int = 101
-        const val URL: String = "http://10.0.3.2:8080/the_sports_billboard_institution/adm/news/image_news/"
-    }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
@@ -133,33 +128,33 @@ class NewsCreateFragment : Fragment(), NewsCreateFragmentView, View.OnClickListe
         if (editTextTitleNews.text.isEmpty())
             editTextTitleNews.error = getString(R.string.news_title_error_empty)
         else if (editTextBodyNews.text.isEmpty())
-            Utils.showSnackBar(conteiner, getString(R.string.news_body_error_empty))
+            showSnackBar(getString(R.string.news_body_error_empty))
         else
             fillNewsEntity()
     }
 
     override fun onClickPhoto() {
-        if (!Utils.oldPhones()) {
+        if (!PermissionHelper.oldPhones()) {
             val permissionCheck = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            Utils.checkForPermission(activity, permissionCheck, PERMISSION_GALERY, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            PermissionHelper.checkForPermission(activity, permissionCheck, ConstantHelper.PERMISSION_GALERY, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
-        if (Utils.hasPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            Utils.ImageDialogLogo(null, this, PERMISSION_GALERY);
+        if (PermissionHelper.hasPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            ViewComponentHelper.ImageDialogLogo(null, this, ConstantHelper.PERMISSION_GALERY);
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_GALERY)
+        if (requestCode == ConstantHelper.PERMISSION_GALERY)
             if (grantResults.count() > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                Utils.ImageDialogLogo(null, this, PERMISSION_GALERY);
+                ViewComponentHelper.ImageDialogLogo(null, this, ConstantHelper.PERMISSION_GALERY);
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
-            if (requestCode == PERMISSION_GALERY) {
+            if (requestCode == ConstantHelper.PERMISSION_GALERY) {
                 val imageUri = CropImage.getPickImageResultUri(activity, data)
-                Utils.startCropImageActivity(null, this, imageUri)
+                ImageHelper.startCropImageActivity(null, this, imageUri)
             }
             if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
                 val result = CropImage.getActivityResult(data)
@@ -168,7 +163,7 @@ class NewsCreateFragment : Fragment(), NewsCreateFragmentView, View.OnClickListe
                     assignImage(result.uri)
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     if (!result.error.toString().contains("ENOENT"))
-                        Utils.showSnackBar(conteiner, "Error al asignar imagen: " + result.error)
+                        showSnackBar("Error al asignar imagen: " + result.error)
                 }
             }
         } catch (e: Exception) {
@@ -178,9 +173,9 @@ class NewsCreateFragment : Fragment(), NewsCreateFragmentView, View.OnClickListe
     }
 
     private fun assignImage(uri: Uri?) {
-        Utils.setPicasso(activity, uri.toString(), android.R.drawable.ic_menu_camera, imageViewNews)
+        ImageHelper.setPicasso(activity, uri.toString(), android.R.drawable.ic_menu_camera, imageViewNews)
         try {
-            imageByte = Utils.readBytes(uri, activity)
+            imageByte = ImageHelper.readBytes(uri, activity)
         } catch (e: IOException) {
             FirebaseCrash.report(e)
             e.printStackTrace()
@@ -188,30 +183,32 @@ class NewsCreateFragment : Fragment(), NewsCreateFragmentView, View.OnClickListe
     }
 
     private fun fillNewsEntity() {
-        news.TITLE = editTextTitleNews.text.toString()
-        news.DESCRIPTION = editTextBodyNews.text.toString()
-        news.ID_SUB_MENU = subMenuDrawer.ID_SUBMENU_KEY
-        if (imageByte != null) {
-            try {
-                encode = Base64.encodeToString(imageByte,
-                        Base64.DEFAULT)
-            } catch (e: Exception) {
-                FirebaseCrash.report(e)
-                encode = ""
+        with(news) {
+            TITLE = editTextTitleNews.text.toString()
+            DESCRIPTION = editTextBodyNews.text.toString()
+            ID_SUB_MENU = subMenuDrawer.ID_SUBMENU_KEY
+            if (imageByte != null) {
+                try {
+                    encode = Base64.encodeToString(imageByte,
+                            Base64.DEFAULT)
+                } catch (e: Exception) {
+                    FirebaseCrash.report(e)
+                    encode = ""
+                }
+                name_image = DateTimeHelper.getFechaOficial() + ConstantHelper.PNG
+                url_image = UrlHelper.URL_NEWS + name_image
             }
-            name_image = Utils.getFechaOficial() + ".PNG"
-            url_image = URL + name_image
-        }
-        news.ENCODE = encode
-        news.NAME_IMAGE = name_image
-        news.URL_IMAGE = url_image
-        if (is_update) {
-            news.ID_NEWS_KEY = id_news
-            news.BEFORE = name_before
-            editNews(news)
-        } else {
-            news.BEFORE = news.NAME_IMAGE
-            saveNews(news)
+            ENCODE = encode
+            NAME_IMAGE = name_image
+            URL_IMAGE = url_image
+            if (is_update) {
+                ID_NEWS_KEY = id_news
+                BEFORE = name_before
+                editNews(news)
+            } else {
+                BEFORE = news.NAME_IMAGE
+                saveNews(news)
+            }
         }
     }
 
@@ -245,7 +242,7 @@ class NewsCreateFragment : Fragment(), NewsCreateFragmentView, View.OnClickListe
     override fun fillViewUpdate() {
         with(news) {
             id_news = ID_NEWS_KEY
-            Utils.setPicasso(activity, URL_IMAGE, android.R.drawable.ic_menu_camera, imageViewNews)
+            ImageHelper.setPicasso(activity, URL_IMAGE, android.R.drawable.ic_menu_camera, imageViewNews)
             editTextTitleNews.text = Editable.Factory.getInstance().newEditable(TITLE)
             editTextBodyNews.text = Editable.Factory.getInstance().newEditable(DESCRIPTION)
             spinnerSubMenu.setSelection(getPositionSpinners(news.ID_SUB_MENU))
@@ -268,18 +265,18 @@ class NewsCreateFragment : Fragment(), NewsCreateFragmentView, View.OnClickListe
 
     override fun saveSuccess() {
         communication.refreshAdapter()
-        Utils.showSnackBar(conteiner, getString(R.string.save_success, "Noticia"))
+        showSnackBar(getString(R.string.save_success, "Noticia"))
     }
 
     override fun editSuccess() {
         communication.refreshAdapter()
-        Utils.showSnackBar(conteiner, getString(R.string.update_success, "Noticia"))
+        showSnackBar(getString(R.string.update_success, "Noticia"))
     }
 
     override fun setError(error: String) {
-        Utils.showSnackBar(conteiner, error)
+        showSnackBar(error)
     }
-
+    private fun showSnackBar(msg: String) = ViewComponentHelper.showSnackBar(conteiner, msg)
     override fun hideProgressDialog() {
         progressBar.visibility = View.GONE
     }

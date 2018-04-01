@@ -8,7 +8,7 @@ import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.model.entities.Team
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClick
 import com.valdroide.thesportsbillboardinstitution.utils.GenericRecyclerAdapter
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ImageHelper
 
 class TeamUpdateFragmentAdapter(context: Context, listener: GenericOnItemClick<Team>) : GenericRecyclerAdapter<Team>(context, listener) {
     override fun createView(context: Context, viewGroup: ViewGroup, viewType: Int): View  =
@@ -20,7 +20,7 @@ class TeamUpdateFragmentAdapter(context: Context, listener: GenericOnItemClick<T
         val tvActive = viewHolder.getView(R.id.textViewPosition) as TextView
         with(item) {
             tvName.text = NAME
-            Utils.setPicasso(context!!, URL_IMAGE, R.drawable.shield_icon, ivTeam)
+            ImageHelper.setPicasso(context!!, URL_IMAGE, R.drawable.shield_icon, ivTeam)
             tvActive.text = if (IS_ACTIVE == 0) "Inactivo" else "Activo"
         }
     }

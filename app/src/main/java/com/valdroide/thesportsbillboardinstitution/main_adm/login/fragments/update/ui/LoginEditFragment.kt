@@ -16,7 +16,7 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.upda
 import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.update.ui.adapter.LoginEditFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.update.ui.adapter.OnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.model.entities.Login
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
 import kotlinx.android.synthetic.main.fragment_fixture.*
 
 class LoginEditFragment : Fragment(), LoginEditFragmentView, OnItemClickListener {
@@ -104,17 +104,19 @@ class LoginEditFragment : Fragment(), LoginEditFragmentView, OnItemClickListener
 
     override fun updateLoginSuccess() {
         adapterLogin.notifyDataSetChanged()
-        Utils.showSnackBar(conteiner, activity.getString(R.string.update_success, "Login", "o"))
+        showShackBar(activity.getString(R.string.update_success, "Login", "o"))
     }
 
     override fun deleteLoginSuccess() {
         adapterLogin.deleteLogin(position)
-        Utils.showSnackBar(conteiner, activity.getString(R.string.login_delete_success))
+        showShackBar(activity.getString(R.string.login_delete_success))
     }
 
     override fun setError(error: String) {
-        Utils.showSnackBar(conteiner, error)
+        showShackBar(error)
     }
+
+    private fun showShackBar(msg:String) = ViewComponentHelper.showSnackBar(conteiner, msg)
 
     override fun hideSwipeRefreshLayout() {
         verifySwipeRefresh(false)

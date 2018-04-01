@@ -1,33 +1,30 @@
 package com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.ui
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-
+import com.google.gson.Gson
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.FixtureFragmentPresenter
-import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.di.FixtureFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.ui.adapter.FixtureFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.ui.adapter.OnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
+import com.valdroide.thesportsbillboardinstitution.utils.helper.SharedHelper
 import kotlinx.android.synthetic.main.fragment_fixture.*
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.base.BaseFragmentUser
+import javax.inject.Inject
 
+open class FixtureFragment : BaseFragmentUser(), FixtureFragmentView, OnItemClickListener {
 
-open class FixtureFragment : Fragment(), FixtureFragmentView, OnItemClickListener {
-
-
-    private lateinit var component: FixtureFragmentComponent
+    @Inject
     lateinit var presenter: FixtureFragmentPresenter
+    @Inject
     lateinit var adapterFixture: FixtureFragmentAdapter
     var fixtures: MutableList<Fixture> = arrayListOf()
-    private var isRegister: Boolean = false
     private var isClick: Boolean = false
-    private var id_sub_menu: Int = 0
+    //private var id_sub_menu: Int = 0
+    inline fun <reified T> Gson.fromJson(json: String): T =
+            this.fromJson<T>(json, T::class.java)
 
     companion object Factory {
         lateinit var presenterTest: FixtureFragmentPresenter
@@ -44,67 +41,74 @@ open class FixtureFragment : Fragment(), FixtureFragmentView, OnItemClickListene
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? =
-            inflater!!.inflate(R.layout.frame_recycler_refresh, container, false)
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setupInjection()
-        register()
         initRecyclerView()
         initSwipeRefreshLayout()
         getFixtures(false)
     }
 
-    fun register() {
-        if (!isRegister) {
-            presenter.onCreate()
-            isRegister = true
-        }
-    }
+    override fun getLayoutResourceId(): Int = R.layout.fragment_create_team
 
-    fun unregister() {
-        if (isRegister) {
+    override fun validateEvenBusRegisterForLifeCycle(isRegister: Boolean) {
+        if (isRegister)
+            presenter.onCreate()
+        else
             presenter.onDestroy()
-            isRegister = false
-        }
     }
 
     private fun initRecyclerView() {
         with(recyclerView) {
-            layoutManager = LinearLayoutManager(activity)
-            setHasFixedSize(true)
+            ViewComponentHelper.initRecyclerView(this, activity)
             adapter = adapterFixture
         }
     }
 
     fun getFixtures(isClick: Boolean) {
-        this.isClick = isClick
+        this.isClick = isClick // is click do button to add more items
+
         if (isClick || (!isClick && fixtures.isEmpty())) {
             showSwipeRefreshLayout()
-            id_sub_menu = Utils.getSubmenuId(activity)
-            if (!fixtures.isEmpty())
-                deleteLastItemButton()
-            presenter.getFixtures(activity, id_sub_menu, fixtures.size)
+            getFixtures(getMenuEntity())
         } else {
             if (fixtures.isNotEmpty())
                 deleteLastItemButton()
-            setAdapter(false)
+
+            updateAdapter(false)
         }
+    }
+
+    private fun getFixtures(id_submenu: Int){
+        if (id_submenu <= 0) {
+            hideSwipeRefreshLayout()
+            setError(getString(R.string.generic_error_response))
+        } else {
+            if (fixtures.isNotEmpty())
+                deleteLastItemButton()
+            presenter.getFixtures(activity, id_submenu, fixtures.size)
+        }
+    }
+
+    private fun getMenuEntity(): Int {
+        return SharedHelper.getSubmenuId(activity)
+
+       /* val menuJson = SharedHelper.getMenuJson(activity)
+        if (menuJson.isEmpty())
+            return null
+        else {
+            return Gson().fromJson<MenuDrawer>(menuJson)
+        }
+        */
     }
 
     private fun deleteLastItemButton() {
         fixtures.removeAt(fixtures.size - 1)
     }
 
-    private fun setupInjection() {
+    override fun setupInjection() {
         val app = activity.application as TheSportsBillboardInstitutionApp
         app.firebaseAnalyticsInstance().setCurrentScreen(activity, javaClass.simpleName, null)
-        //app.getFixtureFragmentComponent(this, this, this)
-        component = app.getFixtureFragmentComponent(this, this, this)
-        presenter = getPresenterInj()
-        adapterFixture = getAdapter()
+        app.getFixtureFragmentComponent(this, this, this).inject(this)
     }
 
     override fun setFixture(fixtures: MutableList<Fixture>) {
@@ -115,32 +119,34 @@ open class FixtureFragment : Fragment(), FixtureFragmentView, OnItemClickListene
                 this.fixtures.addAll(fixtures)
         } else
             this.fixtures.addAll((this.fixtures.size), fixtures)
-        setAdapter(isClick)
+
+        updateAdapter(isClick)
     }
 
-    private fun setAdapter(isClick: Boolean) {
+    private fun updateAdapter(isClick: Boolean) {
         if (isTest)
             adapterFixture.setFixtures(fixturesTest, isClick)
         else
             adapterFixture.setFixtures(this.fixtures, isClick)
     }
 
+    /* see to test
     open fun getPresenterInj(): FixtureFragmentPresenter {
         if (!isTest)
             return component.getPresenter()
         else
             return presenterTest
-    }
-
+    }*/
+    /* see to test
     open fun getAdapter(): FixtureFragmentAdapter {
         if (!isTest)
             return component.getAdapter()
         else
             return adapterTest
     }
-
+   */
     override fun setError(error: String) {
-        Utils.showSnackBar(conteiner, error)
+        ViewComponentHelper.showSnackBar(conteiner, error)
     }
 
     override fun hideSwipeRefreshLayout() {
@@ -153,6 +159,7 @@ open class FixtureFragment : Fragment(), FixtureFragmentView, OnItemClickListene
 
     override fun onClickFixture(position: Int, fixture: Fixture) {
     }
+
     override fun onClickButtonAddMore() {
         getFixtures(true)
     }
@@ -184,42 +191,5 @@ open class FixtureFragment : Fragment(), FixtureFragmentView, OnItemClickListene
         } catch (e: Exception) {
             setError(e.message!!)
         }
-    }
-
-    //    override fun onPause() {
-//        super.onPause()
-//        unregister()
-////        mAd.pause(this)
-////        if (mAdView != null) {
-////            mAdView.pause()
-////        }
-//    }
-    override fun onPause() {
-        unregister()
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        register()
-//        mAd.resume(this)
-//        if (mAdView != null) {
-//            mAdView.resume()
-//        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        register()
-    }
-
-    override fun onStop() {
-        unregister()
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        unregister()
-        super.onDestroy()
     }
 }

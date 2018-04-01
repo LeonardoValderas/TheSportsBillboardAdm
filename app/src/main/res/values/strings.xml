@@ -15,30 +15,21 @@
     <string name="action_settings">Settings</string>
 
     <!--SNACKBAR MESSAGE-->
+    <string name="generic_error_response">Ops, ocurrió un error al realizar la gestión. Intente nuevamente.</string>
     <string name="data_empty_account">Dato vacio.</string>
     <string name="web_address_invalid">Dirección Web invalida.</string>
     <string name="player.error.empty">Ingrese el nombre del jugador.</string>
-    <!--<string name="player.save.success">Jugador creado correctamente.</string>-->
-    <!--<string name="player.update.success">Jugador actualizado correctamente.</string>-->
-    <!--<string name="player.delete.success">Jugador eliminado correctamente.</string>-->
-    <!--<string name="login.save.success">Login creado correctamente.</string>-->
-    <!--<string name="login.edit.success">Login actualizado correctamente.</string>-->
     <string name="login.error.user">El usuario debe contener más de 4 letras.</string>
     <string name="login.error.pass">La contraseña debe contener más de 4 letras.</string>
     <string name="login.delete.success">Login eliminado correctamente.</string>
     <string name="account.success">Datos guardados.</string>
     <string name="team.error.empty">Ingrese el nombre del equipo.</string>
     <string name="position.hint">Ingrese la posición.</string>
-    <!--<string name="team.save.success">Equipo creado correctamente.</string>-->
-    <!--<string name="team.update.success">Equipo actualizado correctamente.</string>-->
-    <!--<string name="team.delete.success">Equipo eliminado correctamente.</string>-->
     <string name="news_title_error_empty">Ingrese el titulo de la noticia.</string>
     <string name="news_body_error_empty">Ingrese la descripción de la noticia.</string>
     <string name="position.empty.player">Debe cargar una posición desde el botón (+).</string>
     <string name="submenu.empty.player">Debe cargar un submenu desde el botón (+).</string>
     <string name="add.menu.error.empty">Debe ingresar un %1$s.</string>
-    <!--<string name="save.menu.success">%1$s guardado correctamente.</string>-->
-    <!--<string name="update.menu.success">%1$s actualizado correctamente.</string>-->
     <string name="same.team.error">El equipo local no puede ser igual al equipo visitante.</string>
     <string name="isactual.error">El Submenu ya tiene un torneo asignado.</string>
 
@@ -70,7 +61,8 @@
     <string name="shared_title">shared_title</string>
     <string name="shared_id_user_work">shared_id_user_work</string>
     <string name="shared_id_user">id_user_work</string>
-
+    <string name="shared_menu_json">share.menu.json</string>
+    <string name="shared_menu">share.menu</string>
     <!--LAYOUT-->
     <string name="pos.title">N°</string>
     <string name="team.title">EQUIPO</string>
@@ -96,7 +88,7 @@
 
     <string name="alert.info.player">En esta opción usted podrá realizar acciones sobre los jugadores que componen los equipos de la institución.
         Para crear un jugador debe ingresar su nombre, seleccionar su posición de juego y su correspondiente submenu.
-        Usted puede crear o editar la posición de juego presionando la opción "mas" o la opción "lapiz".
+        Usted puede crear o editar la posición de juego presionando la opción "salvar" o la opción "lapiz".
         En la sopala Editar usted podrá actualizar los datos de los equipo como también eliminarlos.
         Existe la opción de activar o desactivar un equipo en el caso de no querer eliminar al mismo.
         Un equipo inactivo no será visible para el usuario.</string>
@@ -116,13 +108,20 @@
         modificar los resultados como también eliminarlos.</string>
 
     <string name="alert.info.tournament">En esta opción usted podrá realizar acciones sobre los torneos deportivos.
-        Para crear un torneo debe ingresar el nombre del mismo y presionar el botón "mas".
+        Para crear un torneo debe ingresar el nombre del mismo y presionar el botón "salvar".
         Usted podrá actualizar un torneos presionando el botón "lapiz" y una vez realizada la modificación presionar
-        el botón "mas". Presionando el botón "flecha circular" usted activará o desactivará un torneo en el caso de
+        el botón "salvar". Presionando el botón "flecha circular" usted activará o desactivará un torneo en el caso de
         no querer eliminarlo. Un torneo inactivo no será visible para el usuario. La eliminación se realiza con el botón
         "cesto". Por otro lado, es importante asignar un torneo a un submenu ya que el sistema mostrará la
         información del torneo actual del submenu por default. Si el usuario quiere consultar torneos anteriores debe realizar una acción de busqueda.
         Un submenu puede tener solo un torneo actual, si desea cambiar de torneo debe destildar el actual y tildar el nuevo torneo.</string>
+
+    <string name="alert.info.menu.submenu">En esta opción usted podrá realizar acciones sobre el menu y submenu principal del usuario.
+        Para crear un menu/submenu debe ingresar el nombre del mismo y presionar el botón "salvar".
+        Usted podrá actualizar un menu/submenu presionando el botón "lapiz" y una vez realizada la modificación presionar
+        el botón "salvar". Presionando el botón "flecha circular" usted activará o desactivará un menu/submenu en el caso de
+        no querer eliminarlo. Un menu/submenu inactivo no será visible para el usuario. La eliminación se realiza con el botón
+        "cesto". </string>
 
 
     <!--GENERAL-->
@@ -167,10 +166,15 @@
         <item>Otro</item>
     </array>
     <string name="title_activity_prueba">PruebaActivity</string>
+    <!--MENU-->
     <string name="menu.submenu">Menu - SubMenu</string>
     <string name="menu.submenu.empty">Debe crear un submenu desde la opción Menus y Submenus</string>
     <string name="select.menu">Seleccione un menu</string>
     <string name="select.submenu">Seleccione un sub menu</string>
     <string name="menu.empty.error">Debe crear un menu</string>
     <string name="submenu.empty.error">Debe crear un sub menu</string>
+    <!--TOURNAMENT-->
+    <string name="select.tournament">Seleccione un torneo</string>
+    <string name="create.tournament">Cree un torneo</string>
+    <string name="create.select.tournament">Cree ou seleccione un torneo</string>
 </resources>

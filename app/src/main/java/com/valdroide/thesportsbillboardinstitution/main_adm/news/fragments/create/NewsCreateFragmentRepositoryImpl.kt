@@ -10,7 +10,7 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.creat
 import com.valdroide.thesportsbillboardinstitution.model.entities.News
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 import com.valdroide.thesportsbillboardinstitution.model.entities.WSResponse
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.DateTimeHelper
 
 class NewsCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: ApiService, val scheduler: SchedulersInterface) : NewsCreateFragmentRepository {
 
@@ -51,11 +51,13 @@ class NewsCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: A
         }
     }
 
+    private fun getOficialDate(): String = DateTimeHelper.getFechaOficialSeparate()
+
     override fun saveNews(context: Context, news: News) {
         try {
             apiService.saveNews(news.TITLE, news.DESCRIPTION, news.ID_SUB_MENU,
                     news.URL_IMAGE, news.NAME_IMAGE, news.ENCODE, 1,
-                    Utils.getFechaOficialSeparate())
+                    getOficialDate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->
@@ -86,7 +88,7 @@ class NewsCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: A
     override fun updateNews(context: Context, news: News) {
         try {
             apiService.updateNews(news.ID_NEWS_KEY, news.TITLE, news.DESCRIPTION, news.ID_SUB_MENU, news.URL_IMAGE, news.NAME_IMAGE, news.ENCODE, news.BEFORE,
-                    news.IS_ACTIVE, 1, Utils.getFechaOficialSeparate())
+                    news.IS_ACTIVE, 1, getOficialDate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->

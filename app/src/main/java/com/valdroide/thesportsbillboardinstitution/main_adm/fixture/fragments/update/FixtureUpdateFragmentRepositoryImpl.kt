@@ -10,7 +10,7 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.up
 import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
 import com.valdroide.thesportsbillboardinstitution.model.entities.TimeMatch
 import com.valdroide.thesportsbillboardinstitution.model.entities.WSResponse
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.DateTimeHelper
 
 class FixtureUpdateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: ApiService, val scheduler: SchedulersInterface) : FixtureUpdateFragmentRepository {
     private var fixtures: MutableList<Fixture>? = null
@@ -56,7 +56,7 @@ class FixtureUpdateFragmentRepositoryImpl(val eventBus: EventBus, val apiService
         if (id_user != 0) {
             try {
                 apiService.updateResultFixture(fixture.ID_FIXTURE_KEY, fixture.RESULT_LOCAL, fixture.RESULT_VISITE,
-                        fixture.ID_TIMES_MATCH, id_user, Utils.getFechaOficialSeparate())
+                        fixture.ID_TIMES_MATCH, id_user, DateTimeHelper.getFechaOficialSeparate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->
@@ -90,7 +90,7 @@ class FixtureUpdateFragmentRepositoryImpl(val eventBus: EventBus, val apiService
     override fun deleteFixture(context: Context, fixture: Fixture) {
         if (id_user != 0) {
             try {
-                apiService.deleteFixture(fixture.ID_FIXTURE_KEY, id_user, Utils.getFechaOficialSeparate())
+                apiService.deleteFixture(fixture.ID_FIXTURE_KEY, id_user, DateTimeHelper.getFechaOficialSeparate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->

@@ -20,7 +20,7 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.player.activity.TabP
 import com.valdroide.thesportsbillboardinstitution.main_adm.sanction.activity.TabSanctionActivity
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.activity.TabTeamActivity
 import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.ui.TournamentActivity
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.SharedHelper
 import com.valdroide.thesportsbillboardinstitution.utils.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_navigation_adm.*
 import kotlinx.android.synthetic.main.app_bar_navigation_adm.*
@@ -57,7 +57,7 @@ class NavigationAdmActivity : BaseActivity(), NavigationView.OnNavigationItemSel
 
     private fun goToActivity(activity: Activity) {
         val intent = Intent(this, activity::class.java)
-        val user = Utils.getIdUserWork(this)
+        val user = SharedHelper.getIdUserWork(this)
         intent.putExtra("id_user", user)
         startActivity(intent)
     }

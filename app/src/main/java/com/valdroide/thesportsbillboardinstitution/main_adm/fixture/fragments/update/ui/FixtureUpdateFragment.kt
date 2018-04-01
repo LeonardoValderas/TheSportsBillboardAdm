@@ -17,6 +17,7 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.up
 import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
 import com.valdroide.thesportsbillboardinstitution.model.entities.TimeMatch
 import com.valdroide.thesportsbillboardinstitution.utils.*
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
 import kotlinx.android.synthetic.main.frame_recycler_refresh.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.alert
@@ -113,8 +114,9 @@ class FixtureUpdateFragment : Fragment(), FixtureUpdateFragmentView, GenericOnIt
 
     override fun updateFixtureSuccess(fixture: Fixture) {
         adapterFixture.update(position, fixture)
-        Utils.showSnackBar(conteiner, getString(R.string.update_success, "Fixture"))
+        showShackBar( getString(R.string.update_success, "Fixture"))
     }
+    private fun showShackBar(msg: String) = ViewComponentHelper.showSnackBar(conteiner, msg)
 
     private fun initRecyclerView() {
         with(recyclerView) {
@@ -132,11 +134,11 @@ class FixtureUpdateFragment : Fragment(), FixtureUpdateFragmentView, GenericOnIt
 
     override fun deleteFixtureSuccess() {
         adapterFixture.delete(position)
-        Utils.showSnackBar(conteiner, activity.getString(R.string.delete_success, "Sanción"))
+        showShackBar( activity.getString(R.string.delete_success, "Sanción"))
     }
 
     override fun setError(error: String) {
-        Utils.showSnackBar(conteiner, error)
+        showShackBar( error)
     }
 
     override fun hideSwipeRefreshLayout() {

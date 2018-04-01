@@ -9,8 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.valdroide.thesportsbillboardinstitution.R
 
-
-open class LeaderBoardFragmentAdapter(internal var context: Context, internal var layoutResourceId: Int, internal var leaderBoards: MutableList<LeaderBoard>) : ArrayAdapter<LeaderBoard>(context, layoutResourceId, leaderBoards) {
+open class LeaderBoardFragmentAdapter(internal var context: Context,
+                                      internal var layoutResourceId: Int,
+                                      internal var leaderBoards: MutableList<LeaderBoard>) : ArrayAdapter<LeaderBoard>(context, layoutResourceId, leaderBoards) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
         var row: View? = convertView
@@ -31,9 +32,9 @@ open class LeaderBoardFragmentAdapter(internal var context: Context, internal va
             holder.ge = row.findViewById(R.id.GE)
             holder.df = row.findViewById(R.id.DF)
             row.setTag(holder)
-        } else {
+
+        } else
             holder = row.tag as RecordHolder
-        }
 
         val leaderBoard = leaderBoards[position]
         holder.pos!!.setText(leaderBoard.POSITION)

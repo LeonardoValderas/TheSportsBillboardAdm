@@ -8,7 +8,7 @@ import android.view.*
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.main_adm.news.fragments.update.ui.NewsUpdateFragment
 import com.valdroide.thesportsbillboardinstitution.model.entities.News
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ImageHelper
 import kotlinx.android.synthetic.main.player_item.view.*
 
 class NewsUpdateFragmentAdapter(private var news: MutableList<News>?, private var listener: OnItemClickListener,
@@ -35,7 +35,7 @@ class NewsUpdateFragmentAdapter(private var news: MutableList<News>?, private va
             //   YoYo.with(Techniques.FlipInX).playOn(holder.card_view);
             with(news) {
                 itemView.textViewName.text = TITLE
-                Utils.setPicasso(fragment.activity, URL_IMAGE, R.mipmap.ic_launcher, itemView.imageViewPlayer)
+                ImageHelper.setPicasso(fragment.activity, URL_IMAGE, R.mipmap.ic_launcher, itemView.imageViewPlayer)
                 itemView.textViewPosition.text = DESCRIPTION
                 itemView.textViewMenuSubMenu.visibility = View.VISIBLE
                 val conca = MENU + " - " + SUBMENU

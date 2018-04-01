@@ -8,7 +8,7 @@ import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.model.entities.Player
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClick
 import com.valdroide.thesportsbillboardinstitution.utils.GenericRecyclerAdapter
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ImageHelper
 
 class PlayerUpdateFragmentAdapter(context: Context, listener: GenericOnItemClick<Player>) : GenericRecyclerAdapter<Player>(context, listener) {
     override fun createView(context: Context, viewGroup: ViewGroup, viewType: Int): View =
@@ -24,7 +24,7 @@ class PlayerUpdateFragmentAdapter(context: Context, listener: GenericOnItemClick
 
         with(item) {
             tvName.text = NAME
-            Utils.setPicasso(context!!, URL_IMAGE, R.drawable.shield_icon, ivTeam)
+            ImageHelper.setPicasso(context!!, URL_IMAGE, R.drawable.shield_icon, ivTeam)
             tvPosition.text = POSITION
             tvMenuSubMenu.visibility = View.VISIBLE
             tvMenuSubMenu.text = context.getString(R.string.menu_concatenate, MENU, SUBMENU)

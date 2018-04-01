@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.ui.FixtureFragment
 import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ImageHelper
 import kotlinx.android.synthetic.main.fixture_item.view.*
 
 class FixtureFragmentAdapter(private var fixtures: MutableList<Fixture>?, private var listener: OnItemClickListener, fragment: Fragment) : RecyclerView.Adapter<FixtureFragmentAdapter.ViewHolder>() {
@@ -45,10 +45,10 @@ class FixtureFragmentAdapter(private var fixtures: MutableList<Fixture>?, privat
         fun bindData(fixture: Fixture, position: Int, listener: OnItemClickListener, fragment: Fragment) {
             //   YoYo.with(Techniques.FlipInX).playOn(holder.card_view);
             with(fixture) {
-                val date_hour = DATE_MATCH + " - " + HOUR_MATCH + " hs."
+                val date_hour = DATE_MATCH.plus(" - ").plus(HOUR_MATCH).plus(" hs.")
                 itemView.textViewDateHour.text = date_hour
-                Utils.setPicasso(fragment.activity, URL_LOCAL_TEAM, R.drawable.empty_shield_icon, itemView.imageViewLocalTeam)
-                Utils.setPicasso(fragment.activity, URL_VISIT_TEAM, R.drawable.empty_shield_icon, itemView.imageViewVisitTeam)
+                ImageHelper.setPicasso(fragment.activity, URL_LOCAL_TEAM, R.drawable.empty_shield_icon, itemView.imageViewLocalTeam)
+                ImageHelper.setPicasso(fragment.activity, URL_VISIT_TEAM, R.drawable.empty_shield_icon, itemView.imageViewVisitTeam)
                 itemView.textViewLocalResult.text = RESULT_LOCAL
                 itemView.textViewVisitResult.text = RESULT_VISITE
                 itemView.textViewLocalName.text = NAME_LOCAL_TEAM

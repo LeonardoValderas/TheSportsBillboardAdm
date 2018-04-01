@@ -9,7 +9,7 @@ import com.valdroide.thesportsbillboardinstitution.lib.base.SchedulersInterface
 import com.valdroide.thesportsbillboardinstitution.main_adm.sanction.fragments.update.events.SanctionUpdateFragmentEvent
 import com.valdroide.thesportsbillboardinstitution.model.entities.Sanction
 import com.valdroide.thesportsbillboardinstitution.model.entities.WSResponse
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.DateTimeHelper
 
 class SanctionUpdateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: ApiService, val scheduler: SchedulersInterface) : SanctionUpdateFragmentRepository {
 
@@ -51,7 +51,7 @@ class SanctionUpdateFragmentRepositoryImpl(val eventBus: EventBus, val apiServic
 
     override fun deleteSanction(context: Context, sanction: Sanction) {
         try {
-            apiService.deleteSanction(sanction.ID_SANCTION_KEY, 1, Utils.getFechaOficialSeparate())
+            apiService.deleteSanction(sanction.ID_SANCTION_KEY, 1, DateTimeHelper.getFechaOficialSeparate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->

@@ -1,29 +1,26 @@
 package com.valdroide.thesportsbillboardinstitution.main_user.fragment.leaderboard.ui
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.leaderboard.LeaderBoardFragmentPresenter
-import com.valdroide.thesportsbillboardinstitution.main_user.fragment.leaderboard.di.LeaderBoardFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.leaderboard.ui.adapters.LeaderBoardFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.model.entities.LeaderBoard
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
+import com.valdroide.thesportsbillboardinstitution.utils.helper.SharedHelper
+import com.valdroide.thesportsbillboardinstitution.utils.base.BaseFragmentUser
 import kotlinx.android.synthetic.main.fragment_leader_board.*
+import javax.inject.Inject
 
 
-class LeaderBoardFragment : Fragment(), LeaderBoardFragmentView {
+class LeaderBoardFragment : BaseFragmentUser(), LeaderBoardFragmentView {
 
-
-    private lateinit var component: LeaderBoardFragmentComponent
+    @Inject
     lateinit var presenter: LeaderBoardFragmentPresenter
+    @Inject
     lateinit var adapterLeader: LeaderBoardFragmentAdapter
+
     var ledearBoards: MutableList<LeaderBoard> = arrayListOf()
-    private var isRegister: Boolean = false
     private var isUpdate: Boolean = false
 
     companion object Factory {
@@ -41,39 +38,43 @@ class LeaderBoardFragment : Fragment(), LeaderBoardFragmentView {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_leader_board, container, false)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setupInjection()
-        register()
         initGridView()
         initSwipeRefreshLayout()
         getLeaderBoards(false)
     }
 
-    private fun setupInjection() {
+    override fun setupInjection() {
         val app = activity.application as TheSportsBillboardInstitutionApp
         app.firebaseAnalyticsInstance().setCurrentScreen(activity, javaClass.simpleName, null)
-        app.getLeaderBoardFragmentComponent(this, this)
+        app.getLeaderBoardFragmentComponent(this, this).inject(this)
+    }
 
-        component = app.getLeaderBoardFragmentComponent(this, this)
-        presenter = getPresenterInj()
-        adapterLeader = getAdapter()
+    override fun getLayoutResourceId(): Int = R.layout.fragment_leader_board
+
+    override fun validateEvenBusRegisterForLifeCycle(isRegister: Boolean) {
+        if (isRegister)
+            presenter.onCreate()
+        else
+            presenter.onDestroy()
     }
 
     private fun getLeaderBoards(isUpdate: Boolean) {
         if ((!isUpdate && ledearBoards.isEmpty()) || isUpdate) {
             if (!isUpdate)
                 showSwipeRefreshLayout()
-            val id_menu = Utils.getSubmenuId(activity)
-            presenter.getLeaderBoards(activity, id_menu)
+            getLeaderBoards(SharedHelper.getSubmenuId(activity))
         } else
             adapterLeader.setLeaderBoarders(ledearBoards)
+    }
 
+    private fun getLeaderBoards(id_submenu: Int){
+        if (id_submenu <= 0) {
+            hideSwipeRefreshLayout()
+            setError(getString(R.string.generic_error_response))
+        } else
+            presenter.getLeaderBoards(activity, id_submenu)
     }
 
     override fun setLeaderBoards(lidearBoards: MutableList<LeaderBoard>) {
@@ -81,22 +82,22 @@ class LeaderBoardFragment : Fragment(), LeaderBoardFragmentView {
         adapterLeader.setLeaderBoarders(lidearBoards)
     }
 
-    open fun getPresenterInj(): LeaderBoardFragmentPresenter {
-        if (!isTest)
-            return component.getPresenter()
-        else
-            return presenterTest
-    }
+    /* open fun getPresenterInj(): LeaderBoardFragmentPresenter {
+         if (!isTest)
+             return component.getPresenter()
+         else
+             return presenterTest
+     }
 
-    open fun getAdapter(): LeaderBoardFragmentAdapter {
-        if (!isTest)
-            return component.getAdapter()
-        else
-            return adapterTest
-    }
-
+     open fun getAdapter(): LeaderBoardFragmentAdapter {
+         if (!isTest)
+             return component.getAdapter()
+         else
+             return adapterTest
+     }
+ */
     override fun setError(error: String) {
-        Utils.showSnackBar(conteinerLeader, error)
+        ViewComponentHelper.showSnackBar(conteinerLeader, error)
     }
 
     override fun hideSwipeRefreshLayout() {
@@ -111,25 +112,9 @@ class LeaderBoardFragment : Fragment(), LeaderBoardFragmentView {
         gridLeaderBoard.adapter = adapterLeader
     }
 
-
     private fun verifySwipeRefresh(show: Boolean) {
-        try {
-            if (swipeRefreshLayoutLeader != null) {
-                if (show) {
-                    if (!swipeRefreshLayoutLeader.isRefreshing()) {
-                        swipeRefreshLayoutLeader.setRefreshing(true)
-                    }
-                } else {
-                    if (swipeRefreshLayoutLeader.isRefreshing()) {
-                        swipeRefreshLayoutLeader.setRefreshing(false)
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            setError(e.message!!)
-        }
+        ViewComponentHelper.verifySwipeRefresh(conteinerLeader, swipeRefreshLayoutLeader, show)
     }
-
 
     private fun initSwipeRefreshLayout() {
         try {
@@ -139,48 +124,5 @@ class LeaderBoardFragment : Fragment(), LeaderBoardFragmentView {
         } catch (e: Exception) {
             setError(e.message!!)
         }
-    }
-
-    fun register() {
-        if (!isRegister) {
-            presenter.onCreate()
-            isRegister = true
-        }
-    }
-
-    fun unregister() {
-        if (isRegister) {
-            presenter.onDestroy()
-            isRegister = false
-        }
-    }
-
-    override fun onPause() {
-        unregister()
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        register()
-//        mAd.resume(this)
-//        if (mAdView != null) {
-//            mAdView.resume()
-//        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        register()
-    }
-
-    override fun onStop() {
-        unregister()
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        unregister()
-        super.onDestroy()
     }
 }

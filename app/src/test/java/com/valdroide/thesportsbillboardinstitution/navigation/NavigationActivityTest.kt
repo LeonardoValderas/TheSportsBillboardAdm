@@ -8,12 +8,10 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import com.valdroide.thesportsbillboardinstitution.BaseTest
 import com.valdroide.thesportsbillboardinstitution.BuildConfig
-import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_user.account.ui.AccountActivity
-import com.valdroide.thesportsbillboardinstitution.main_user.navigation.ui.NavigationActivity
+import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_submenu.ui.NavigationActivity
 import com.valdroide.thesportsbillboardinstitution.main_user.tab.TabActivity
-import kotlinx.android.synthetic.main.app_bar_navigation.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
 import org.junit.Before
 import org.junit.Test

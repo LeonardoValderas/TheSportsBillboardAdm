@@ -7,12 +7,9 @@ import com.valdroide.thesportsbillboardinstitution.api.ApiService
 import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
 import com.valdroide.thesportsbillboardinstitution.lib.base.SchedulersInterface
 import com.valdroide.thesportsbillboardinstitution.main_adm.login.fragments.create.events.LoginCreateFragmentEvent
-import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.FixtureFragmentRepository
-import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.events.FixtureFragmentEvent
-import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
 import com.valdroide.thesportsbillboardinstitution.model.entities.Login
 import com.valdroide.thesportsbillboardinstitution.model.entities.WSResponse
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.DateTimeHelper
 
 class LoginCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: ApiService, val scheduler: SchedulersInterface) : LoginCreateFragmentRepository {
 
@@ -55,7 +52,7 @@ class LoginCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: 
 
     override fun saveLogin(context: Context, login: Login) {
         try {
-            apiService.saveLogin(login.USER, login.PASS, login.TYPE_ADM, 1, Utils.getFechaOficialSeparate())
+            apiService.saveLogin(login.USER, login.PASS, login.TYPE_ADM, 1, DateTimeHelper.getFechaOficialSeparate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->
@@ -85,7 +82,7 @@ class LoginCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: 
 
     override fun editLogin(context: Context, login: Login) {
         try {
-            apiService.editLogin(login.ID_LOGIN_KEY, login.USER, login.PASS, login.TYPE_ADM, login.IS_ACTIVE, 1, Utils.getFechaOficialSeparate())
+            apiService.editLogin(login.ID_LOGIN_KEY, login.USER, login.PASS, login.TYPE_ADM, login.IS_ACTIVE, 1, DateTimeHelper.getFechaOficialSeparate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->

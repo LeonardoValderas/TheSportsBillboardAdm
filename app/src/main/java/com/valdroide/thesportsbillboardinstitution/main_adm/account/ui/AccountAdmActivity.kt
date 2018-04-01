@@ -17,12 +17,11 @@ import com.google.firebase.crash.FirebaseCrash
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_adm.account.AccountAdmActivityPresenter
-import com.valdroide.thesportsbillboardinstitution.main_adm.account.di.AccountAdmActivityComponent
 import com.valdroide.thesportsbillboardinstitution.model.entities.Account
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.activity_adm_account.*
 import kotlinx.android.synthetic.main.content_adm_account.*
 import com.theartofdev.edmodo.cropper.CropImage
+import com.valdroide.thesportsbillboardinstitution.utils.helper.*
 import kotlinx.android.synthetic.main.activity_tab.*
 import java.io.IOException
 import javax.inject.Inject
@@ -95,27 +94,27 @@ open class AccountAdmActivity : AppCompatActivity(), AccountAdmActivityView {
     }
 
     override fun getPhoto() {
-        if (!Utils.oldPhones()) {
+        if (!PermissionHelper.oldPhones()) {
             val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            Utils.checkForPermission(this, permissionCheck, Utils.PERMISSION_GALERY, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            PermissionHelper.checkForPermission(this, permissionCheck, ConstantHelper.PERMISSION_GALERY, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
-        if (Utils.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            Utils.ImageDialogLogo(this, null, Utils.PERMISSION_GALERY);
+        if (PermissionHelper.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            ViewComponentHelper.ImageDialogLogo(this, null, ConstantHelper.PERMISSION_GALERY);
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == Utils.PERMISSION_GALERY)
+        if (requestCode == ConstantHelper.PERMISSION_GALERY)
             if (grantResults.count() > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                Utils.ImageDialogLogo(this, null, Utils.PERMISSION_GALERY);
+                ViewComponentHelper.ImageDialogLogo(this, null, ConstantHelper.PERMISSION_GALERY);
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
-            if (requestCode == Utils.PERMISSION_GALERY) {
+            if (requestCode == ConstantHelper.PERMISSION_GALERY) {
                 val imageUri = CropImage.getPickImageResultUri(this, data)
-                Utils.startCropImageActivity(this, null, imageUri)
+                ImageHelper.startCropImageActivity(this, null, imageUri)
             }
             if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
                 val result = CropImage.getActivityResult(data)
@@ -125,7 +124,7 @@ open class AccountAdmActivity : AppCompatActivity(), AccountAdmActivityView {
                     assignImage(uriExtra)
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     if (!result.error.toString().contains("ENOENT"))
-                        Utils.showSnackBar(conteiner, getString(R.string.error_crop_image) + result.error)
+                        ViewComponentHelper.showSnackBar(conteiner, getString(R.string.error_crop_image) + result.error)
                 }
             }
         } catch (e: Exception) {
@@ -135,9 +134,9 @@ open class AccountAdmActivity : AppCompatActivity(), AccountAdmActivityView {
     }
 
     private fun assignImage(uri: Uri?) {
-        Utils.setPicasso(this, uri.toString(), android.R.drawable.ic_menu_crop, imageView)
+        ImageHelper.setPicasso(this, uri.toString(), android.R.drawable.ic_menu_crop, imageView)
         try {
-            imageByte = Utils.readBytes(uri, this)
+            imageByte = ImageHelper.readBytes(uri, this)
         } catch (e: IOException) {
             FirebaseCrash.report(e)
             e.printStackTrace()
@@ -149,7 +148,7 @@ open class AccountAdmActivity : AppCompatActivity(), AccountAdmActivityView {
             url_image = URL_IMAGE
             name_image = NAME_IMAGE
             name_before = name_image
-            Utils.setPicasso(applicationContext, url_image, R.drawable.adeful, imageView)
+            ImageHelper.setPicasso(applicationContext, url_image, R.drawable.adeful, imageView)
             editTextDescription.text = Editable.Factory.getInstance().newEditable(DESCRIPTION)
             editTextAdress.text = Editable.Factory.getInstance().newEditable(ADDRESS)
             editTextPhone.text = Editable.Factory.getInstance().newEditable(PHONE)
@@ -161,11 +160,11 @@ open class AccountAdmActivity : AppCompatActivity(), AccountAdmActivityView {
     }
 
     override fun setError(error: String) {
-        Utils.showSnackBar(conteiner, error)
+        ViewComponentHelper.showSnackBar(conteiner, error)
     }
 
     override fun saveSuccess() {
-        Utils.showSnackBar(conteiner, getString(R.string.account_success))
+        ViewComponentHelper.showSnackBar(conteiner, getString(R.string.account_success))
     }
 
     override fun cleanViews() {
@@ -191,8 +190,8 @@ open class AccountAdmActivity : AppCompatActivity(), AccountAdmActivityView {
                 encode = ""
             }
             name_before = account.NAME_IMAGE
-            name_image = Utils.getFechaOficial() + Utils.PNG
-            url_image = Utils.URL_ACCOUNT + name_image
+            name_image = DateTimeHelper.getFechaOficial() + ConstantHelper.PNG
+            url_image = UrlHelper.URL_ACCOUNT + name_image
         } else {
             name_before = account.NAME_IMAGE
             name_image = name_before

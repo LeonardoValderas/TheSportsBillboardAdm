@@ -2,6 +2,7 @@ package com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.view.View
 import com.valdroide.thesportsbillboardinstitution.R
@@ -11,13 +12,14 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui.dial
 import com.valdroide.thesportsbillboardinstitution.main_adm.menu_submenu.ui.dialog.OnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.model.entities.MenuDrawer
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
 import com.valdroide.thesportsbillboardinstitution.utils.base.BaseActivity
 import com.valdroide.thesportsbillboardinstitution.utils.generics.OnSpinerItemClick
 import com.valdroide.thesportsbillboardinstitution.utils.generics.SpinnerDialog
 import kotlinx.android.synthetic.main.activity_menu_submenu.*
 import kotlinx.android.synthetic.main.activity_menu_submenu_content.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
+import org.jetbrains.anko.backgroundDrawable
 import javax.inject.Inject
 
 
@@ -57,10 +59,15 @@ open class MenuSubMenuActivity : BaseActivity(), MenuSubMenuActivityView, View.O
         setOnClickView(fabUpdateSubMenu)
         setOnClickView(fabActiveSubMenu)
         setOnClickView(fabDeleteSubMenu)
+        setOnClickView(imageViewInformationTournament)
     }
 
     private fun setOnClickView(view: View) {
         view.setOnClickListener(this)
+    }
+
+    private fun showAlertInformation() {
+        ViewComponentHelper.showAlertInformation(this, "MENU - SUBMENU", getString(R.string.alert_info_menu_submenu))
     }
 
     private fun getMenuSubMenu() {
@@ -88,11 +95,11 @@ open class MenuSubMenuActivity : BaseActivity(), MenuSubMenuActivityView, View.O
         if (v == fabCreateMenu) {
             saveMenuSubMenuOnClick(true)
             return
-        } else
-            if (!menuListAny()) {
-                errorMenuSubMenuEmpty(true)
-                return
-            }
+        }
+        if (!menuListAny()) {
+            errorMenuSubMenuEmpty(true)
+            return
+        }
         when (v) {
             btnMenu -> onClickMenuSubmenu(true)
             fabCreateMenu -> saveMenuSubMenuOnClick(true)
@@ -105,6 +112,7 @@ open class MenuSubMenuActivity : BaseActivity(), MenuSubMenuActivityView, View.O
             fabUpdateSubMenu -> updateMenuSubMenuOnClick(false)
             fabActiveSubMenu -> activeAndDeleteSubMenuOnClick(false)
             fabDeleteSubMenu -> activeAndDeleteSubMenuOnClick(true)
+            imageViewInformationTournament -> showAlertInformation()
         }
     }
 
@@ -160,15 +168,18 @@ open class MenuSubMenuActivity : BaseActivity(), MenuSubMenuActivityView, View.O
         menuDrawer = null
         subMenuDrawer = null
 
+
         if (!menuDrawers.any())
             btnMenu.text = "Menu"
         else
             btnMenu.text = getString(R.string.select_menu)
+        diviverLineMenu.visibility = View.GONE
 
         if (!subMenuDrawers.any())
             btnSubMenu.text = "Sub Menu"
         else
             btnSubMenu.text = getString(R.string.select_submenu)
+        diviverLineSubmenu.visibility = View.GONE
     }
 
     private fun dialogSpinnerMenu() {
@@ -177,6 +188,7 @@ open class MenuSubMenuActivity : BaseActivity(), MenuSubMenuActivityView, View.O
             override fun onClick(item: String, position: Int) {
                 menuDrawer = menuDrawers[position]
                 btnMenu.text = item
+                setDividerLine(diviverLineMenu, menuDrawer!!.IS_ACTIVE)
             }
         })
 
@@ -188,15 +200,26 @@ open class MenuSubMenuActivity : BaseActivity(), MenuSubMenuActivityView, View.O
         spinnerDialog.bindOnSpinerListener(object : OnSpinerItemClick {
             override fun onClick(item: String, position: Int) {
                 subMenuDrawer = subMenuDrawers[position]
-                btnSubMenu.text = subMenuDrawer.toString()
+                btnSubMenu.text = subMenuDrawer!!.toString()
+                setDividerLine(diviverLineSubmenu, subMenuDrawer!!.IS_ACTIVE)
             }
         })
 
         spinnerDialog.showSpinerDialog()
     }
 
+    private fun setDividerLine(view: View, is_active: Int) {
+        with(view) {
+            visibility = View.VISIBLE
+            if (is_active == 0)
+                backgroundDrawable = ContextCompat.getDrawable(this@MenuSubMenuActivity, R.drawable.line_state_unactivo_item)
+            else
+                backgroundDrawable = ContextCompat.getDrawable(this@MenuSubMenuActivity, R.drawable.line_state_activo_item)
+        }
+    }
+
     override fun setError(error: String) {
-        Utils.showSnackBar(conteiner, error)
+        showShackBar(error)
     }
 
     override fun validateAlert() {
@@ -258,12 +281,13 @@ open class MenuSubMenuActivity : BaseActivity(), MenuSubMenuActivityView, View.O
     }
 
     override fun menuSaveSuccess() {
-        Utils.showSnackBar(conteiner, getString(R.string.save_success, "Menu", "o"))
+        showShackBar(getString(R.string.save_success, "Menu", "o"))
     }
 
     override fun eventSuccess(msg: String) {
-        Utils.showSnackBar(conteiner, msg)
+        showShackBar(msg)
     }
+    private fun showShackBar(msg: String) = ViewComponentHelper.showSnackBar(conteiner, msg)
 
     private fun showAlertDialog(title: String,
                                 msg: String,

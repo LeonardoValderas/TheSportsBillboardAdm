@@ -8,9 +8,9 @@ import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.ui
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.news.ui.NewsFragment
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.sanction.ui.SanctionFragment
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.leaderboard.ui.LeaderBoardFragment
+import com.valdroide.thesportsbillboardinstitution.utils.helper.SharedHelper
 import kotlinx.android.synthetic.main.activity_tab.*
 import com.valdroide.thesportsbillboardinstitution.utils.base.BaseActivityTabs
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
 
 
 open class TabActivity : BaseActivityTabs() {
@@ -31,7 +31,7 @@ open class TabActivity : BaseActivityTabs() {
     private fun initToobar(){
         setSupportActionBar(toolbar)
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
-        val title: String = Utils.getSubmenuTitle(this)
+        val title: String = SharedHelper.getSubmenuTitle(this)
         getSupportActionBar()!!.setTitle(title)
     }
 //      SAN ESTEBAN

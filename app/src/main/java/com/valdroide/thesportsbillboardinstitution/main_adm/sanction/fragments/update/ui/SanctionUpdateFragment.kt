@@ -3,7 +3,6 @@ package com.valdroide.thesportsbillboardinstitution.main_adm.sanction.fragments.
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +13,8 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.sanction.fragments.u
 import com.valdroide.thesportsbillboardinstitution.main_adm.sanction.fragments.update.di.SanctionUpdateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.sanction.fragments.update.ui.adapter.SanctionUpdateFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.model.entities.Sanction
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener_2
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import kotlinx.android.synthetic.main.frame_recycler_refresh.*
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.support.v4.alert
@@ -93,8 +92,10 @@ class SanctionUpdateFragment : Fragment(), SanctionUpdateFragmentView, GenericOn
 
     override fun updateSanctionSuccess() {
         adapterSanction.notifyDataSetChanged()
-        Utils.showSnackBar(conteiner, getString(R.string.update_success, "Sanción"))
+        showSnackBar(getString(R.string.update_success, "Sanción"))
     }
+
+    private fun showSnackBar(msg: String) = ViewComponentHelper.showSnackBar(conteiner, msg)
 
     private fun initRecyclerView() {
         with(recyclerView) {
@@ -111,11 +112,11 @@ class SanctionUpdateFragment : Fragment(), SanctionUpdateFragmentView, GenericOn
 
     override fun deleteSanctionSuccess() {
         adapterSanction.deleteSanction(position)
-        Utils.showSnackBar(conteiner, activity.getString(R.string.delete_success, "Sanción"))
+        showSnackBar(activity.getString(R.string.delete_success, "Sanción"))
     }
 
     override fun setError(error: String) {
-        Utils.showSnackBar(conteiner, error)
+        showSnackBar(error)
     }
 
     override fun hideSwipeRefreshLayout() {

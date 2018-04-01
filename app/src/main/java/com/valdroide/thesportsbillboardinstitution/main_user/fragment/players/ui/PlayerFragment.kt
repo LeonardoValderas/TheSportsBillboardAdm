@@ -1,95 +1,70 @@
 package com.valdroide.thesportsbillboardinstitution.main_user.fragment.players.ui
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.players.PlayerFragmentPresenter
-import com.valdroide.thesportsbillboardinstitution.main_user.fragment.players.di.PlayerFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.players.ui.adapters.PlayerFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.model.entities.Player
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
+import com.valdroide.thesportsbillboardinstitution.utils.helper.SharedHelper
+import com.valdroide.thesportsbillboardinstitution.utils.base.BaseFragmentUser
 import kotlinx.android.synthetic.main.fragment_player.*
+import javax.inject.Inject
 
-class PlayerFragment : Fragment(), PlayerFragmentView {
+class PlayerFragment : BaseFragmentUser(), PlayerFragmentView {
 
-    private lateinit var component: PlayerFragmentComponent
+    @Inject
     lateinit var presenter: PlayerFragmentPresenter
+    @Inject
     lateinit var adapterPlayer: PlayerFragmentAdapter
     var playerList: MutableList<Player> = arrayListOf()
-    private var isRegister: Boolean = false
     private var id_sub_menu: Int = 0
-
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? =
-            inflater!!.inflate(R.layout.frame_recycler_refresh, container, false)
-
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setupInjection()
-        register()
         initRecyclerView()
         initSwipeRefreshLayout()
         getPlayer(false)
     }
 
-    private fun setupInjection() {
+    override fun getLayoutResourceId(): Int = R.layout.frame_recycler_refresh
+
+    override fun validateEvenBusRegisterForLifeCycle(isRegister: Boolean) {
+        if (isRegister)
+            presenter.onCreate()
+        else
+            presenter.onDestroy()
+    }
+
+    override fun setupInjection() {
         val app = activity.application as TheSportsBillboardInstitutionApp
         app.firebaseAnalyticsInstance().setCurrentScreen(activity, javaClass.simpleName, null)
-        //app.getFixtureFragmentComponent(this, this, this)
-        component = app.getPlayerFragmentComponent(this, this)
-        presenter = getPresenterInj()
-        adapterPlayer = getAdapter()
+        app.getPlayerFragmentComponent(this, this).inject(this)
     }
 
     fun getPlayer(isUpdate: Boolean) {
         if (playerList.isEmpty() || isUpdate) {
             showSwipeRefreshLayout()
-            id_sub_menu = Utils.getSubmenuId(activity)
-            presenter.getPlayers(activity, id_sub_menu)
-        } else {
+            getPlayer(SharedHelper.getSubmenuId(activity))
+        } else
             setAdapter(playerList)
-        }
+    }
+
+    private fun getPlayer(id_submenu: Int){
+        if (id_submenu <= 0) {
+            hideSwipeRefreshLayout()
+            setError(getString(R.string.generic_error_response))
+        } else
+            presenter.getPlayers(activity, id_submenu)
     }
 
     private fun setAdapter(Player: MutableList<Player>) {
         adapterPlayer.setPlayers(Player)
     }
 
-    fun register() {
-        if (!isRegister) {
-            presenter.onCreate()
-            isRegister = true
-        }
-    }
-
-    fun unregister() {
-        if (isRegister) {
-            presenter.onDestroy()
-            isRegister = false
-        }
-    }
-
     private fun verifySwipeRefresh(show: Boolean) {
-        try {
-            if (swipeRefreshLayout != null) {
-                if (show) {
-                    if (!swipeRefreshLayout.isRefreshing()) {
-                        swipeRefreshLayout.setRefreshing(true)
-                    }
-                } else {
-                    if (swipeRefreshLayout.isRefreshing()) {
-                        swipeRefreshLayout.setRefreshing(false)
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            setError(e.message!!)
-        }
+        ViewComponentHelper.verifySwipeRefresh(conteiner, swipeRefreshLayout, show)
     }
 
     private fun initSwipeRefreshLayout() {
@@ -104,24 +79,9 @@ class PlayerFragment : Fragment(), PlayerFragmentView {
 
     private fun initRecyclerView() {
         with(recyclerView) {
-            layoutManager = android.support.v7.widget.LinearLayoutManager(activity)
-            setHasFixedSize(true)
+            ViewComponentHelper.initRecyclerView(this, activity)
             adapter = adapterPlayer
         }
-    }
-
-    open fun getPresenterInj(): PlayerFragmentPresenter {
-        //  if (!isTest)
-        return component.getPresenter()
-//        else
-//            return presenterTest
-    }
-
-    open fun getAdapter(): PlayerFragmentAdapter {
-        //if (!isTest)
-        return component.getAdapter()
-//        else
-//            return adapterTest
     }
 
     override fun setPlayers(players: MutableList<Player>) {
@@ -130,7 +90,7 @@ class PlayerFragment : Fragment(), PlayerFragmentView {
     }
 
     override fun setError(error: String) {
-        Utils.showSnackBar(conteiner, error)
+        ViewComponentHelper.showSnackBar(conteiner, error)
     }
 
     override fun hideSwipeRefreshLayout() {
@@ -140,34 +100,4 @@ class PlayerFragment : Fragment(), PlayerFragmentView {
     override fun showSwipeRefreshLayout() {
         verifySwipeRefresh(true)
     }
-
-    override fun onPause() {
-        unregister()
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        register()
-//        mAd.resume(this)
-//        if (mAdView != null) {
-//            mAdView.resume()
-//        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        register()
-    }
-
-    override fun onStop() {
-        unregister()
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        unregister()
-        super.onDestroy()
-    }
-
 }

@@ -9,7 +9,7 @@ import com.valdroide.thesportsbillboardinstitution.lib.base.SchedulersInterface
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.events.TeamCreateFragmentEvent
 import com.valdroide.thesportsbillboardinstitution.model.entities.Team
 import com.valdroide.thesportsbillboardinstitution.model.entities.WSResponse
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.DateTimeHelper
 
 class TeamCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: ApiService, val scheduler: SchedulersInterface) : TeamCreateFragmentRepository {
 
@@ -54,7 +54,7 @@ class TeamCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: A
      //   id_user = Utils.getIdUserWork(context)
         if (id_user != 0) {
             try {
-                apiService.saveTeam(team.NAME, team.URL_IMAGE, team.NAME_IMAGE, team.ENCODE, id_user, Utils.getFechaOficialSeparate())
+                apiService.saveTeam(team.NAME, team.URL_IMAGE, team.NAME_IMAGE, team.ENCODE, id_user, DateTimeHelper.getFechaOficialSeparate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->
@@ -91,7 +91,7 @@ class TeamCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: A
             try {
                 apiService.updateTeam(team.ID_TEAM_KEY, team.NAME, team.URL_IMAGE,
                         team.NAME_IMAGE, team.ENCODE, team.BEFORE,
-                        team.IS_ACTIVE, id_user, Utils.getFechaOficialSeparate())
+                        team.IS_ACTIVE, id_user, DateTimeHelper.getFechaOficialSeparate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->

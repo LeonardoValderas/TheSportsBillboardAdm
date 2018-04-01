@@ -6,7 +6,6 @@ import android.view.*
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.TeamUpdateFragmentPresenter
-import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.di.TeamUpdateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.update.ui.adapter.TeamUpdateFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.model.entities.Team
 import kotlinx.android.synthetic.main.fragment_fixture.*
@@ -16,6 +15,7 @@ import org.jetbrains.anko.yesButton
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.activity.TabTeamActivity
 import com.valdroide.thesportsbillboardinstitution.utils.*
 import com.valdroide.thesportsbillboardinstitution.utils.base.BaseFragment
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
 import javax.inject.Inject
 
 class TeamUpdateFragment : BaseFragment(), TeamUpdateFragmentView, GenericOnItemClick<Team>, OnMenuItemClickListener {
@@ -142,7 +142,7 @@ class TeamUpdateFragment : BaseFragment(), TeamUpdateFragmentView, GenericOnItem
     }
 
     private fun showSnackBar(msg: String){
-        Utils.showSnackBar(conteiner, msg)
+        ViewComponentHelper.showSnackBar(conteiner, msg)
     }
     override fun hideSwipeRefreshLayout() {
         verifySwipeRefresh(false)

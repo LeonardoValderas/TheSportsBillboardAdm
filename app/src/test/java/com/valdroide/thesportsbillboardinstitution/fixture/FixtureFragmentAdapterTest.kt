@@ -11,7 +11,6 @@ import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.ui
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.ui.adapter.FixtureFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.ui.adapter.OnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

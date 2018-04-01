@@ -11,7 +11,7 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.Player
 import com.valdroide.thesportsbillboardinstitution.model.entities.Sanction
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 import com.valdroide.thesportsbillboardinstitution.model.entities.WSResponse
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.DateTimeHelper
 
 class SanctionCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: ApiService, val scheduler: SchedulersInterface) : SanctionCreateFragmentRepository {
 
@@ -84,11 +84,13 @@ class SanctionCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiServic
         }
     }
 
+    private fun getOficialDate(): String = DateTimeHelper.getFechaOficialSeparate()
+
     override fun saveSanction(context: Context, sanction: Sanction) {
         try {
             apiService.saveSanction(sanction.YELLOW, sanction.RED, sanction.SANCTION,
                     sanction.OBSERVATION, sanction.ID_SUB_MENU, sanction.ID_PLAYER, 1,
-                    Utils.getFechaOficialSeparate())
+                    getOficialDate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->
@@ -120,7 +122,7 @@ class SanctionCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiServic
         try {
             apiService.updateSanction(sanction.ID_SANCTION_KEY, sanction.YELLOW, sanction.RED, sanction.SANCTION,
                     sanction.OBSERVATION, sanction.ID_SUB_MENU, sanction.ID_PLAYER, 1,
-                    Utils.getFechaOficialSeparate())
+                    getOficialDate())
                     .subscribeOn(scheduler.schedulerIO())
                     .observeOn(scheduler.schedulerMainThreader())
                     .subscribe({ result ->

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.players.ui.PlayerFragment
 import com.valdroide.thesportsbillboardinstitution.model.entities.Player
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ImageHelper
 import kotlinx.android.synthetic.main.player_item.view.*
 
 class PlayerFragmentAdapter(private var players: MutableList<Player>?, fragment: Fragment) : RecyclerView.Adapter<PlayerFragmentAdapter.ViewHolder>() {
@@ -34,7 +34,7 @@ class PlayerFragmentAdapter(private var players: MutableList<Player>?, fragment:
             //   YoYo.with(Techniques.FlipInX).playOn(holder.card_view);
             with(player) {
                 itemView.textViewName.text = NAME
-                Utils.setPicasso(fragment.activity, URL_IMAGE, R.mipmap.ic_launcher, itemView.imageViewPlayer)
+                ImageHelper.setPicasso(fragment.activity, URL_IMAGE, R.mipmap.ic_launcher, itemView.imageViewPlayer)
                 itemView.textViewPosition.text = POSITION
             }
         }

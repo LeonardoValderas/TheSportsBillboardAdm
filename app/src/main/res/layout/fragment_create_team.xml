@@ -39,9 +39,9 @@
                     style="@style/ButtonInformation" />
 
                 <FrameLayout
-                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
 
                     <ImageView
                         android:id="@+id/imageViewTeam"
@@ -64,9 +64,9 @@
                         android:id="@+id/editTextNameTeam"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Ingrese el nombre"
                         android:layout_marginLeft="@dimen/dim_10dp"
                         android:layout_marginRight="@dimen/dim_10dp"
+                        android:hint="Ingrese el nombre"
                         android:textSize="18sp">
 
                         <requestFocus />
@@ -155,7 +155,7 @@
                             android:id="@+id/fabCreatePosition"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@android:drawable/ic_input_add"
+                            android:src="@android:drawable/ic_menu_save"
                             android:tint="@color/colorWhite"
                             fab:fab_colorNormal="@color/colorPrimary"
                             fab:fab_colorPressed="@color/colorPrimaryDark"
@@ -225,7 +225,9 @@
                 android:id="@+id/buttonSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp" />
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_select_button_blue"
+                android:textColor="@color/bpWhite" />
 
         </LinearLayout>
     </ScrollView>

@@ -25,18 +25,15 @@ class LeaderBoardFragmentModule(val view: LeaderBoardFragmentView, val context: 
     fun provideLeaderBoardFragmentPresenter(view: LeaderBoardFragmentView, event: EventBus, interactor: LeaderBoardFragmentInteractor): LeaderBoardFragmentPresenter
             = LeaderBoardFragmentPresenterImpl(view, event, interactor)
 
-
     @Provides
     @Singleton
     fun provideLeaderBoardFragmentInteractor(repository: LeaderBoardFragmentRepository): LeaderBoardFragmentInteractor
             = LeaderBoardFragmentInteractorImpl(repository)
 
-
     @Provides
     @Singleton
     fun provideLeaderBoardFragmentRepository(event: EventBus?, apiService: ApiService, scheduler: SchedulersInterface): LeaderBoardFragmentRepository
             = LeaderBoardFragmentRepositoryImpl(event!!, apiService, scheduler)
-
 
     @Provides
     @Singleton

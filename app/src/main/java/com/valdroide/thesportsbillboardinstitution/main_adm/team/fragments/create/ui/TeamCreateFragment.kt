@@ -8,19 +8,16 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.text.Editable
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.google.firebase.crash.FirebaseCrash
 import com.theartofdev.edmodo.cropper.CropImage
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.TeamCreateFragmentPresenter
-import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.di.TeamCreateFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.model.entities.Team
-import com.valdroide.thesportsbillboardinstitution.utils.Communicator
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.*
 import com.valdroide.thesportsbillboardinstitution.utils.base.BaseFragment
+import com.valdroide.thesportsbillboardinstitution.utils.helper.*
 import kotlinx.android.synthetic.main.fragment_create_team.*
 import java.io.IOException
 import javax.inject.Inject
@@ -39,16 +36,20 @@ class TeamCreateFragment : BaseFragment(), TeamCreateFragmentView, View.OnClickL
     private var url_image: String = ""
     private var imageByte: ByteArray? = null
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    init {
         buttonSave.text = getString(R.string.save_button, "Equipo")
         linearConteinerPlayer.visibility = View.GONE
-        if (isTeamUpdate()) {
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if (isTeamUpdate())
             presenter.getTeam(activity, id_team)
-        } else
+        else
             setVisibilityViews(View.VISIBLE)
         setOnclik()
     }
+
 
     override fun setupInjection() {
         val app = activity.application as TheSportsBillboardInstitutionApp
@@ -84,7 +85,7 @@ class TeamCreateFragment : BaseFragment(), TeamCreateFragmentView, View.OnClickL
     }
 
     private fun showAlertInformation() {
-        Utils.showAlertInformation(activity, "EQUIPOS", getString(R.string.alert_info_team))
+        ViewComponentHelper.showAlertInformation(activity, "EQUIPOS", getString(R.string.alert_info_team))
     }
 
     override fun onClickButtonSave() {
@@ -95,27 +96,27 @@ class TeamCreateFragment : BaseFragment(), TeamCreateFragmentView, View.OnClickL
     }
 
     override fun onClickPhoto() {
-        if (!Utils.oldPhones()) {
+        if (!PermissionHelper.oldPhones()) {
             val permissionCheck = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            Utils.checkForPermission(activity, permissionCheck, Utils.PERMISSION_GALERY, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            PermissionHelper.checkForPermission(activity, permissionCheck, ConstantHelper.PERMISSION_GALERY, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
-        if (Utils.hasPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            Utils.ImageDialogLogo(null, this, Utils.PERMISSION_GALERY);
+        if (PermissionHelper.hasPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            ViewComponentHelper.ImageDialogLogo(null, this, ConstantHelper.PERMISSION_GALERY);
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == Utils.PERMISSION_GALERY)
+        if (requestCode == ConstantHelper.PERMISSION_GALERY)
             if (grantResults.count() > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                Utils.ImageDialogLogo(null, this, Utils.PERMISSION_GALERY);
+                ViewComponentHelper.ImageDialogLogo(null, this, ConstantHelper.PERMISSION_GALERY);
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
-            if (requestCode == Utils.PERMISSION_GALERY) {
+            if (requestCode == ConstantHelper.PERMISSION_GALERY) {
                 val imageUri = CropImage.getPickImageResultUri(activity, data)
-                Utils.startCropImageActivity(null, this, imageUri)
+                ImageHelper.startCropImageActivity(null, this, imageUri)
             }
             if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
                 val result = CropImage.getActivityResult(data)
@@ -134,9 +135,9 @@ class TeamCreateFragment : BaseFragment(), TeamCreateFragmentView, View.OnClickL
     }
 
     private fun assignImage(uri: Uri?) {
-        Utils.setPicasso(activity, uri.toString(), R.drawable.shield_icon, imageViewTeam)
+        ImageHelper.setPicasso(activity, uri.toString(), R.drawable.shield_icon, imageViewTeam)
         try {
-            imageByte = Utils.readBytes(uri, activity)
+            imageByte = ImageHelper.readBytes(uri, activity)
         } catch (e: IOException) {
             FirebaseCrash.report(e)
             e.printStackTrace()
@@ -148,13 +149,13 @@ class TeamCreateFragment : BaseFragment(), TeamCreateFragmentView, View.OnClickL
             NAME = editTextNameTeam.text.toString()
             if (imageByte != null) {
                 try {
-                    encode = Utils.encodeToString(imageByte)
+                    encode = ImageHelper.encodeToString(imageByte)
                 } catch (e: Exception) {
                     FirebaseCrash.report(e)
                     encode = ""
                 }
-                name_image = Utils.getFechaOficial() + Utils.PNG
-                url_image = Utils.URL_TEAM + name_image
+                name_image = DateTimeHelper.getFechaOficial() + ConstantHelper.PNG
+                url_image = UrlHelper.URL_TEAM + name_image
             }
 
             ENCODE = encode
@@ -196,7 +197,7 @@ class TeamCreateFragment : BaseFragment(), TeamCreateFragmentView, View.OnClickL
     override fun fillViewUpdate() {
         with(team) {
             id_team = ID_TEAM_KEY
-            Utils.setPicasso(activity, URL_IMAGE, R.drawable.shield_icon, imageViewTeam)
+            ImageHelper.setPicasso(activity, URL_IMAGE, R.drawable.shield_icon, imageViewTeam)
             editTextNameTeam.text = Editable.Factory.getInstance().newEditable(NAME)
             url_image = URL_IMAGE
             name_image = NAME_IMAGE
@@ -227,7 +228,7 @@ class TeamCreateFragment : BaseFragment(), TeamCreateFragmentView, View.OnClickL
     }
 
     private fun showSnackBar(msg: String){
-        Utils.showSnackBar(conteiner, msg)
+        ViewComponentHelper.showSnackBar(conteiner, msg)
     }
     override fun cleanViews() {
         team = Team()

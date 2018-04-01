@@ -7,9 +7,8 @@ import com.valdroide.thesportsbillboardinstitution.api.ApiService
 import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
 import com.valdroide.thesportsbillboardinstitution.lib.base.SchedulersInterface
 import com.valdroide.thesportsbillboardinstitution.main_adm.fixture.fragments.create.events.FixtureCreateFragmentEvent
-import com.valdroide.thesportsbillboardinstitution.main_adm.team.fragments.create.events.TeamCreateFragmentEvent
 import com.valdroide.thesportsbillboardinstitution.model.entities.*
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.DateTimeHelper
 
 class FixtureCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService: ApiService, val scheduler: SchedulersInterface) : FixtureCreateFragmentRepository {
 
@@ -95,7 +94,7 @@ class FixtureCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService
                         fixture.ID_LOCAL_TEAM, fixture.ID_VISITE_TEAM,
                         fixture.ID_SUBMENU_KEY, fixture.ID_FIELD_MATCH,
                         fixture.ID_TIMES_MATCH, fixture.RESULT_LOCAL, fixture.RESULT_VISITE, fixture.DATE_MATCH,
-                        fixture.HOUR_MATCH, fixture.OBSERVATION, id_user, Utils.getFechaOficialSeparate())
+                        fixture.HOUR_MATCH, fixture.OBSERVATION, id_user, DateTimeHelper.getFechaOficialSeparate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->
@@ -134,7 +133,7 @@ class FixtureCreateFragmentRepositoryImpl(val eventBus: EventBus, val apiService
                         fixture.ID_LOCAL_TEAM, fixture.ID_VISITE_TEAM,
                         fixture.ID_SUBMENU_KEY, fixture.ID_FIELD_MATCH,
                         fixture.ID_TIMES_MATCH, fixture.RESULT_LOCAL, fixture.RESULT_VISITE, fixture.DATE_MATCH,
-                        fixture.HOUR_MATCH, fixture.OBSERVATION, id_user, Utils.getFechaOficialSeparate())
+                        fixture.HOUR_MATCH, fixture.OBSERVATION, id_user, DateTimeHelper.getFechaOficialSeparate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->

@@ -7,11 +7,11 @@ import android.view.View
 
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
-import com.valdroide.thesportsbillboardinstitution.main_user.navigation.ui.NavigationActivity
+import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_submenu.ui.NavigationActivity
 import com.valdroide.thesportsbillboardinstitution.main_user.splash.SplashActivityPresenter
 import com.valdroide.thesportsbillboardinstitution.main_user.splash.di.SplashActivityComponent
 import com.valdroide.thesportsbillboardinstitution.model.entities.DateData
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
 import kotlinx.android.synthetic.main.activity_splash.*
 
 
@@ -46,7 +46,7 @@ open class SplashActivity : AppCompatActivity(), SplashActivityView {
     }
 
     override fun setError(error: String) {
-        Utils.showSnackBar(conteiner, error)
+        ViewComponentHelper.showSnackBar(conteiner, error)
     }
 
     override fun goToNav() {

@@ -100,14 +100,16 @@ import com.valdroide.thesportsbillboardinstitution.main_user.fragment.sanction.d
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.sanction.di.SanctionFragmentComponent
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.sanction.di.SanctionFragmentModule
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.sanction.ui.SanctionFragmentView
-import com.valdroide.thesportsbillboardinstitution.main_user.navigation.di.DaggerNavigationActivityComponent
-import com.valdroide.thesportsbillboardinstitution.main_user.navigation.di.NavigationActivityComponent
-import com.valdroide.thesportsbillboardinstitution.main_user.navigation.di.NavigationActivityModule
-import com.valdroide.thesportsbillboardinstitution.main_user.navigation.ui.NavigationActivityView
+import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_menu.di.DaggerNavigationActivityMenuComponent
+import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_menu.di.NavigationActivityMenuComponent
+import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_menu.di.NavigationActivityMenuModule
+import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_submenu.di.DaggerNavigationActivityComponent
+import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_submenu.di.NavigationActivityComponent
+import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_submenu.di.NavigationActivityModule
+import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_submenu.ui.NavigationActivityView
 import com.valdroide.thesportsbillboardinstitution.model.entities.Player
 import com.valdroide.thesportsbillboardinstitution.model.entities.Team
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClick
-import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClickListener_2
 
 
@@ -163,6 +165,15 @@ class TheSportsBillboardInstitutionApp : Application() {
                 .builder()
                 .libsModule(LibsModule(activity))
                 .navigationActivityModule(NavigationActivityModule(activity, view))
+                .build()
+    }
+
+    fun getNavigationActivityMenuComponent(view: com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_menu.ui.NavigationActivityView,
+                                       activity: Activity): NavigationActivityMenuComponent {
+        return DaggerNavigationActivityMenuComponent
+                .builder()
+                .libsModule(LibsModule(activity))
+                .navigationActivityMenuModule(NavigationActivityMenuModule(activity, view))
                 .build()
     }
 

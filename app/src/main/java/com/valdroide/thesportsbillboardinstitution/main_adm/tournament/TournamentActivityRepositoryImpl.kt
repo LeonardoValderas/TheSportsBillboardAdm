@@ -10,7 +10,7 @@ import com.valdroide.thesportsbillboardinstitution.main_adm.tournament.events.To
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 import com.valdroide.thesportsbillboardinstitution.model.entities.Tournament
 import com.valdroide.thesportsbillboardinstitution.model.entities.WSResponse
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
+import com.valdroide.thesportsbillboardinstitution.utils.helper.DateTimeHelper
 
 class TournamentActivityRepositoryImpl(val eventBus: EventBus, val apiService: ApiService, val scheduler: SchedulersInterface) : TournamentActivityRepository {
 
@@ -52,10 +52,12 @@ class TournamentActivityRepositoryImpl(val eventBus: EventBus, val apiService: A
         }
     }
 
+    private fun getOficialDate(): String = DateTimeHelper.getFechaOficialSeparate()
+
     override fun saveTournament(context: Context, tournament: Tournament) {
         if (id_user != 0) {
             try {
-                apiService.saveTournament(tournament.TOURNAMENT, id_user, Utils.getFechaOficialSeparate())
+                apiService.saveTournament(tournament.TOURNAMENT, id_user, getOficialDate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->
@@ -86,7 +88,7 @@ class TournamentActivityRepositoryImpl(val eventBus: EventBus, val apiService: A
         if (id_user != 0) {
             try {
                 apiService.updateTournament(tournament.ID_TOURNAMENT_KEY, tournament.TOURNAMENT, tournament.IS_ACTIVE,
-                        id_user, Utils.getFechaOficialSeparate())
+                        id_user, getOficialDate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->
@@ -117,7 +119,7 @@ class TournamentActivityRepositoryImpl(val eventBus: EventBus, val apiService: A
         if (id_user != 0) {
             try {
                 apiService.activeOrUnActiveTournament(tournament.ID_TOURNAMENT_KEY, tournament.IS_ACTIVE,
-                        id_user, Utils.getFechaOficialSeparate())
+                        id_user, getOficialDate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->
@@ -147,7 +149,7 @@ class TournamentActivityRepositoryImpl(val eventBus: EventBus, val apiService: A
     override fun deleteTournament(context: Context, tournament: Tournament) {
         if (id_user != 0) {
             try {
-                apiService.deleteTournament(tournament.ID_TOURNAMENT_KEY, id_user, Utils.getFechaOficialSeparate())
+                apiService.deleteTournament(tournament.ID_TOURNAMENT_KEY, id_user, getOficialDate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->
@@ -182,7 +184,7 @@ class TournamentActivityRepositoryImpl(val eventBus: EventBus, val apiService: A
         if (id_user != 0) {
             try {
                 apiService.assignationUnassignation(subMenu.ID_SUBMENU_KEY, tounament, id_user,
-                        Utils.getFechaOficialSeparate())
+                        getOficialDate())
                         .subscribeOn(scheduler.schedulerIO())
                         .observeOn(scheduler.schedulerMainThreader())
                         .subscribe({ result ->

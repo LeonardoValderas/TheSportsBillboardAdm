@@ -19,6 +19,10 @@ interface ApiService {
 
     //MENUSSUBMENUS
     @GET("user/menu_submenu/getMenusSubMenus.php")
+    fun getMenus(): Observable<MenuSubMenuResponse>
+
+    //MENUSSUBMENUS
+    @GET("user/menu_submenu/getMenusSubMenus.php")
     fun getMenuSubMenu(): Observable<MenuSubMenuResponse>
 
     //ACCOUNT
@@ -29,6 +33,11 @@ interface ApiService {
     @FormUrlEncoded
     @POST("user/fixture/getFixture.php")
     fun getFixtureForDivision(@Field("id_submenu") id_submenu: Int,
+                              @Field("quantity") quantity: Int): Observable<FixtureResponse>
+
+    @FormUrlEncoded
+    @POST("user/fixture/getFixtureMenu.php")
+    fun getFixtureForDivisionMenu(@Field("menu") id_menu: Int,
                               @Field("quantity") quantity: Int): Observable<FixtureResponse>
 
     //LEADERBOARDS

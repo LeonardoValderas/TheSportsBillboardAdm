@@ -8,10 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
-import com.valdroide.thesportsbillboardinstitution.model.entities.Team
 import com.valdroide.thesportsbillboardinstitution.utils.GenericRecyclerAdapter
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
-import kotlinx.android.synthetic.main.fixture_item.view.*
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ImageHelper
 
 class FixtureUpdateFragmentAdapter(context: Context) : GenericRecyclerAdapter<Fixture>(context, null) {
 
@@ -36,8 +34,8 @@ class FixtureUpdateFragmentAdapter(context: Context) : GenericRecyclerAdapter<Fi
 //            DATE_MATCH + " - " + HOUR_MATCH + " hs."
             val date_hour = context!!.getString(R.string.fixture_concatenate, DATE_MATCH ,HOUR_MATCH)
             tvDateHour.text = date_hour
-            com.valdroide.thesportsbillboardinstitution.utils.Utils.setPicasso(context, URL_LOCAL_TEAM, R.drawable.shield_icon, ivLocalTeam)
-            com.valdroide.thesportsbillboardinstitution.utils.Utils.setPicasso(context, URL_VISIT_TEAM, R.drawable.shield_icon, ivVisitTeam)
+            ImageHelper.setPicasso(context, URL_LOCAL_TEAM, R.drawable.shield_icon, ivLocalTeam)
+            ImageHelper.setPicasso(context, URL_VISIT_TEAM, R.drawable.shield_icon, ivVisitTeam)
             tvLocalResult.text = RESULT_LOCAL
             tvVisitResult.text = RESULT_VISITE
             tvTimes.text = TIMES_MATCH

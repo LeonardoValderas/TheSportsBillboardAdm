@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.valdroide.thesportsbillboardinstitution.main_user.navigation.ui.NavigationActivity">
+    tools:context=".main_user.navigation.with_submenu.ui.NavigationActivity">
 
     <include layout="@layout/toolbar_layout" />
 
