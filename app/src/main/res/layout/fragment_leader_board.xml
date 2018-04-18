@@ -8,12 +8,14 @@
     tools:context="com.valdroide.thesportsbillboardinstitution.main_user.fragment.leaderboard.ui.LeaderBoardFragment">
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/ll_title_conteiner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
@@ -128,6 +130,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <TextView
+                android:id="@+id/tv_without_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sin Datos"
+                android:gravity="center|top"
+                android:layout_marginTop="5dp"
+                android:textSize="15sp"
+                android:visibility="gone"/>
 
             <GridView
                 android:id="@+id/gridLeaderBoard"

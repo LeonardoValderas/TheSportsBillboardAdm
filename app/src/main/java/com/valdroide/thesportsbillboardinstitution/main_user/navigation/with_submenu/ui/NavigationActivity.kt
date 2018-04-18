@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.app_bar_navigation.*
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_submenu.NavigationActivityPresenter
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_submenu.ui.adapters.CustomExpandableListAdapter
-import com.valdroide.thesportsbillboardinstitution.main_user.tab.TabActivity
+import com.valdroide.thesportsbillboardinstitution.main_user.tab.ui.TabActivity
 import com.valdroide.thesportsbillboardinstitution.model.entities.MenuDrawer
 import com.valdroide.thesportsbillboardinstitution.model.entities.SubMenuDrawer
 import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper

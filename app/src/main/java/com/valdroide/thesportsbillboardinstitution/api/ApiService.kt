@@ -18,7 +18,7 @@ interface ApiService {
     fun getDateData(): Observable<DataResponse>
 
     //MENUSSUBMENUS
-    @GET("user/menu_submenu/getMenusSubMenus.php")
+    @GET("user/menu_submenu/getMenus.php")
     fun getMenus(): Observable<MenuSubMenuResponse>
 
     //MENUSSUBMENUS
@@ -65,6 +65,11 @@ interface ApiService {
     @POST("user/login/validateLogin.php")
     fun validateLogin(@Field("user") user: String,
                       @Field("pass") pass: String): Call<WSResponse>
+
+    //TOURNAMENT
+    @FormUrlEncoded
+    @POST("user/tournament/getTournamentsForIdSubMenu.php")
+    fun getTournamentsForIdSubMenu(@Field("id_submenu") id_submenu: Int): Observable<TournamentResponse>
 
     //ADM
     //LOGIN

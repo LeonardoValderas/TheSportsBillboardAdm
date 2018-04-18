@@ -12,6 +12,16 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <TextView
+            android:id="@+id/tv_without_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sin Datos"
+            android:gravity="center|top"
+            android:layout_marginTop="5dp"
+            android:textSize="15sp"
+            android:visibility="gone"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

@@ -27,6 +27,13 @@ object SharedHelper {
         editor.apply()
     }
 
+    fun setIdTournament(context: Context, id: Int) {
+        val shared: SharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_id_tournament_title), Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = shared.edit()
+        editor.putInt(context.getString(R.string.shared_id_tournament), id)
+        editor.apply()
+    }
+
     fun getSubmenuId(context: Context): Int {
         val shared: SharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_id_title_submenu), Context.MODE_PRIVATE)
         return shared.getInt(context.getString(R.string.shared_id), 0)

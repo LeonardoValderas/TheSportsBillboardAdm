@@ -6,9 +6,8 @@ import android.support.v4.view.ViewPager
 import android.support.v7.widget.Toolbar
 import com.valdroide.thesportsbillboardinstitution.BaseTest
 import com.valdroide.thesportsbillboardinstitution.BuildConfig
-import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
-import com.valdroide.thesportsbillboardinstitution.main_user.tab.TabActivity
+import com.valdroide.thesportsbillboardinstitution.main_user.tab.ui.TabActivity
 import com.valdroide.thesportsbillboardinstitution.utils.SectionsPagerAdapter
 import kotlinx.android.synthetic.main.activity_tab.*
 import kotlinx.android.synthetic.main.content_tab.*

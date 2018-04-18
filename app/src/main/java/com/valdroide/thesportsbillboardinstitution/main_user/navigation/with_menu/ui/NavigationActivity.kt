@@ -13,12 +13,13 @@ import kotlinx.android.synthetic.main.app_bar_navigation.*
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_menu.ui.adapters.NavigationActivityAdapter
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_menu.NavigationActivityPresenter
-import com.valdroide.thesportsbillboardinstitution.main_user.tab.TabActivity
+import com.valdroide.thesportsbillboardinstitution.main_user.tab.ui.TabActivity
 import com.valdroide.thesportsbillboardinstitution.model.entities.MenuDrawer
 import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClick
 import com.valdroide.thesportsbillboardinstitution.utils.helper.SharedHelper
 import com.valdroide.thesportsbillboardinstitution.utils.base.BaseActivity
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ConstantHelper
 import kotlinx.android.synthetic.main.activity_tab.*
 import kotlinx.android.synthetic.main.content_navigation.*
 import javax.inject.Inject
@@ -29,7 +30,10 @@ open class NavigationActivity : BaseActivity(), NavigationActivityView, GenericO
     lateinit var presenter: NavigationActivityPresenter
     lateinit var adapterMenu: NavigationActivityAdapter
     private var position: Int = 0
-    var menus: List<MenuDrawer> = arrayListOf()
+
+    //important get firt to database, is null get to network is null and the varible hasMenu is tru. show erro
+
+    var menus: MutableList<MenuDrawer> = arrayListOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +66,7 @@ open class NavigationActivity : BaseActivity(), NavigationActivityView, GenericO
         app.getNavigationActivityMenuComponent(this, this).inject(this)
         adapterMenu = getAdapter()
     }
-    //I dont realice inject because a have error
+    //I dont realice inject because it has a error
     private fun getAdapter(): NavigationActivityAdapter = NavigationActivityAdapter(this, this)
 
     override fun onClick(view: View, position: Int, t: MenuDrawer) {
@@ -71,12 +75,18 @@ open class NavigationActivity : BaseActivity(), NavigationActivityView, GenericO
             if(menuJson.isEmpty())
                 showSnackBar(getString(R.string.generic_error_response))
             else {
-                SharedHelper.setMenuJson(this, menuJson)
-                startActivity(Intent(applicationContext, TabActivity::class.java))
+                //SharedHelper.setMenuJson(this, menuJson)
+                goToTabActivity(menuJson)
             }
         } catch (e: Exception) {
             showSnackBar(e.message!!)
         }
+    }
+
+    private fun goToTabActivity(json: String){
+        val intent = Intent(applicationContext, TabActivity::class.java)
+        intent.putExtra(ConstantHelper.JSON_ENTITY, json)
+        startActivity(intent)
     }
 
     private fun showSnackBar(msg: String) = ViewComponentHelper.showSnackBar(drawer_layout, msg)

@@ -28,6 +28,11 @@ open class SplashActivity : AppCompatActivity(), SplashActivityView {
         setupInjection()
         register()
         getDate();
+        /// Get menu and stored if is null validate if database has data. If is null and the variable hasMenu is true, show error.
+
+
+
+
     }
 
     fun getDate() {

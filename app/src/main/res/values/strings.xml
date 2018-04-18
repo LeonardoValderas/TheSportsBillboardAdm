@@ -63,6 +63,8 @@
     <string name="shared_id_user">id_user_work</string>
     <string name="shared_menu_json">share.menu.json</string>
     <string name="shared_menu">share.menu</string>
+    <string name="shared.id.tournament.title">shared.id.tournament.title</string>
+    <string name="shared.id.tournament">shared.id.tournament</string>
     <!--LAYOUT-->
     <string name="pos.title">N°</string>
     <string name="team.title">EQUIPO</string>

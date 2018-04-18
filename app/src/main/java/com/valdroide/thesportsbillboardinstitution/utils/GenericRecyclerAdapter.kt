@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 
 abstract class GenericRecyclerAdapter<T>(val context: Context?,
-                                         var listener: GenericOnItemClick<T>?) : RecyclerView.Adapter<GenericRecyclerAdapter<T>.ViewHolder>() {
+                                         var listener: GenericOnItemClick<T>?):
+                                         RecyclerView.Adapter<GenericRecyclerAdapter<T>.ViewHolder>() {
+
     private var items: MutableList<T>? = arrayListOf()
 
     constructor(context: Context) : this(context, null)
@@ -25,7 +27,7 @@ abstract class GenericRecyclerAdapter<T>(val context: Context?,
         constructor(view: View, listener: GenericOnItemClick<T>?) : this(view) {
             this.listener = listener
             views = hashMapOf()
-            views!!.put(0, view)
+            views!!.put(0, view) // is de row inflated
             if (listener != null)
                 view.setOnClickListener(this)
         }

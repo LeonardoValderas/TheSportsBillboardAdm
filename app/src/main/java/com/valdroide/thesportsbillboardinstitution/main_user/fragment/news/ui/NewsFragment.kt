@@ -1,6 +1,7 @@
 package com.valdroide.thesportsbillboardinstitution.main_user.fragment.news.ui
 
 import android.os.Bundle
+import android.view.View
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.news.ui.adapters.NewsFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.model.entities.News
@@ -11,16 +12,28 @@ import com.valdroide.thesportsbillboardinstitution.main_user.fragment.news.NewsF
 import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
 import com.valdroide.thesportsbillboardinstitution.utils.helper.SharedHelper
 import com.valdroide.thesportsbillboardinstitution.utils.base.BaseFragmentUser
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ConstantHelper
 import javax.inject.Inject
 
 class NewsFragment : BaseFragmentUser(), NewsFragmentView {
+
+    companion object {
+        fun newInstance(id_menu: Int, error: String): NewsFragment {
+            val args = Bundle()
+            args.putInt(ConstantHelper.USER_FRAGMENT.ID_MENU_FRAGMENT, id_menu)
+            args.putString(ConstantHelper.USER_FRAGMENT.ERROR_FRAGMENT, error)
+            val fragment = NewsFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     @Inject
     lateinit var presenter: NewsFragmentPresenter
     @Inject
     lateinit var adapterNews: NewsFragmentAdapter
     var newsList: MutableList<News> = arrayListOf()
- //   private var id_sub_menu: Int = 0
+    //   private var id_sub_menu: Int = 0
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -50,10 +63,9 @@ class NewsFragment : BaseFragmentUser(), NewsFragmentView {
             getNews(SharedHelper.getSubmenuId(activity))
         } else
             setAdapter(newsList)
-
     }
 
-    private fun getNews(id_submenu: Int){
+    private fun getNews(id_submenu: Int) {
         if (id_submenu <= 0) {
             hideSwipeRefreshLayout()
             setError(getString(R.string.generic_error_response))
@@ -62,7 +74,21 @@ class NewsFragment : BaseFragmentUser(), NewsFragmentView {
     }
 
     private fun setAdapter(news: MutableList<News>) {
+        if (showMessageEmpty(news.isEmpty()))
+            return
+
         adapterNews.setNews(news)
+    }
+
+    private fun showMessageEmpty(isEmpty: Boolean): Boolean {
+        if (isEmpty) {
+            mainListView.visibility = View.GONE
+            tv_without_data.visibility = View.VISIBLE
+        } else {
+            mainListView.visibility = View.VISIBLE
+            tv_without_data.visibility = View.GONE
+        }
+        return isEmpty
     }
 
     private fun verifySwipeRefresh(show: Boolean) {

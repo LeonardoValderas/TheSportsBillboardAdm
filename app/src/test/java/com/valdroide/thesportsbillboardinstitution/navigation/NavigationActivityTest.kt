@@ -11,7 +11,7 @@ import com.valdroide.thesportsbillboardinstitution.BuildConfig
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_user.account.ui.AccountActivity
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_submenu.ui.NavigationActivity
-import com.valdroide.thesportsbillboardinstitution.main_user.tab.TabActivity
+import com.valdroide.thesportsbillboardinstitution.main_user.tab.ui.TabActivity
 import kotlinx.android.synthetic.main.toolbar_layout.*
 import org.junit.Before
 import org.junit.Test

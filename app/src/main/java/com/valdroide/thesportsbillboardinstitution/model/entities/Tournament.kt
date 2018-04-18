@@ -11,7 +11,10 @@ class Tournament ( @SerializedName("id")
                   var TOURNAMENT: String = "",
                   @SerializedName("is_active")
                   @Expose
-                  var IS_ACTIVE: Int = 0) {
+                  var IS_ACTIVE: Int = 0,
+                  @SerializedName("is_actual")
+                  @Expose
+                  var IS_ACTUAL: Int = 0) {
      override fun toString(): String = TOURNAMENT
 }
 

@@ -1,16 +1,14 @@
-package com.valdroide.thesportsbillboardinstitution.utils
+package com.valdroide.thesportsbillboardinstitution.utils.generics
 
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.TextView
+import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClick
 
-abstract class GenericSpinnerAdapterDos<T>(var list :MutableList<T>): BaseAdapter() {
+abstract class GenericSpinnerAdapter<T>(var list :MutableList<T>): BaseAdapter() {
 
     var any: Any? = null
-    lateinit var textViewMenu: TextView
-    lateinit var imageViewMenu: ImageView
 
     override fun getView(int: Int, view: View?, viewGroup: ViewGroup?): View =
             setView(int, view, viewGroup)
@@ -22,7 +20,6 @@ abstract class GenericSpinnerAdapterDos<T>(var list :MutableList<T>): BaseAdapte
     override fun getItemId(p0: Int): Long = 0
 
     override fun getCount(): Int = list.size
-
 
     fun refresh(list: MutableList<T>) {
         this.list = list

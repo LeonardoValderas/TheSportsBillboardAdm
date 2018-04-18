@@ -107,6 +107,10 @@ import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_sub
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_submenu.di.NavigationActivityComponent
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_submenu.di.NavigationActivityModule
 import com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_submenu.ui.NavigationActivityView
+import com.valdroide.thesportsbillboardinstitution.main_user.tab.di.DaggerTabActivityComponent
+import com.valdroide.thesportsbillboardinstitution.main_user.tab.di.TabActivityComponent
+import com.valdroide.thesportsbillboardinstitution.main_user.tab.di.TabActivityModule
+import com.valdroide.thesportsbillboardinstitution.main_user.tab.ui.TabActivityView
 import com.valdroide.thesportsbillboardinstitution.model.entities.Player
 import com.valdroide.thesportsbillboardinstitution.model.entities.Team
 import com.valdroide.thesportsbillboardinstitution.utils.GenericOnItemClick
@@ -230,6 +234,14 @@ class TheSportsBillboardInstitutionApp : Application() {
                 .builder()
                 .libsModule(LibsModule(fragment))
                 .sanctionFragmentModule(SanctionFragmentModule(view, fragment))
+                .build()
+    }
+
+    fun getTabActivityComponent(view: TabActivityView, activity: Activity): TabActivityComponent {
+        return DaggerTabActivityComponent
+                .builder()
+                .libsModule(LibsModule(activity))
+                .tabActivityModule(TabActivityModule(view))
                 .build()
     }
 

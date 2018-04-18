@@ -1,6 +1,7 @@
 package com.valdroide.thesportsbillboardinstitution.main_user.fragment.players.ui
 
 import android.os.Bundle
+import android.view.View
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.players.PlayerFragmentPresenter
@@ -9,10 +10,23 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.Player
 import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
 import com.valdroide.thesportsbillboardinstitution.utils.helper.SharedHelper
 import com.valdroide.thesportsbillboardinstitution.utils.base.BaseFragmentUser
-import kotlinx.android.synthetic.main.fragment_player.*
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ConstantHelper
+import kotlinx.android.synthetic.main.frame_recycler_refresh.*
 import javax.inject.Inject
 
 class PlayerFragment : BaseFragmentUser(), PlayerFragmentView {
+
+    companion object {
+        fun newInstance(id_menu: Int, error: String): PlayerFragment {
+            val args = Bundle()
+            args.putInt(ConstantHelper.USER_FRAGMENT.ID_MENU_FRAGMENT, id_menu)
+            args.putString(ConstantHelper.USER_FRAGMENT.ERROR_FRAGMENT, error)
+
+            val fragment = PlayerFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     @Inject
     lateinit var presenter: PlayerFragmentPresenter
@@ -51,7 +65,7 @@ class PlayerFragment : BaseFragmentUser(), PlayerFragmentView {
             setAdapter(playerList)
     }
 
-    private fun getPlayer(id_submenu: Int){
+    private fun getPlayer(id_submenu: Int) {
         if (id_submenu <= 0) {
             hideSwipeRefreshLayout()
             setError(getString(R.string.generic_error_response))
@@ -60,7 +74,20 @@ class PlayerFragment : BaseFragmentUser(), PlayerFragmentView {
     }
 
     private fun setAdapter(Player: MutableList<Player>) {
+        if (showMessageEmpty(Player.isEmpty()))
+            return
         adapterPlayer.setPlayers(Player)
+    }
+
+    private fun showMessageEmpty(isEmpty: Boolean): Boolean {
+        if (isEmpty) {
+            recyclerView.visibility = View.GONE
+            tv_without_data.visibility = View.VISIBLE
+        } else {
+            recyclerView.visibility = View.VISIBLE
+            tv_without_data.visibility = View.GONE
+        }
+        return isEmpty
     }
 
     private fun verifySwipeRefresh(show: Boolean) {

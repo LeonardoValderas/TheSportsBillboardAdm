@@ -1,6 +1,7 @@
 package com.valdroide.thesportsbillboardinstitution.main_user.fragment.sanction.ui
 
 import android.os.Bundle
+import android.view.View
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.sanction.SanctionFragmentPresenter
@@ -9,10 +10,24 @@ import com.valdroide.thesportsbillboardinstitution.model.entities.Sanction
 import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
 import com.valdroide.thesportsbillboardinstitution.utils.helper.SharedHelper
 import com.valdroide.thesportsbillboardinstitution.utils.base.BaseFragmentUser
-import kotlinx.android.synthetic.main.fragment_sanction.*
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ConstantHelper
+import kotlinx.android.synthetic.main.frame_recycler_refresh.*
 import javax.inject.Inject
 
 class SanctionFragment : BaseFragmentUser(), SanctionFragmentView {
+
+    companion object {
+        fun newInstance(id_menu: Int, id_tournament: Int, error: String): SanctionFragment {
+            val args = Bundle()
+            args.putInt(ConstantHelper.USER_FRAGMENT.ID_MENU_FRAGMENT, id_menu)
+            args.putInt(ConstantHelper.USER_FRAGMENT.ID_TOURNAMENT_FRAGMENT, id_tournament)
+            args.putString(ConstantHelper.USER_FRAGMENT.ERROR_FRAGMENT, error)
+
+            val fragment = SanctionFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     @Inject
     lateinit var presenter: SanctionFragmentPresenter
@@ -46,6 +61,8 @@ class SanctionFragment : BaseFragmentUser(), SanctionFragmentView {
     }
 
     private fun setAdapter(sactions: MutableList<Sanction>) {
+        if (showMessageEmpty(sactions.isEmpty()))
+            return
         adapterSanction.setSanctions(sactions)
     }
 
@@ -62,6 +79,16 @@ class SanctionFragment : BaseFragmentUser(), SanctionFragmentView {
         }
     }
 
+    private fun showMessageEmpty(isEmpty: Boolean): Boolean {
+        if (isEmpty) {
+            recyclerView.visibility = View.GONE
+            tv_without_data.visibility = View.VISIBLE
+        } else {
+            recyclerView.visibility = View.VISIBLE
+            tv_without_data.visibility = View.GONE
+        }
+        return isEmpty
+    }
     private fun getSanctions(id_submenu: Int) {
         if (id_submenu <= 0) {
             hideSwipeRefreshLayout()

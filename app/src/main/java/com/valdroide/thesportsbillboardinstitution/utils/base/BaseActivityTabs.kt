@@ -33,4 +33,8 @@ abstract class BaseActivityTabs : AppCompatActivity() {
         adapter = SectionsPagerAdapter(supportFragmentManager, titles, fragments)
         ViewPagerAdapter.setupViewpagerTabs(viewPager, tabs, adapter)
     }
+
+    fun updateAdapterForTournament(){
+        adapter?.notifyDataSetChanged()
+    }
 }

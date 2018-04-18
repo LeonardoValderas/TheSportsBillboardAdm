@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".main_user.tab.TabActivity">
+        <activity android:name=".main_user.tab.ui.TabActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_submenu.ui.NavigationActivity" />

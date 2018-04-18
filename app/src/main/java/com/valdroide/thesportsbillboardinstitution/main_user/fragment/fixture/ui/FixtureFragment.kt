@@ -1,6 +1,8 @@
 package com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.ui
 
 import android.os.Bundle
+import android.support.v7.widget.RecyclerView
+import android.view.View
 import com.google.gson.Gson
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
@@ -8,13 +10,28 @@ import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.Fi
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.ui.adapter.FixtureFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.ui.adapter.OnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
+import com.valdroide.thesportsbillboardinstitution.model.entities.MenuDrawer
 import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
 import com.valdroide.thesportsbillboardinstitution.utils.helper.SharedHelper
 import kotlinx.android.synthetic.main.fragment_fixture.*
 import com.valdroide.thesportsbillboardinstitution.utils.base.BaseFragmentUser
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ConstantHelper
 import javax.inject.Inject
 
 open class FixtureFragment : BaseFragmentUser(), FixtureFragmentView, OnItemClickListener {
+
+    companion object {
+       fun newInstance(id_menu: Int, id_tournament: Int, error: String): FixtureFragment {
+            val args = Bundle()
+            args.putInt(ConstantHelper.USER_FRAGMENT.ID_MENU_FRAGMENT, id_menu)
+            args.putInt(ConstantHelper.USER_FRAGMENT.ID_TOURNAMENT_FRAGMENT, id_tournament)
+            args.putString(ConstantHelper.USER_FRAGMENT.ERROR_FRAGMENT, error)
+
+            val fragment = FixtureFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     @Inject
     lateinit var presenter: FixtureFragmentPresenter
@@ -26,7 +43,7 @@ open class FixtureFragment : BaseFragmentUser(), FixtureFragmentView, OnItemClic
     inline fun <reified T> Gson.fromJson(json: String): T =
             this.fromJson<T>(json, T::class.java)
 
-    companion object Factory {
+    /*companion object Factory {
         lateinit var presenterTest: FixtureFragmentPresenter
         lateinit var adapterTest: FixtureFragmentAdapter
         lateinit var fixturesTest: MutableList<Fixture>
@@ -39,7 +56,7 @@ open class FixtureFragment : BaseFragmentUser(), FixtureFragmentView, OnItemClic
 
             return com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.ui.FixtureFragment()
         }
-    }
+    }*/
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -48,7 +65,7 @@ open class FixtureFragment : BaseFragmentUser(), FixtureFragmentView, OnItemClic
         getFixtures(false)
     }
 
-    override fun getLayoutResourceId(): Int = R.layout.fragment_create_team
+    override fun getLayoutResourceId(): Int = R.layout.fragment_fixture
 
     override fun validateEvenBusRegisterForLifeCycle(isRegister: Boolean) {
         if (isRegister)
@@ -59,7 +76,7 @@ open class FixtureFragment : BaseFragmentUser(), FixtureFragmentView, OnItemClic
 
     private fun initRecyclerView() {
         with(recyclerView) {
-            ViewComponentHelper.initRecyclerView(this, activity)
+            ViewComponentHelper.initRecyclerView(recyclerView, activity)
             adapter = adapterFixture
         }
     }
@@ -78,7 +95,7 @@ open class FixtureFragment : BaseFragmentUser(), FixtureFragmentView, OnItemClic
         }
     }
 
-    private fun getFixtures(id_submenu: Int){
+    private fun getFixtures(id_submenu: Int) {
         if (id_submenu <= 0) {
             hideSwipeRefreshLayout()
             setError(getString(R.string.generic_error_response))
@@ -92,13 +109,13 @@ open class FixtureFragment : BaseFragmentUser(), FixtureFragmentView, OnItemClic
     private fun getMenuEntity(): Int {
         return SharedHelper.getSubmenuId(activity)
 
-       /* val menuJson = SharedHelper.getMenuJson(activity)
-        if (menuJson.isEmpty())
-            return null
-        else {
-            return Gson().fromJson<MenuDrawer>(menuJson)
-        }
-        */
+        /* val menuJson = SharedHelper.getMenuJson(activity)
+         if (menuJson.isEmpty())
+             return null
+         else {
+             return Gson().fromJson<MenuDrawer>(menuJson)
+         }
+         */
     }
 
     private fun deleteLastItemButton() {
@@ -112,10 +129,13 @@ open class FixtureFragment : BaseFragmentUser(), FixtureFragmentView, OnItemClic
     }
 
     override fun setFixture(fixtures: MutableList<Fixture>) {
+        if (showMenssageEmpty(fixtures.isEmpty() && this.fixtures.isEmpty()))
+            return
+
         if (this.fixtures.isEmpty()) {
-            if (isTest)
-                fixturesTest.addAll(fixtures)
-            else
+       //     if (isTest)
+         //       fixturesTest.addAll(fixtures)
+           // else
                 this.fixtures.addAll(fixtures)
         } else
             this.fixtures.addAll((this.fixtures.size), fixtures)
@@ -123,10 +143,22 @@ open class FixtureFragment : BaseFragmentUser(), FixtureFragmentView, OnItemClic
         updateAdapter(isClick)
     }
 
+    private fun showMenssageEmpty(isEmpty: Boolean): Boolean {
+        if (isEmpty) {
+            recyclerView.visibility = View.GONE
+            tv_without_data.visibility = View.VISIBLE
+        } else {
+            recyclerView.visibility = View.VISIBLE
+            tv_without_data.visibility = View.GONE
+        }
+
+        return isEmpty
+    }
+
     private fun updateAdapter(isClick: Boolean) {
-        if (isTest)
-            adapterFixture.setFixtures(fixturesTest, isClick)
-        else
+      //  if (isTest)
+        //    adapterFixture.setFixtures(fixturesTest, isClick)
+       // else
             adapterFixture.setFixtures(this.fixtures, isClick)
     }
 
@@ -158,6 +190,7 @@ open class FixtureFragment : BaseFragmentUser(), FixtureFragmentView, OnItemClic
     }
 
     override fun onClickFixture(position: Int, fixture: Fixture) {
+        //without event
     }
 
     override fun onClickButtonAddMore() {
@@ -165,21 +198,7 @@ open class FixtureFragment : BaseFragmentUser(), FixtureFragmentView, OnItemClic
     }
 
     private fun verifySwipeRefresh(show: Boolean) {
-        try {
-            if (swipeRefreshLayout != null) {
-                if (show) {
-                    if (!swipeRefreshLayout.isRefreshing()) {
-                        swipeRefreshLayout.setRefreshing(true)
-                    }
-                } else {
-                    if (swipeRefreshLayout.isRefreshing()) {
-                        swipeRefreshLayout.setRefreshing(false)
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            setError(e.message!!)
-        }
+        ViewComponentHelper.verifySwipeRefresh(conteiner, swipeRefreshLayout, show)
     }
 
     private fun initSwipeRefreshLayout() {
