@@ -25,40 +25,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_tournament"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="2dp"
-                android:text="Torneo" />
-
             <Spinner
                 android:id="@+id/sp_tournament"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="5dp"
-                android:layout_toEndOf="@+id/tv_tournament"
-                android:layout_toLeftOf="@+id/tv_tournament" />
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/border_style_spinner"
+                android:popupBackground="@color/colorPrimary"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/colorWhite" />
+            <!--android:layout_toRightOf="@+id/iv_tournament"-->
+            <!--android:layout_toStartOf="@+id/iv_tournament"-->
 
-            <!--<TextView-->
-            <!--android:id="@+id/tv_tournament_current"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:text="actual"-->
-            <!--android:textColor="@color/greenColor" />-->
+            <!--android:theme="@style/AppTheme.PopupOverlay"-->
+            <!--app:popupTheme="@style/AppTheme.AppBarOverlay" />-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_tournament"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:tint="@color/colorWhite"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginRight="2dp"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:src="@mipmap/tournament_icon" />-->
+
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_margin="2dp"
             android:background="@color/bpWhite" />
-
+        <!--     android:layout_marginTop="2dp"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginBottom="2dp"
+                -->
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"

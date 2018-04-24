@@ -8,8 +8,12 @@ object ConstantHelper {
     object USER_FRAGMENT {
         const val ID_MENU_FRAGMENT: String = "id_menu_fragment"
         const val ID_TOURNAMENT_FRAGMENT: String = "id_tournament_fragment"
-        const val ERROR_FRAGMENT: String = "error_fragment"
+       // const val ERROR_FRAGMENT: String = "error_fragment"
+        const val WITHOUT_SCREEN: Int = 1111
+    }
 
+    object INTENT_EXTRA {
+        const val ID_MENU_TO: String = "id_menu_to"
     }
 
     object ENTITY{

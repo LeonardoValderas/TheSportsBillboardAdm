@@ -17,11 +17,10 @@ import javax.inject.Inject
 class LeaderBoardFragment: BaseFragmentUser(), LeaderBoardFragmentView {
 
     companion object {
-        fun newInstance(id_menu: Int, id_tournament: Int, error: String): LeaderBoardFragment {
+        fun newInstance(id_menu: Int, id_tournament: Int): LeaderBoardFragment {
             val args = Bundle()
             args.putInt(ConstantHelper.USER_FRAGMENT.ID_MENU_FRAGMENT, id_menu)
             args.putInt(ConstantHelper.USER_FRAGMENT.ID_TOURNAMENT_FRAGMENT, id_tournament)
-            args.putString(ConstantHelper.USER_FRAGMENT.ERROR_FRAGMENT, error)
 
             val fragment = LeaderBoardFragment()
             fragment.arguments = args

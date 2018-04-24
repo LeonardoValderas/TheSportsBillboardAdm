@@ -5,23 +5,23 @@ import android.view.View
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.news.ui.adapters.NewsFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.model.entities.News
-import kotlinx.android.synthetic.main.fragment_news.*
-import com.ramotion.foldingcell.FoldingCell
 import com.valdroide.thesportsbillboardinstitution.TheSportsBillboardInstitutionApp
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.news.NewsFragmentPresenter
 import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
-import com.valdroide.thesportsbillboardinstitution.utils.helper.SharedHelper
 import com.valdroide.thesportsbillboardinstitution.utils.base.BaseFragmentUser
 import com.valdroide.thesportsbillboardinstitution.utils.helper.ConstantHelper
+import com.valdroide.thesportsbillboardinstitution.utils.helper.ImageHelper
+import kotlinx.android.synthetic.main.content_without_data.*
+import kotlinx.android.synthetic.main.frame_recycler_refresh.*
 import javax.inject.Inject
 
 class NewsFragment : BaseFragmentUser(), NewsFragmentView {
 
     companion object {
-        fun newInstance(id_menu: Int, error: String): NewsFragment {
+        fun newInstance(id_menu: Int): NewsFragment {
             val args = Bundle()
             args.putInt(ConstantHelper.USER_FRAGMENT.ID_MENU_FRAGMENT, id_menu)
-            args.putString(ConstantHelper.USER_FRAGMENT.ERROR_FRAGMENT, error)
+
             val fragment = NewsFragment()
             fragment.arguments = args
             return fragment
@@ -32,17 +32,21 @@ class NewsFragment : BaseFragmentUser(), NewsFragmentView {
     lateinit var presenter: NewsFragmentPresenter
     @Inject
     lateinit var adapterNews: NewsFragmentAdapter
+
     var newsList: MutableList<News> = arrayListOf()
-    //   private var id_sub_menu: Int = 0
+    var id_menu = 0
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        initListViewAdapter()
+        if(arguments != null)
+            updateVariablesArgument(arguments.getInt(ConstantHelper.USER_FRAGMENT.ID_MENU_FRAGMENT))
+
+        initRecyclerView()
         initSwipeRefreshLayout()
         getNews(false)
     }
 
-    override fun getLayoutResourceId(): Int = R.layout.fragment_news
+    override fun getLayoutResourceId(): Int = R.layout.frame_recycler_refresh
 
     override fun validateEvenBusRegisterForLifeCycle(isRegister: Boolean) {
         if (isRegister)
@@ -51,6 +55,10 @@ class NewsFragment : BaseFragmentUser(), NewsFragmentView {
             presenter.onDestroy()
     }
 
+    fun updateVariablesArgument(id_menu: Int){
+        this.id_menu = id_menu
+
+    }
     override fun setupInjection() {
         val app = activity.application as TheSportsBillboardInstitutionApp
         app.firebaseAnalyticsInstance().setCurrentScreen(activity, javaClass.simpleName, null)
@@ -58,9 +66,13 @@ class NewsFragment : BaseFragmentUser(), NewsFragmentView {
     }
 
     fun getNews(isUpdate: Boolean) {
+        /*
+        when refreshLayout is call the variable isUpdate is true
+        */
         if (newsList.isEmpty() || isUpdate) {
             showSwipeRefreshLayout()
-            getNews(SharedHelper.getSubmenuId(activity))
+            //getNews(SharedHelper.getSubmenuId(activity))
+            getNews(id_menu)
         } else
             setAdapter(newsList)
     }
@@ -68,27 +80,29 @@ class NewsFragment : BaseFragmentUser(), NewsFragmentView {
     private fun getNews(id_submenu: Int) {
         if (id_submenu <= 0) {
             hideSwipeRefreshLayout()
-            setError(getString(R.string.generic_error_response))
+            showInformationLayout(true)
+           // setError(getString(R.string.generic_error_response))
         } else
             presenter.getNews(activity, id_submenu)
     }
 
     private fun setAdapter(news: MutableList<News>) {
-        if (showMessageEmpty(news.isEmpty()))
-            return
-
-        adapterNews.setNews(news)
+        adapterNews.addAll(news)
     }
 
-    private fun showMessageEmpty(isEmpty: Boolean): Boolean {
-        if (isEmpty) {
-            mainListView.visibility = View.GONE
-            tv_without_data.visibility = View.VISIBLE
-        } else {
-            mainListView.visibility = View.VISIBLE
-            tv_without_data.visibility = View.GONE
+    private fun showInformationLayout(isErro: Boolean){
+        recyclerVisibility(false)
+        if(isErro) {
+            ImageHelper.setPicasso(activity, "", R.mipmap.ic_without_data, iv_without_data)//change icon
+            tv_without_data.text = getString(R.string.generic_error_response)
+        }else {
+            ImageHelper.setPicasso(activity, "", R.mipmap.ic_without_data, iv_without_data)
         }
-        return isEmpty
+    }
+
+    private fun recyclerVisibility(isRecycler: Boolean){
+        recyclerView.visibility = if(isRecycler) View.VISIBLE else View.INVISIBLE
+        without_data.visibility = if(isRecycler) View.INVISIBLE else View.VISIBLE
     }
 
     private fun verifySwipeRefresh(show: Boolean) {
@@ -105,25 +119,25 @@ class NewsFragment : BaseFragmentUser(), NewsFragmentView {
         }
     }
 
-    private fun initListViewAdapter() {
-        with(mainListView) {
+    private fun initRecyclerView() {
+        with(recyclerView) {
+            ViewComponentHelper.initRecyclerView(this, activity)
             adapter = adapterNews
-            setOnItemClickListener({ adapterView, view, pos, l ->
-                // toggle clicked cell state
-                (view as FoldingCell).toggle(false)
-                // register in adapter that state for selected cell is toggled
-                adapterNews.registerToggle(pos)
-            })
         }
     }
 
     override fun setNews(news: MutableList<News>) {
         newsList = news
-        setAdapter(news)
+        //verify if empty and show layout info
+        if(newsList.isEmpty())
+            showInformationLayout(false)
+        else
+            setAdapter(news)
     }
 
     override fun setError(error: String) {
-        ViewComponentHelper.showSnackBar(conteiner, error)
+         showInformationLayout(true)
+        //ViewComponentHelper.showSnackBar(conteiner, error)
     }
 
     override fun hideSwipeRefreshLayout() {

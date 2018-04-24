@@ -21,11 +21,10 @@ import javax.inject.Inject
 open class FixtureFragment : BaseFragmentUser(), FixtureFragmentView, OnItemClickListener {
 
     companion object {
-       fun newInstance(id_menu: Int, id_tournament: Int, error: String): FixtureFragment {
+       fun newInstance(id_menu: Int, id_tournament: Int): FixtureFragment {
             val args = Bundle()
             args.putInt(ConstantHelper.USER_FRAGMENT.ID_MENU_FRAGMENT, id_menu)
             args.putInt(ConstantHelper.USER_FRAGMENT.ID_TOURNAMENT_FRAGMENT, id_tournament)
-            args.putString(ConstantHelper.USER_FRAGMENT.ERROR_FRAGMENT, error)
 
             val fragment = FixtureFragment()
             fragment.arguments = args

@@ -17,10 +17,9 @@ import javax.inject.Inject
 class PlayerFragment : BaseFragmentUser(), PlayerFragmentView {
 
     companion object {
-        fun newInstance(id_menu: Int, error: String): PlayerFragment {
+        fun newInstance(id_menu: Int): PlayerFragment {
             val args = Bundle()
             args.putInt(ConstantHelper.USER_FRAGMENT.ID_MENU_FRAGMENT, id_menu)
-            args.putString(ConstantHelper.USER_FRAGMENT.ERROR_FRAGMENT, error)
 
             val fragment = PlayerFragment()
             fragment.arguments = args
@@ -32,6 +31,7 @@ class PlayerFragment : BaseFragmentUser(), PlayerFragmentView {
     lateinit var presenter: PlayerFragmentPresenter
     @Inject
     lateinit var adapterPlayer: PlayerFragmentAdapter
+
     var playerList: MutableList<Player> = arrayListOf()
     private var id_sub_menu: Int = 0
 
@@ -82,10 +82,10 @@ class PlayerFragment : BaseFragmentUser(), PlayerFragmentView {
     private fun showMessageEmpty(isEmpty: Boolean): Boolean {
         if (isEmpty) {
             recyclerView.visibility = View.GONE
-            tv_without_data.visibility = View.VISIBLE
+           // tv_without_data.visibility = View.VISIBLE
         } else {
             recyclerView.visibility = View.VISIBLE
-            tv_without_data.visibility = View.GONE
+            //tv_without_data.visibility = View.GONE
         }
         return isEmpty
     }

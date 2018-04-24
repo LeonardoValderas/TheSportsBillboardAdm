@@ -7,28 +7,44 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:weightSum="6">
+
+        <ImageView
+            android:id="@+id/iv_tournament"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@mipmap/tournament_icon"
+            android:tint="@color/colorWhite" />
 
         <TextView
             android:id="@+id/tv_text"
-            style="?android:attr/spinnerDropDownItemStyle"
             android:layout_width="0dp"
-            android:textSize="20sp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="80"
-            android:text="Hola" />
+            android:layout_marginLeft="2dp"
+            android:layout_weight="3.8"
+            android:text="Hola"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp" />
+
+        <!--style="?android:attr/spinnerDropDownItemStyle"-->
 
         <TextView
             android:id="@+id/tv_text_actual"
             android:layout_width="0dp"
-            android:textColor="@color/greenColor"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="10sp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="10"
-            android:text="actual"/>
+            android:layout_marginRight="2dp"
+            android:layout_weight="1"
+            android:text="actual"
+            android:textColor="@color/greenColor"
+            android:textSize="11sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

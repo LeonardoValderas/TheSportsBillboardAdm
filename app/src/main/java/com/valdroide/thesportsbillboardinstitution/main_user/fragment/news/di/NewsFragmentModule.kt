@@ -1,6 +1,7 @@
 package com.valdroide.thesportsbillboardinstitution.main_user.fragment.news.di
 
 import android.content.Context
+import android.support.v4.app.Fragment
 import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.api.ApiClient
 import com.valdroide.thesportsbillboardinstitution.api.ApiService
@@ -16,6 +17,7 @@ import javax.inject.Singleton
 
 @Module
 class NewsFragmentModule(val view: NewsFragmentView, val context: Context) {
+
     @Provides
     @Singleton
     fun provideNewsFragmentView(): NewsFragmentView = this.view
@@ -47,13 +49,13 @@ class NewsFragmentModule(val view: NewsFragmentView, val context: Context) {
 
     @Provides
     @Singleton
-    fun provideNewsFragmentAdapter(context: Context, layoutResourceId: Int, news: MutableList<News>): NewsFragmentAdapter
-            = NewsFragmentAdapter(context, layoutResourceId, news)
+    fun provideNewsFragmentAdapter(context: Context): NewsFragmentAdapter
+            = NewsFragmentAdapter(context)
 
     @Provides
     @Singleton
     fun provideContext(): Context = context
-
+/*
     @Provides
     @Singleton
     fun provideLayoutResourceId(): Int = R.layout.cell_news
@@ -62,5 +64,5 @@ class NewsFragmentModule(val view: NewsFragmentView, val context: Context) {
     @Singleton
     fun provideListNews(): MutableList<News> = arrayListOf()
 
-
+¨*/
 }

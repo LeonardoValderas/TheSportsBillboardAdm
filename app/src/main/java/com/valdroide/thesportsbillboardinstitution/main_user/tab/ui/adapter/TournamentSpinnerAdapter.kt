@@ -27,7 +27,7 @@ class TournamentSpinnerAdapter(list: MutableList<Tournament>,
             if (IS_ACTUAL == 0)
                 actual.visibility = View.INVISIBLE
             else
-                actual.visibility = View.INVISIBLE
+                actual.visibility = View.VISIBLE
         }
         return row
     }

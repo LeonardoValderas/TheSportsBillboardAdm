@@ -179,4 +179,8 @@
     <string name="select.tournament">Seleccione un torneo</string>
     <string name="create.tournament">Cree un torneo</string>
     <string name="create.select.tournament">Cree ou seleccione un torneo</string>
+
+    <!-- ERRO AND INFORMATION SCREEMS -->
+    <string name="text_without_data_user">Esta opción no posse datos.</string>
+
 </resources>
