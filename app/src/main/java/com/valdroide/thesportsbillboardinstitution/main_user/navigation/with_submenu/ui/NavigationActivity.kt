@@ -47,7 +47,7 @@ open class NavigationActivity : BaseActivity(), NavigationActivityView {
         initHeaderNav()
         initAdapterDrawer()
         addDrawerItems()
-        ImageHelper.setPicasso(this, "", R.drawable.adeful, imageViewLogo)
+      //  ImageHelper.setPicasso(this, "", R.drawable.adeful, imageViewLogo)
         fab.setOnClickListener { view ->
             startActivity(Intent(this, AccountActivity::class.java))
         }

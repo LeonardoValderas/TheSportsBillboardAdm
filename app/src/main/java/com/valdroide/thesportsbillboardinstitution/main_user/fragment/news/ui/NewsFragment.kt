@@ -11,6 +11,7 @@ import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHel
 import com.valdroide.thesportsbillboardinstitution.utils.base.BaseFragmentUser
 import com.valdroide.thesportsbillboardinstitution.utils.helper.ConstantHelper
 import com.valdroide.thesportsbillboardinstitution.utils.helper.ImageHelper
+import com.valdroide.thesportsbillboardinstitution.utils.helper.SharedHelper
 import kotlinx.android.synthetic.main.content_without_data.*
 import kotlinx.android.synthetic.main.frame_recycler_refresh.*
 import javax.inject.Inject
@@ -71,8 +72,8 @@ class NewsFragment : BaseFragmentUser(), NewsFragmentView {
         */
         if (newsList.isEmpty() || isUpdate) {
             showSwipeRefreshLayout()
-            //getNews(SharedHelper.getSubmenuId(activity))
-            getNews(id_menu)
+           // getNews(SharedHelper.getSubmenuId(activity))
+            getNews(id_menu) //analisis if more practic create new instance and pass id or save it no shared preference
         } else
             setAdapter(newsList)
     }
@@ -92,17 +93,18 @@ class NewsFragment : BaseFragmentUser(), NewsFragmentView {
 
     private fun showInformationLayout(isErro: Boolean){
         recyclerVisibility(false)
-        if(isErro) {
-            ImageHelper.setPicasso(activity, "", R.mipmap.ic_without_data, iv_without_data)//change icon
-            tv_without_data.text = getString(R.string.generic_error_response)
+
+        /*if(isErro) {
+            ImageHelper.setPicasso(activity, "", R.mipmap.ic_error_data, iv_empty_error_data)
+            tv_empty_error_data.text = getString(R.string.generic_error_response)
         }else {
-            ImageHelper.setPicasso(activity, "", R.mipmap.ic_without_data, iv_without_data)
-        }
+            ImageHelper.setPicasso(activity, "", R.mipmap.ic_empty_data, iv_empty_error_data)
+        }*/
     }
 
     private fun recyclerVisibility(isRecycler: Boolean){
         recyclerView.visibility = if(isRecycler) View.VISIBLE else View.INVISIBLE
-        without_data.visibility = if(isRecycler) View.INVISIBLE else View.VISIBLE
+   //     without_data.visibility = if(isRecycler) View.INVISIBLE else View.VISIBLE
     }
 
     private fun verifySwipeRefresh(show: Boolean) {

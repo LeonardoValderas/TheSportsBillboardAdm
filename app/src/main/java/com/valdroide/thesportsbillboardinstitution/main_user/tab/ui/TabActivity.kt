@@ -23,7 +23,8 @@ import kotlinx.android.synthetic.main.activity_user_tab.*
 import kotlinx.android.synthetic.main.content_tab.*
 import javax.inject.Inject
 
-open class TabActivity : BaseActivityUserTabs(), TabActivityView {
+open class
+TabActivity : BaseActivityUserTabs(), TabActivityView {
 
 
     inline fun <reified T> Gson.fromJson(json: String): T =
@@ -66,10 +67,12 @@ open class TabActivity : BaseActivityUserTabs(), TabActivityView {
     private fun getExtraIntent(): MenuDrawer? {
         try {
             val entity_string = intent.getStringExtra(ConstantHelper.JSON_ENTITY)
+
             if (!entity_string.isNullOrEmpty()) {
                 val enti: MenuDrawer = Gson().fromJson<MenuDrawer>(entity_string)
                 return enti
             }
+
         } catch (e: Exception) {
             showErrorAndFinish()
         }
@@ -91,7 +94,7 @@ open class TabActivity : BaseActivityUserTabs(), TabActivityView {
     }
 
     private fun showErrorAndFinish() {
-        Toast.makeText(this, getString(R.string.generic_error_response), Toast.LENGTH_LONG).show()
+        ViewComponentHelper.showToast(this, getString(R.string.generic_error_response), Toast.LENGTH_LONG)
         finish()
     }
 
@@ -126,7 +129,7 @@ open class TabActivity : BaseActivityUserTabs(), TabActivityView {
     }
 
     override fun setTournaments(tournaments: MutableList<Tournament>) {
-        if (tournaments == null || tournaments.isEmpty())
+        if (tournaments != null || tournaments.isEmpty())
             setError("No se encontraron torneos activos.")
         else {
             tournamentsList = tournaments
@@ -138,7 +141,7 @@ open class TabActivity : BaseActivityUserTabs(), TabActivityView {
         setPagerAdapter()
     }
 
-    private fun fillIdTournament(){
+    private fun fillIdTournament() {
         val actual = validateCurrentTournament()
         if (actual != null)
             id_tournament = actual.ID_TOURNAMENT_KEY
@@ -149,7 +152,7 @@ open class TabActivity : BaseActivityUserTabs(), TabActivityView {
     private fun validateCurrentTournament(): Tournament? = tournamentsList!!.firstOrNull { it.IS_ACTUAL != 0 }
 
     override fun setError(msg: String) {
-        ViewComponentHelper.showSnackBar(cl_container, msg)
+        ViewComponentHelper.showToast(this, msg, Toast.LENGTH_LONG)
         finish()
     }
 

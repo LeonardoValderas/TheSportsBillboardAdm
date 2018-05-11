@@ -101,11 +101,11 @@ class LeaderBoardFragment: BaseFragmentUser(), LeaderBoardFragmentView {
         if (isEmpty) {
             ll_title_conteiner.visibility = View.GONE
             gridLeaderBoard.visibility = View.GONE
-            tv_without_data.visibility = View.VISIBLE
+            tv_empty_error_data.visibility = View.VISIBLE
         } else {
             ll_title_conteiner.visibility = View.VISIBLE
             gridLeaderBoard.visibility = View.VISIBLE
-            tv_without_data.visibility = View.GONE
+            tv_empty_error_data.visibility = View.GONE
         }
         return isEmpty
     }

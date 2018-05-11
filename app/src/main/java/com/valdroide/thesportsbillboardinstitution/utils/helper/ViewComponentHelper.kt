@@ -10,6 +10,8 @@ import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
+import android.widget.Toast
+import com.valdroide.thesportsbillboardinstitution.R
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.yesButton
 
@@ -19,6 +21,9 @@ object ViewComponentHelper {
         Snackbar.make(conteiner, msg, Snackbar.LENGTH_LONG).show()
     }
 
+    fun showToast(context: Context, msg: String, duration: Int) {
+        Toast.makeText(context, msg, duration).show()
+    }
     fun ImageDialogLogo(activity: Activity?, fragment: Fragment?, GALLERY: Int) {
         val myAlertDialog: AlertDialog.Builder
         if (activity != null)

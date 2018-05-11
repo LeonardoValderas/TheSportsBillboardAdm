@@ -12,12 +12,13 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include android:visibility="gone"
-            layout="@layout/content_without_data"
-            android:id="@+id/without_data"/>
+        <!--<include android:visibility="gone"-->
+            <!--layout="@layout/content_without_data"-->
+            <!--android:id="@+id/without_data"/>-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
+            tools:listitem="@layout/news_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />

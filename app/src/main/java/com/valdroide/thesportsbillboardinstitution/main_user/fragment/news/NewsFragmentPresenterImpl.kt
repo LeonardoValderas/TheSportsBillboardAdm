@@ -9,9 +9,9 @@ import org.greenrobot.eventbus.Subscribe
 class NewsFragmentPresenterImpl(var view: NewsFragmentView, val event: EventBus, val interactor: NewsFragmentInteractor) : NewsFragmentPresenter {
 
 
-    override fun getViewPresenter(): NewsFragmentView = view
+    override fun getNewsView(): NewsFragmentView = view
 
-    override fun setViewPresenter(view: NewsFragmentView) {
+    override fun setNewsView(view: NewsFragmentView) {
        this.view = view
     }
 

@@ -1,8 +1,6 @@
 package com.valdroide.thesportsbillboardinstitution.main_user.fragment.news.di
 
 import android.content.Context
-import android.support.v4.app.Fragment
-import com.valdroide.thesportsbillboardinstitution.R
 import com.valdroide.thesportsbillboardinstitution.api.ApiClient
 import com.valdroide.thesportsbillboardinstitution.api.ApiService
 import com.valdroide.thesportsbillboardinstitution.lib.base.EventBus
@@ -10,7 +8,6 @@ import com.valdroide.thesportsbillboardinstitution.lib.base.SchedulersInterface
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.news.*
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.news.ui.NewsFragmentView
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.news.ui.adapters.NewsFragmentAdapter
-import com.valdroide.thesportsbillboardinstitution.model.entities.News
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

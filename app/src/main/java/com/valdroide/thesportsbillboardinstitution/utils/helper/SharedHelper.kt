@@ -35,9 +35,17 @@ object SharedHelper {
     }
 
     fun getSubmenuId(context: Context): Int {
-        val shared: SharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_id_title_submenu), Context.MODE_PRIVATE)
-        return shared.getInt(context.getString(R.string.shared_id), 0)
+          return 4
+     //   val shared: SharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_id_title_submenu), Context.MODE_PRIVATE)
+      //  return shared.getInt(context.getString(R.string.shared_id), 0)
     }
+
+    fun getIdTournament(context: Context): Int {
+        return 18
+        //   val shared: SharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_id_title_submenu), Context.MODE_PRIVATE)
+        //  return shared.getInt(context.getString(R.string.shared_id), 0)
+    }
+
 
     fun getSubmenuTitle(context: Context): String {
         val shared: SharedPreferences = context.getSharedPreferences(context.getString(R.string.shared_id_title_submenu), Context.MODE_PRIVATE)

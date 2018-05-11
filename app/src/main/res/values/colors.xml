@@ -39,5 +39,7 @@
     <color name="redColor">#FF440B</color>
 
 
+    <!--NAVIGATION BOTTOM-->
+    <color name="colorGray">#ccc</color>
 
 </resources>

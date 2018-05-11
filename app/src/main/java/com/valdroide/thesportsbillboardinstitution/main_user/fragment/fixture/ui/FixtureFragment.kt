@@ -1,7 +1,6 @@
 package com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.ui
 
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.google.gson.Gson
 import com.valdroide.thesportsbillboardinstitution.R
@@ -10,7 +9,6 @@ import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.Fi
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.ui.adapter.FixtureFragmentAdapter
 import com.valdroide.thesportsbillboardinstitution.main_user.fragment.fixture.ui.adapter.OnItemClickListener
 import com.valdroide.thesportsbillboardinstitution.model.entities.Fixture
-import com.valdroide.thesportsbillboardinstitution.model.entities.MenuDrawer
 import com.valdroide.thesportsbillboardinstitution.utils.helper.ViewComponentHelper
 import com.valdroide.thesportsbillboardinstitution.utils.helper.SharedHelper
 import kotlinx.android.synthetic.main.fragment_fixture.*
@@ -145,10 +143,10 @@ open class FixtureFragment : BaseFragmentUser(), FixtureFragmentView, OnItemClic
     private fun showMenssageEmpty(isEmpty: Boolean): Boolean {
         if (isEmpty) {
             recyclerView.visibility = View.GONE
-            tv_without_data.visibility = View.VISIBLE
+            tv_empty_error_data.visibility = View.VISIBLE
         } else {
             recyclerView.visibility = View.VISIBLE
-            tv_without_data.visibility = View.GONE
+            tv_empty_error_data.visibility = View.GONE
         }
 
         return isEmpty

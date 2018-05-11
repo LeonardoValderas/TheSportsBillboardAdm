@@ -10,5 +10,5 @@ class SectionsPagerAdapter(fm: FragmentManager,
 
     override fun getItem(position: Int): Fragment = fragments[position]
     override fun getCount(): Int = fragments.size
-    override fun getPageTitle(position: Int): CharSequence = titles[position]
+    override fun getPageTitle(position: Int): CharSequence = if(titles.isNotEmpty()) titles[position] else ""
 }

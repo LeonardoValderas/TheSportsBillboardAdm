@@ -24,7 +24,6 @@ import com.valdroide.thesportsbillboardinstitution.main_user.account.events.Acco
 import com.valdroide.thesportsbillboardinstitution.main_user.account.ui.AccountActivity
 import com.valdroide.thesportsbillboardinstitution.main_user.account.ui.AccountActivityView
 import com.valdroide.thesportsbillboardinstitution.model.entities.Account
-import com.valdroide.thesportsbillboardinstitution.utils.Utils
 import org.junit.Assert
 import kotlinx.android.synthetic.main.activity_account.*
 import kotlinx.android.synthetic.main.content_account.*
@@ -55,8 +54,6 @@ class AccountActivityTest : BaseTest() {
     lateinit var account: Account
     @Mock
     lateinit var picasso: Picasso
-    @Mock
-    lateinit var utils: Utils
 
     lateinit var view: AccountActivityView
     lateinit var activity: AccountActivity

@@ -26,11 +26,10 @@
                 android:value="com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_submenu.ui.NavigationActivity" />
         </activity>
         <activity
-            android:name="com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_submenu.ui.NavigationActivity"
-            android:label="@string/app_name">
-        </activity>
+            android:name=".main_user.navigation.with_submenu.ui.NavigationActivity"
+            android:label="@string/app_name"></activity>
         <activity
-            android:name="com.valdroide.thesportsbillboardinstitution.main_user.navigation.with_menu.ui.NavigationActivity"
+            android:name=".main_user.navigation.with_menu.ui.NavigationActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +37,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".main_user.tab.ui.TabActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -50,11 +48,13 @@
         <activity
             android:name=".main_adm.navigation.ui.NavigationAdmActivity"
             android:label="@string/title_activity_navigation_adm">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".main_adm.login.activity.TabLoginActivity"
@@ -125,7 +125,10 @@
         <activity
             android:name=".main_adm.PruebaActivity"
             android:label="@string/title_activity_prueba"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".main_user.MainBottomActivity"
+            android:label="@string/title_activity_main_bottom"></activity>
     </application>
 
 </manifest>

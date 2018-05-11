@@ -7,8 +7,8 @@ import com.valdroide.thesportsbillboardinstitution.main_user.fragment.news.ui.Ne
 interface NewsFragmentPresenter {
     fun onCreate()
     fun onDestroy()
-    fun getViewPresenter(): NewsFragmentView
-    fun setViewPresenter(view: NewsFragmentView)
+    fun getNewsView(): NewsFragmentView
+    fun setNewsView(view: NewsFragmentView)
     fun getNews(context: Context, id_submenu: Int)
     fun onEventMainThread(event: NewsFragmentEvent)
 }

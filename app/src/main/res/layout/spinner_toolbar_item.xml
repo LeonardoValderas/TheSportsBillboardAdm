@@ -18,7 +18,8 @@
             android:id="@+id/iv_tournament"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
+            android:layout_gravity="left"
             android:src="@mipmap/tournament_icon"
             android:tint="@color/colorWhite" />
 
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="2dp"
-            android:layout_weight="3.8"
+            android:layout_weight="4"
             android:text="Hola"
             android:textColor="@color/colorWhite"
             android:textSize="16sp" />
